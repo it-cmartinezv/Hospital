@@ -1,0 +1,20 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/template/template.xhtml">
+	<h:head>
+	</h:head>
+
+	<ui:define name="cuerpo">
+	    <!-- TITULO  --> 
+		<h1>Registrar Paciente</h1>
+		<!-- FORMULARIO, SOLO DEBE HABER UNO --> 
+		<h:form prependId="false" id="fasociar">
+			<!-- PANELGRID ES UNA TABLA SE PUEDE REPETIR  --> 
+			<h:panelGrid id="paneldatos" columns="3">
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

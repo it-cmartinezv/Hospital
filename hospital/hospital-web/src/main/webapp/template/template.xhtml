@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Sistema Hospitalario</title>
+    <meta name="description" content="Sistema Hospitalario"/>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Candal|Alegreya+Sans"/>
+    <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/imagehover.min.css"/>
+    <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/style.css"/>
+  </h:head>
+  <h:body data-spy="scroll" data-target="#navbar" data-offset="0">
+    <!--Navigation bar-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">Hospital<span>Kill</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#feature">Features</a></li>
+          <li><a href="#organisations">Organisations</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#" data-target="#login" data-toggle="modal">Iniciar Sesion</a></li>
+          <li class="btn-trial"><a href="#footer">Registrarme</a></li>
+        </ul>
+        </div>
+      </div>
+    </nav>
+    <!--/ Navigation bar-->
+    <!--Modal box-->
+    <div class="modal fade" id="login" role="dialog">
+      <div class="modal-dialog modal-sm">
+      
+        <!-- Modal content no 1-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">x</button>
+            <h4 class="modal-title text-center form-title">Iniciar Sesion</h4>
+          </div>
+          <div class="modal-body padtrbl">
+
+            <div class="login-box-body">
+              <p class="login-box-msg">Ingresa tus datos para iniciar sesion</p>
+              <div class="form-group">
+                <form name="" id="loginForm">
+                 <div class="form-group has-feedback">
+                      <input class="form-control" placeholder="Username"  id="loginid" type="text" autocomplete="off" /> 
+            <span style="display:none;font-weight:bold; position:absolute;color: red;position: absolute;padding:4px;font-size: 11px;background-color:rgba(128, 128, 128, 0.26);z-index: 17;  right: 27px; top: 5px;" id="span_loginid"></span><!---Alredy exists  ! -->
+                      <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                  </div>
+                  <div class="form-group has-feedback">
+                      <input class="form-control" placeholder="Password" id="loginpsw" type="password" autocomplete="off" />
+            <span style="display:none;font-weight:bold; position:absolute;color: grey;position: absolute;padding:4px;font-size: 11px;background-color:rgba(128, 128, 128, 0.26);z-index: 17;  right: 27px; top: 5px;" id="span_loginpsw"></span><!---Alredy exists  ! -->
+                      <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                  </div>
+                  <div class="row">
+                      <div class="col-xs-12">
+                          <div class="checkbox icheck">
+                              <label>
+                                <input type="checkbox" id="loginrem"/> Recordarme
+                              </label>
+                          </div>
+                      </div>
+                      <div class="col-xs-12">
+                          <button type="button" class="btn btn-green btn-block btn-flat" onclick="userlogin()">Iniciar Sesion</button>
+                      </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
+
+    
+    <section id ="contact" class="section-padding">
+      <div class="container">
+        <div class="row">
+        	 
+        	 <p:messages id="facesMessage" autoUpdate="true" globalOnly="true" closable="true"/>
+        	 
+			 <ui:insert name="cuerpo"/>
+        </div>
+      </div>
+    </section>
+    
+    <footer id="footer" class="footer">
+      <div class="container text-center">
+    
+      <h3>Start Your Free Trial Now!</h3>
+    
+      <form class="mc-trial row">
+        <div class="form-group col-md-3 col-md-offset-2 col-sm-4">
+          <div class=" controls">
+            <input name="name" placeholder="Enter Your Name" class="form-control" type="text"/>
+          </div>
+        </div>
+        <div class="form-group col-md-3 col-sm-4">
+          <div class=" controls">
+            <input name="EMAIL" placeholder="Enter Your email" class="form-control" type="email"/>
+          </div>
+        </div>
+        <div class="col-md-2 col-sm-4">
+          <p>
+            <button name="submit" type="submit" class="btn btn-block btn-submit">
+            Submit <i class="fa fa-arrow-right"></i></button>
+          </p>
+        </div>
+      </form>
+      <ul class="social-links">
+        <li><a href="#link"><i class="fa fa-twitter fa-fw"></i></a></li>
+        <li><a href="#link"><i class="fa fa-facebook fa-fw"></i></a></li>
+        <li><a href="#link"><i class="fa fa-google-plus fa-fw"></i></a></li>
+        <li><a href="#link"><i class="fa fa-dribbble fa-fw"></i></a></li>
+        <li><a href="#link"><i class="fa fa-linkedin fa-fw"></i></a></li>
+      </ul>
+        ©2016 Sistema Hospitalario. All rights reserved
+        <div class="credits">
+             Designed by Carlos Martinez - Alejandro Matallana
+        </div>
+      </div>
+    </footer>
+    
+    <script src="#{request.contextPath}/js/jquery.min.js"></script>
+    <script src="#{request.contextPath}/js/jquery.easing.min.js"></script>
+    <script src="#{request.contextPath}/js/bootstrap.min.js"></script>
+    <script src="#{request.contextPath}/js/custom.js"></script>
+    <script src="#{request.contextPath}/contactform/contactform.js"></script>
+  </h:body>
+</html>
