@@ -31,7 +31,7 @@ public class Eps implements Serializable{
 	@Column(name="Telefono",nullable = false,length=15)
 	private String telefono;
 	
-	@JoinColumn(name="Ciudad_Id_Ciudad")
+	@JoinColumn(name="Id_Tipo_Eps")
 	@ManyToOne(cascade={})
 	private TipoEps tipoEps;
 

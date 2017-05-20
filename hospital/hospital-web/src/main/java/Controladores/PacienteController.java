@@ -65,7 +65,7 @@ public class PacienteController implements Serializable{
 	public void inicializar(){
 		try{
 			paises = localizacionEJB.listarPaises();
-			listaEps = epsEJB.listar();
+			//listaEps = epsEJB.listar();
 		}catch (excepciones.ExcepcionNegocio e){
 			Messages.addFlashGlobalError(e.getMessage());
 		}
@@ -213,6 +213,14 @@ public class PacienteController implements Serializable{
 
 	public void setListaEps(List<Eps> listaEps) {
 		this.listaEps = listaEps;
+	}
+
+	public Eps getEps() {
+		return eps;
+	}
+
+	public void setEps(Eps eps) {
+		this.eps = eps;
 	}
 	
 }

@@ -3,11 +3,14 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Farmaceutico")
+@Inheritance(strategy=InheritanceType.JOINED)
 @NamedQuery(name=Farmaceutico.listarFarmaceuticos, query="SELECT f FROM Farmaceutico f")
 public class Farmaceutico extends Persona implements Serializable{
 	

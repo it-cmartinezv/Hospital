@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(name = "Ciudad")
 @NamedQueries({
 	@NamedQuery(name=Ciudad.LISTAR, query="SELECT c FROM Ciudad c"),
-	@NamedQuery(name=Ciudad.BYDEPARTAMENTO, query="SELECT c FROM Ciudad c WHERE d.departamento = ?1")
+	@NamedQuery(name=Ciudad.BYDEPARTAMENTO, query="SELECT d FROM Ciudad d WHERE d.departamento = ?1")
 })
 public class Ciudad implements Serializable{
 	
