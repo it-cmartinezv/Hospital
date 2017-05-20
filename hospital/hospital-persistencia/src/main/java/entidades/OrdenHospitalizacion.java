@@ -21,7 +21,7 @@ public class OrdenHospitalizacion implements Serializable{
 	@ManyToOne(cascade={})
 	private CitaMedica citaMedica;
 	
-	@JoinColumn(name="Hospitalizacion_Id_Hospitalizacion")
+	@JoinColumn(name="Hospitalizacion")
 	@ManyToOne(cascade={})
 	private Hospitalizacion hospitalizacion;
 

@@ -24,7 +24,7 @@ public class Enfermedad implements Serializable{
 	@ManyToOne(cascade={})
 	private Sintoma sintomas;
 		
-	@JoinColumn(name="Tratamiento_Id_Tratamiento")
+	@JoinColumn(name="Tratamiento")
 	@ManyToOne(cascade={})
 	private Tratamiento tratamiento;
 

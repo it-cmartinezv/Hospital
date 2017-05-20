@@ -17,4 +17,6 @@ public class Medico extends Persona implements Serializable{
 	@Column(name="Estado")
 	private boolean estado;
 	
+	@Column(name="Tarjeta_Profesional",nullable = false,length=100)
+	private String tarjetaProfesional;
 }

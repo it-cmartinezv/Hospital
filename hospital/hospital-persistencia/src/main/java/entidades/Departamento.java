@@ -7,15 +7,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Departamento")
-@NamedQuery(name=Departamento.LISTAR, query="SELECT d FROM Departamento d")
+@NamedQueries({
+	@NamedQuery(name=Departamento.LISTAR, query="SELECT d FROM Departamento d"),
+	@NamedQuery(name=Departamento.BYPAIS, query="SELECT d FROM Departamento d WHERE d.pais = ?1")
+})
 public class Departamento implements Serializable{
 	
 	public static final String LISTAR = "Departamento.listar";
+	public static final String BYPAIS = "Departamento.bypais";
 	
 	@Id
 	@Column(name="Id_Departamento")

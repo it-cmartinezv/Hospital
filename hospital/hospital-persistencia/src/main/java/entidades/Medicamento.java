@@ -28,7 +28,7 @@ public class Medicamento implements Serializable{
 	@Column(name="Cantidad")
 	private int cantidad;
 	
-	@JoinColumn(name="Tipo_Medicamento_Id_Tipo_Medicamento")
+	@JoinColumn(name="Tipo_Medicamento")
 	@ManyToOne(cascade={})
 	private TipoMedicamento tipoMedicamento;
 	

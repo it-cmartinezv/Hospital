@@ -40,8 +40,8 @@ public class Persona implements Serializable{
 	@Column(name="Fecha_Nacimiento",nullable = false)
 	private Date fechaNacimiento;
 	
-	@Column(name="Genero")
-	private boolean genero;
+	@Column(name="Genero",nullable = false,length=50)
+	private String genero;
 	
 	@Column(name="Correo",nullable = false,length=50)
 	private String correo;
@@ -108,11 +108,11 @@ public class Persona implements Serializable{
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public boolean isGenero() {
+	public String getGenero() {
 		return genero;
 	}
 
-	public void setGenero(boolean genero) {
+	public void setGenero(String genero) {
 		this.genero = genero;
 	}
 

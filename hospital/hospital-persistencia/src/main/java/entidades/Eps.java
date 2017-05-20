@@ -7,11 +7,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "EPS")
+@NamedQuery(name=Eps.LISTAR, query="SELECT e FROM Eps e")
 public class Eps implements Serializable{
+	
+	public static final String LISTAR = "Eps.listar";
+	
 	@Id
 	@Column(name="Id_Eps")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

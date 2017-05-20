@@ -7,12 +7,15 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import entidades.Ciudad;
 import entidades.Eps;
+import entidades.Pais;
 import entidades.TipoEps;
 
 /**
@@ -70,6 +73,15 @@ public class EPSEJB {
 		Query q = em.createNamedQuery(TipoEps.listaTipos);
 		List<TipoEps> lista = q.getResultList();
 		return lista;
+	}
+	
+	/**
+	 * Listar las eps registradas en la base de datos
+	 * @return toda la lista de eps
+	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Eps> listar(){
+		return em.createNamedQuery(Eps.LISTAR).getResultList();
 	}
 	
 }

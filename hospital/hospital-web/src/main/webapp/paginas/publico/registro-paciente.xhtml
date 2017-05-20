@@ -11,9 +11,80 @@
 	    <!-- TITULO  --> 
 		<h1>Registrar Paciente</h1>
 		<!-- FORMULARIO, SOLO DEBE HABER UNO --> 
-		<h:form prependId="false" id="fasociar">
+		<h:form prependId="false">
 			<!-- PANELGRID ES UNA TABLA SE PUEDE REPETIR  --> 
 			<h:panelGrid id="paneldatos" columns="3">
+			
+				<p:outputLabel for="tipoId" id="ltipoId" value="#{msj['usuario.tipoId']}:" />
+				<h:selectOneMenu id="tipoId"
+					value="#{pacienteController.tipoID}">
+					<f:selectItem itemValue="CEDULA_DE_CIUDADANIA" itemLabel="CEDULA DE CIUDADANIA" />					
+					<f:selectItem itemValue="TARJETA_IDENTIDAD" itemLabel="TARJETA IDENTIDAD" />
+					<f:selectItem itemValue="PASAPORTE" itemLabel="PASAPORTE" />
+					<f:selectItem itemValue="CEDULA_EXTRANGERIA" itemLabel="CEDULA EXTRANGERIA" />
+				</h:selectOneMenu>
+				<p:message for="tipoId"/>
+				
+				<h:outputLabel for="numeroIdentificacion" id="lnumeroIdentificacion" value="#{msj['usuario.numeroId']}:" />
+				<h:inputText id="numeroIdentificacion" value="#{pacienteController.numeroIdentificacion}" />
+				<p:message for="numeroIdentificacion" />
+				
+				<h:outputLabel for="nombre" id="lnombre" value="#{msj['usuario.nombre']}:" />
+				<h:inputText id="nombre" value="#{pacienteController.nombre}" />
+				<p:message for="nombre" />
+				
+				<h:outputLabel for="apellido" id="lapellido" value="#{msj['usuario.apellido']}:" />
+				<h:inputText id="apellido" value="#{pacienteController.apellido}" />
+				<p:message for="apellido" />
+				
+				<p:outputLabel for="genero" id="lgenero" value="#{msj['usuario.genero ']}:" />
+				<h:selectOneMenu id="genero"
+					value="#{pacienteController.genero}">
+					<f:selectItem itemValue="HOMBRE" itemLabel="#{msj['usuario.hombre']}" />					
+					<f:selectItem itemValue="MUJER" itemLabel="#{msj['usuario.mujer']}" />
+				</h:selectOneMenu>
+				<p:message for="genero"/>
+				
+				<h:outputLabel for="correo" id="lcorreo" value="#{msj['usuario.correo']}:" />
+				<h:inputText id="correo" value="#{pacienteController.correo}" />
+				<p:message for="correo" />
+				
+				<h:outputLabel for="telefono" id="ltelefono" value="#{msj['usuario.telefono']}:" />
+				<h:inputText id="telefono" value="#{pacienteController.telefono}" />
+				<p:message for="telefono" />
+				
+				<h:outputLabel for="pais" id="lpais" value="#{msj['usuario.pais']}:" />
+				<h:selectOneMenu id="pais" value="#{pacienteController.pais}">
+					<f:selectItems value="#{pacienteController.paises}" var="pais" itemValue="#{pais.idPais}" itemLabel="#{pais.nombre}"/>
+					<f:ajax event="change" execute="@this" render="departamento" listener="#{pacienteController.departamentosByPais}"/>
+				</h:selectOneMenu>
+				<p:message for="pais"/>
+				
+				<h:outputLabel for="departamento" id="ldepartamento" value="#{msj['usuario.departamento']}:" />
+				<h:selectOneMenu id="departamento" value="#{pacienteController.departamento}">
+					<f:selectItems value="#{pacienteController.departamentos}" var="depto" itemValue="#{depto.id}" itemLabel="#{depto.nombre}"/>
+					<f:ajax event="change" execute="@this" render="ciudad" listener="#{pacienteController.ciudadesBydepartamento}"/>
+				</h:selectOneMenu>
+				<p:message for="departamento"/>
+				
+				<h:outputLabel for="ciudad" id="lciudad" value="#{msj['usuario.ciudad']}:" />
+				<h:selectOneMenu id="ciudad" value="#{pacienteController.ciudad}">
+					<f:selectItems value="#{pacienteController.ciudades}" var="ciudad"
+						itemValue="#{ciudad.id}" itemLabel="#{ciudad.nombre}" />
+				</h:selectOneMenu>
+				<p:message for="ciudad"/>
+				
+				<h:outputLabel for="eps" id="leps" value="#{msj['paciente.eps']}:" />
+				<h:selectOneMenu id="eps" value="#{pacienteController.eps}">
+					<f:selectItems value="#{pacienteController.listaEps}" var="eps"
+						itemValue="#{eps.id}" itemLabel="#{eps.nombre}" />
+				</h:selectOneMenu>
+				<p:message for="eps"/>
+			</h:panelGrid>
+			
+			<h:panelGrid id="acciones" columns="1">
+				<p:commandButton value="#{msj['cancelar']}" id="btnCancelar" process="@this" action="/?faces-redirect=true" />
+				<p:commandButton value="#{msj['registrarme']}" id="btnRegistrar" action="#{pacienteController.registrar}" />
 			</h:panelGrid>
 		</h:form>
 	</ui:define>
