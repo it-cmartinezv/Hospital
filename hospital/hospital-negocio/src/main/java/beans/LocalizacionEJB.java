@@ -93,7 +93,7 @@ public class LocalizacionEJB {
 	}
 	
 	/**
-	 * Buscar ciudad
+	 * Buscar ciudad por id
 	 */
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public Ciudad buscarCiudad(int id){
