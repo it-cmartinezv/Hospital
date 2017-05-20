@@ -6,6 +6,7 @@ package beans;
 import java.util.List;
 
 import javax.ejb.LocalBean;
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -17,6 +18,8 @@ import entidades.Ciudad;
 import entidades.Eps;
 import entidades.Pais;
 import entidades.TipoEps;
+import remote.IEpsRemote;
+import remote.ILocalizacionRemote;
 
 /**
  * @author AlejandroM
@@ -24,6 +27,7 @@ import entidades.TipoEps;
  */
 @LocalBean
 @Stateless
+@Remote(IEpsRemote.class)
 public class EPSEJB {
 
 	
