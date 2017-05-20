@@ -16,6 +16,8 @@ import remote.ILocalizacionRemote;
 /**
  * Clase encargada de gestionar la localizacion
  * listar paises,departamentos,ciudades
+ * listar departamentos por pais
+ * listar ciudades por departamento
  */
 
 @LocalBean
