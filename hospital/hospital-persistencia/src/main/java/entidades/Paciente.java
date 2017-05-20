@@ -26,4 +26,27 @@ public class Paciente extends Persona implements Serializable{
 	@ManyToOne(cascade={})
 	private Eps eps;
 
+	public Paciente() {
+		super();
+	}
+
+	public Eps getEps() {
+		return eps;
+	}
+
+	public void setEps(Eps eps) {
+		this.eps = eps;
+	}
+
+	@Override
+	public String toString() {
+		return "INFORMACION PACIENTE Paciente [eps=" + eps + ", getId()=" + getId() + ", getNumeroIdentificacion()="
+				+ getNumeroIdentificacion() + ", getTipoIdentificacion()=" + getTipoIdentificacion() + ", getNombre()="
+				+ getNombre() + ", getApellido()=" + getApellido() + ", getFechaNacimiento()=" + getFechaNacimiento()
+				+ ", getGenero()=" + getGenero() + ", getCorreo()=" + getCorreo() + ", getPassword()=" + getPassword()
+				+ ", getTelefono()=" + getTelefono() + ", getCiudad()=" + getCiudad()+ "]";
+	}
+	
+	
+	
 }

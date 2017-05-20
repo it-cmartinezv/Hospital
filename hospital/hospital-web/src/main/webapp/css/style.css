@@ -5,6 +5,80 @@
     Author URL: https://bootstrapmade.com
 */
 
+/*
+	Nuevos estilos
+*/
+.contenedor{
+	
+}
+label{
+    font-size: 16px!important;
+}
+.contenedor h1{
+    text-align: center;
+    font-size: 30px;
+    margin: 50px 0 20px 0;
+}
+.bf1f2f3{background: #f1f2f3!important}
+.contenedor #pregistro{
+	width: 500px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 3px;
+}
+.contenedor select,.contenedor input{
+    margin: 0 0 11px 10px;
+    width: 255px;
+    padding: 2px;
+    border: 1px solid #ced0d4;
+}
+.contenedor #btnCancelar{
+    color: #393a3c;
+    text-shadow: none;
+    border: 1px solid #c9c9c9;
+    box-shadow: none;
+    font-weight: 100;
+    padding: 8px 20px;
+    width: auto!important;
+    border-radius: 3px;
+    
+}
+.contenedor #btnCancelar:hover{
+	background: #c9c9c9;
+}
+.contenedor #btnRegistrar {
+    background: #5fcf80;
+    color: #fff;
+    text-shadow: none;
+    border: 1px solid #55bd73;
+    box-shadow: none;
+    font-weight: 100;
+    padding: 8px 20px;
+    margin-left: 10px;
+    width: auto!important;
+    border-radius: 3px;
+}
+.contenedor #btnRegistrar:hover{
+	background: #55bd73;
+}
+.ui-message-error-icon{
+    vertical-align: middle;
+    margin-top: 5px;
+}
+#acciones{
+    text-align: right;
+    margin-left: auto;
+    margin-top: 10px;
+}
+
+tr div {
+    position: absolute;
+    margin-top: -21px!important;
+}
+tr {
+    position: relative;
+}
 body {
 	font-size: 15px;
     line-height: 1.52;

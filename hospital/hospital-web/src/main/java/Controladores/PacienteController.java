@@ -1,19 +1,33 @@
 package Controladores;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
+
+import beans.EJBUsuario;
 import beans.EPSEJB;
 import beans.LocalizacionEJB;
 import entidades.Ciudad;
 import entidades.Departamento;
 import entidades.Eps;
+import entidades.Paciente;
 import entidades.Pais;
+import excepciones.ExcepcionNegocio;
+
 import javax.inject.Named;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  * 
@@ -27,6 +41,9 @@ import javax.ejb.EJB;
 public class PacienteController implements Serializable{
 	
 	@EJB
+	private EJBUsuario usuarioEJB;
+	
+	@EJB
 	private LocalizacionEJB localizacionEJB;
 	
 	@EJB
@@ -34,21 +51,30 @@ public class PacienteController implements Serializable{
 	
 	String tipoID;
 	
-	@Pattern(regexp="[0-9]*",message="Por favor, solo numeros")
+	@Pattern(regexp="[0-9]*",message="Solo numeros")
 	String numeroIdentificacion;
 	
 	@Pattern(regexp="[a-zA-Z ]*",message="Nombre No valido")
+	@Length(min=4,max=10,message="longitud entre 4 y 50")
 	String nombre;
 	
-	@Pattern(regexp="[a-zA-Z ]*",message="Nombre No valido")
+	@Pattern(regexp="[a-zA-Z ]*",message="Apellido No valido")
+	@Length(min=4,max=10,message="longitud entre 4 y 50")
 	String apellido;
 	
 	String genero;
 	
+	String fecha;
+	Date fechaNacimiento;
+	
 	@Email
 	String correo;
 	
-	@Pattern(regexp="[0-9]*",message="Por favor, solo numeros")
+	@Length(min=4,max=10,message="longitud entre 4 y 200")
+	String password;
+	
+	@Pattern(regexp="[0-9]*",message="Solo numeros")
+	@Length(min=5,max=10,message="longitud entre 5 y 20")
 	String telefono;
 	
 	private Pais pais;
@@ -64,7 +90,14 @@ public class PacienteController implements Serializable{
 	@PostConstruct
 	public void inicializar(){
 		try{
+			listaEps = epsEJB.listar();
 			paises = localizacionEJB.listarPaises();
+			if(!paises.isEmpty()){
+				departamentos = localizacionEJB.departamentosByPais(paises.get(0));
+				if(!departamentos.isEmpty()){
+					ciudades = localizacionEJB.ciudadesByDepartamento(departamentos.get(0));
+				}
+			}
 			//listaEps = epsEJB.listar();
 		}catch (excepciones.ExcepcionNegocio e){
 			Messages.addFlashGlobalError(e.getMessage());
@@ -76,7 +109,41 @@ public class PacienteController implements Serializable{
 	 * 
 	 */
 	public void registrar(){
-		
+		try{
+			//En este caso buscará en el String dia/mes/año
+			DateFormat fechaFormat = new SimpleDateFormat("dd/MM/yyyy");
+			Date fechan = fechaFormat.parse(fecha);
+			Paciente paciente = new Paciente();
+			paciente.setId(1);
+			paciente.setNombre(nombre);
+			paciente.setApellido(apellido);
+			paciente.setCorreo(correo);
+			paciente.setGenero(genero);
+			paciente.setCiudad(ciudad);
+			paciente.setFechaNacimiento(fechan);
+			paciente.setNumeroIdentificacion(numeroIdentificacion);
+			paciente.setTipoIdentificacion(tipoID);
+			paciente.setTelefono(telefono);
+			paciente.setPassword(password);
+			paciente.setEps(eps);		
+			System.out.println(paciente.toString());
+			usuarioEJB.registrarPaciente(paciente);
+			limpiar();
+			Messages.addFlashGlobalInfo("Te has registrado exitosamente");
+
+		}catch(ExcepcionNegocio e){
+			Messages.addGlobalError(e.getMessage());
+		}catch(ParseException p){
+			Messages.addGlobalError(p.getMessage());
+		}
+	}
+	
+	public void limpiar(){
+		nombre = "";
+		apellido = "";
+		correo = "";
+		telefono = "";
+		password = "";
 	}
 	
 	/**
@@ -84,7 +151,16 @@ public class PacienteController implements Serializable{
 	 */
 	public void departamentosByPais(){
 		try{
-			departamentos = localizacionEJB.departamentosByPais(pais);
+			if(pais != null){
+				System.out.println("EL PAIS SELECCIONADO ES:"+pais.getNombre());
+				departamentos = localizacionEJB.departamentosByPais(pais);
+				if(!departamentos.isEmpty()){
+					departamento = departamentos.get(0);
+					ciudadesBydepartamento();
+				}else{
+					ciudades.clear();
+				}
+			}
 		}catch (excepciones.ExcepcionNegocio e){
 			Messages.addFlashGlobalError(e.getMessage());
 		}
@@ -95,7 +171,10 @@ public class PacienteController implements Serializable{
 	 */
 	public void ciudadesBydepartamento(){
 		try{
-			ciudades = localizacionEJB.ciudadesByDepartamento(departamento);
+			if(departamento != null){
+				System.out.println("EL DEPARTAMENTO SELECCIONADO ES:"+departamento.getNombre());
+				ciudades = localizacionEJB.ciudadesByDepartamento(departamento);
+			}
 		}catch (excepciones.ExcepcionNegocio e){
 			Messages.addFlashGlobalError(e.getMessage());
 		}
@@ -103,7 +182,15 @@ public class PacienteController implements Serializable{
 	
 	
 	
+	/**
+	 * Calendario
+	 */
 	
+    public void onDateSelect(SelectEvent event) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+    }
 	
 	/**
 	 * Accesores y Modificadores
@@ -222,5 +309,28 @@ public class PacienteController implements Serializable{
 	public void setEps(Eps eps) {
 		this.eps = eps;
 	}
-	
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
 }
