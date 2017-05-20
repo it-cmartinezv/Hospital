@@ -46,7 +46,7 @@ public class ControladorEPS implements Serializable {
 	 * 
 	 */
 	public void crear() {
-		System.out.println("OEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println("OEEEEE!!!!!!!mkon jajajaja no funciona :p !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		Eps eps = new Eps(nombre, direccion, telefono, tipo);
 		epsEJB.crear(eps);
 		Messages.addFlashGlobalInfo("Se ha registrado exitosamente");
