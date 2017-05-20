@@ -18,7 +18,7 @@ import javax.ejb.EJB;
 /**
  * 
  * @author Carlos Alfredo Martinez Villada
- * Clase que controla la ventana de paciente
+ * Clase que controla la ventana de paciente 
  * 
  */
 
