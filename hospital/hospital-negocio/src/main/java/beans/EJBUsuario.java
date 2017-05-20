@@ -6,7 +6,7 @@ import javax.ejb.Stateless;
 /**
  * 
  * @author carlos martinez
- *
+ * clase encargada de las operaciones de usuario
  */
 @LocalBean
 @Stateless
