@@ -12,9 +12,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
 /**
- * 
+ * hola
  * Clase encargada de proveer los servicios basicos para la capa de
- * persistencia.
+ * persistencia. 
  * 
  */
 @SuppressWarnings({ "unchecked" })
