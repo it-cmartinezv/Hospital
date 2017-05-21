@@ -7,5 +7,7 @@
 4. Gestion de Farmaceuticos : http://localhost:8081/hospital-web/paginas/seguro/gestion-farmaceuticos.xhtml
 
 ---------------------------  ALEJANDRO MATALLANA --------------------------- 
-
+Gestion de EPS
+Gestion de Farmacia
+Gestion de medicamentos
 --------------------------- SEBASTIAN SALAZAR ------------------------------ 
