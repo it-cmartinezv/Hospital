@@ -14,6 +14,7 @@
 .submenu:hover > ul{
 	display:  block!important;
 }
+#fentrar{width: 397px!important;}
 .submenu ul {
     position: absolute;
     background: #5fcf80;
@@ -32,6 +33,7 @@
 .submenu ul a,.submenu ul a:hover {
     color: #fff!important;
     text-decoration: none!important;
+    display: block!important;
 }
 .submenu li:hover {
     background: #338049;
@@ -53,7 +55,7 @@ label{
     margin: 50px 0 20px 0;
 }
 .bf1f2f3{background: #f1f2f3!important}
-.contenedor #pregistro, .contenedor #gestion{
+.contenedor #pregistro, .contenedor #gestion, .contenedor #fentrar{
 	width: 500px;
     margin: 0 auto;
     background: #fff;

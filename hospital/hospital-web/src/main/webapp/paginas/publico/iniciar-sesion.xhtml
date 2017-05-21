@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/template/template.xhtml">
+	<h:head>
+	</h:head>
+
+	<ui:define name="cuerpo">
+	    <!-- TITULO  --> 
+		<h1>Iniciar Sesion</h1>
+		<!-- FORMULARIO, SOLO DEBE HABER UNO --> 
+		<h:form prependId="false" id="fentrar">
+			<!-- PANELGRID ES UNA TABLA SE PUEDE REPETIR  --> 
+			<h:panelGrid id="paneldatos" columns="3">
+				
+				<h:outputLabel for="correo" id="lcorreo" value="#{msj['usuario.correo']}:" />
+				<h:inputText id="correo" value="#{sesionController.correo}" />
+				<p:message for="correo" />
+				
+				<h:outputLabel for="password" id="lpassword" value="Contraseña:" />
+				<h:inputSecret id="password" value="#{sesionController.password}" />
+				<p:message for="password" />
+				
+			</h:panelGrid>
+			
+			<h:panelGrid id="acciones" columns="2">
+				<h:commandButton action="/hospital-web/?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>
+				<h:commandButton action="#{sesionController.entrar}" value="Iniciar Sesion" id="btnRegistrar"/>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
