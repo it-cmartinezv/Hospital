@@ -4,7 +4,40 @@
     Author: BootstrapMade.com
     Author URL: https://bootstrapmade.com
 */
-
+/* Submenu */
+.nav>li {
+    height: 63px!important;
+}
+.submenu {
+    position: relative!important;
+}
+.submenu:hover > ul{
+	display:  block!important;
+}
+.submenu ul {
+    position: absolute;
+    background: #5fcf80;
+    margin: 0;
+    width: 250px;
+    margin-top: 3px;
+    padding: 0;
+    border-radius: 0 0 3px 3px;
+        display: none;
+}
+.submenu li {
+    padding: 6px 10px;
+    display: block;
+    font-size: 14px;
+}
+.submenu ul a,.submenu ul a:hover {
+    color: #fff!important;
+    text-decoration: none!important;
+}
+.submenu li:hover {
+    background: #338049;
+    text-decoration: none;
+    color: #fff;
+}
 /*
 	Nuevos estilos
 */
