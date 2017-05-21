@@ -3,9 +3,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Messages;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
-
 import beans.EJBUsuario;
 import beans.EPSEJB;
 import beans.LocalizacionEJB;
@@ -15,12 +13,9 @@ import entidades.Eps;
 import entidades.Paciente;
 import entidades.Pais;
 import excepciones.ExcepcionNegocio;
-
 import javax.inject.Named;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -32,13 +27,13 @@ import javax.faces.context.FacesContext;
 /**
  * 
  * @author Carlos Alfredo Martinez Villada
- * Clase que controla la ventana de paciente 
+ * Clase que controla la ventana de Paciente 
  * 
  */
 
-@Named("pacienteController")
+@Named("gpacienteController")
 @ViewScoped
-public class PacienteController implements Serializable{
+public class GestionPacienteController implements Serializable{
 	
 	@EJB
 	private EJBUsuario usuarioEJB;
@@ -84,6 +79,7 @@ public class PacienteController implements Serializable{
 	private List<Pais> paises;
 	private List<Departamento> departamentos;
 	private List<Ciudad> ciudades;
+	private List<Paciente> pacientes;
 	private List<Eps> listaEps;
 	
 	@PostConstruct
@@ -91,6 +87,7 @@ public class PacienteController implements Serializable{
 		try{
 			listaEps = epsEJB.listar();
 			paises = localizacionEJB.listarPaises();
+			pacientes = usuarioEJB.listarPacientes();
 			if(!paises.isEmpty()){
 				departamentos = localizacionEJB.departamentosByPais(paises.get(0));
 				if(!departamentos.isEmpty()){
@@ -120,12 +117,45 @@ public class PacienteController implements Serializable{
 			paciente.setTipoIdentificacion(tipoID);
 			paciente.setTelefono(telefono);
 			paciente.setPassword(password);
-			paciente.setEps(eps);		
-			System.out.println(paciente.toString());
+			paciente.setEps(eps);
 			usuarioEJB.registrarPaciente(paciente);
 			limpiar();
-			Messages.addFlashGlobalInfo("Te has registrado exitosamente");
+			Messages.addFlashGlobalInfo("Paciente "+nombre+" "+apellido+" registrado exitosamente");
 
+		}catch(ExcepcionNegocio e){
+			Messages.addGlobalError(e.getMessage());
+		}
+	}
+	
+	/**
+	 * Buscar
+	 * 
+	 */
+	public void buscar(){
+		try{
+			if(numeroIdentificacion != null){
+				//Paciente Paciente = usuarioEJB.buscarPaciente(tipoID, numeroIdentificacion);
+				Paciente paciente = usuarioEJB.buscarPaciente(tipoID, numeroIdentificacion);
+				if(paciente != null){
+					nombre = paciente.getNombre();
+					apellido = paciente.getApellido();
+					correo = paciente.getCorreo();
+					telefono = paciente.getTelefono();
+					password = paciente.getPassword();
+					numeroIdentificacion = paciente.getNumeroIdentificacion();
+					pais = paciente.getCiudad().getDepartamento().getPais();
+					departamento = paciente.getCiudad().getDepartamento();
+					ciudad = paciente.getCiudad();
+					fechaNacimiento = paciente.getFechaNacimiento();
+					tipoID = paciente.getTipoIdentificacion();
+					password = paciente.getPassword();
+					eps = paciente.getEps();
+				}else{
+					Messages.addGlobalError("No se ha encontrado ningun Paciente con estas credenciales");
+				}
+			}else{
+				Messages.addGlobalError("Por favor ingrese el numero de identificacion del Paciente a buscar");
+			}
 		}catch(ExcepcionNegocio e){
 			Messages.addGlobalError(e.getMessage());
 		}
@@ -141,6 +171,56 @@ public class PacienteController implements Serializable{
 		fechaNacimiento = null;
 	}
 	
+	/**
+	 * Registrar
+	 * 
+	 */
+	public void editar(){
+		try{
+			if(numeroIdentificacion != null){
+				Paciente paciente = usuarioEJB.buscarPaciente(tipoID, numeroIdentificacion);
+				if(paciente != null){
+					paciente.setNombre(nombre);
+					paciente.setApellido(apellido);
+					paciente.setCorreo(correo);
+					paciente.setGenero(genero);
+					paciente.setCiudad(ciudad);
+					paciente.setFechaNacimiento(fechaNacimiento);
+					paciente.setNumeroIdentificacion(numeroIdentificacion);
+					paciente.setTipoIdentificacion(tipoID);
+					paciente.setTelefono(telefono);
+					paciente.setPassword(password);
+					paciente.setEps(eps);
+					usuarioEJB.editarPaciente(paciente);
+					limpiar();
+					Messages.addFlashGlobalInfo("El Paciente "+nombre+" "+apellido+" se ha actualizado exitosamente");
+				}else{
+					Messages.addGlobalError("No se ha encontrado ningun paciente para actualizar");
+				}
+			}else{
+				Messages.addGlobalError("Por favor ingrese el numero de identificacion del paciente a editar");
+			}
+		}catch(ExcepcionNegocio e){
+			Messages.addGlobalError(e.getMessage());
+		}
+	}
+	
+	/**
+	 * Eliminar
+	 */
+	public void eliminar(){
+		try{
+			if(numeroIdentificacion != null){
+				usuarioEJB.eliminarPaciente(tipoID,numeroIdentificacion);
+				limpiar();
+				Messages.addGlobalError("Se ha eliminado correctamente");
+			}else{
+				Messages.addGlobalError("Por favor ingrese el numero de identificacion del paciente a editar");
+			}
+		}catch(ExcepcionNegocio e){
+			Messages.addGlobalError(e.getMessage());
+		}
+	}
 	/**
 	 * Listar departamentos de un respectivo pais
 	 */
@@ -289,21 +369,6 @@ public class PacienteController implements Serializable{
 		this.ciudades = ciudades;
 	}
 
-	public List<Eps> getListaEps() {
-		return listaEps;
-	}
-
-	public void setListaEps(List<Eps> listaEps) {
-		this.listaEps = listaEps;
-	}
-
-	public Eps getEps() {
-		return eps;
-	}
-
-	public void setEps(Eps eps) {
-		this.eps = eps;
-	}
 
 	public String getPassword() {
 		return password;
@@ -319,5 +384,29 @@ public class PacienteController implements Serializable{
 
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public Eps getEps() {
+		return eps;
+	}
+
+	public void setEps(Eps eps) {
+		this.eps = eps;
+	}
+
+	public List<Eps> getListaEps() {
+		return listaEps;
+	}
+
+	public void setListaEps(List<Eps> listaEps) {
+		this.listaEps = listaEps;
+	}
+
+	public List<Paciente> getPacientes() {
+		return pacientes;
+	}
+
+	public void setPacientes(List<Paciente> pacientes) {
+		this.pacientes = pacientes;
 	}
 }

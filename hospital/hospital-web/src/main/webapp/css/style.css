@@ -20,34 +20,69 @@ label{
     margin: 50px 0 20px 0;
 }
 .bf1f2f3{background: #f1f2f3!important}
-.contenedor #pregistro{
+.contenedor #pregistro, .contenedor #gestion{
 	width: 500px;
     margin: 0 auto;
     background: #fff;
     padding: 20px;
     border-radius: 3px;
 }
-.contenedor select,.contenedor input{
+.contenedor #gestion{
+    display: flex;
+    width: 100%;
+    padding: 0!important;
+}
+.datos{
+    padding: 20px;
+    border-right: 1px solid #ccc;
+    width: 500px;
+    min-width: 500px;
+}
+.tabladatos{
+    padding: 20px;
+    border-left: 20px solid #f1f2f3;
+}
+.ui-panel .ui-panel-content{
+    padding: 0!important;
+    border: none!important;
+}
+.ui-panel,.ui-panel .ui-panel-titlebar {
+    padding: 0px!important;
+}
+.ui-widget-content {
+    border: none!important;
+}
+.ui-widget-header{
+    background: #fff!important;
+    border: none!important;
+    color: #717171!important;
+    margin-bottom: 10px!important;
+}
+.ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+    background: #f1f2f3!important;
+    font-size: 14px!important;
+}
+.ui-datatable tbody td {
+    border-color: inherit;
+    border-color: #a8a8a8!important;
+}
+.ui-datatable tbody td label{
+    font-weight: 100!important;
+}
+.contenedor select,.contenedor input, .contenedor button{
     margin: 0 0 11px 10px;
     width: 255px;
-    padding: 2px;
     border: 1px solid #ced0d4;
+    color: #475258;
+    font-size: 14px;
+    padding: 5px;
 }
-.contenedor #btnCancelar{
-    color: #393a3c;
-    text-shadow: none;
-    border: 1px solid #c9c9c9;
-    box-shadow: none;
-    font-weight: 100;
-    padding: 8px 20px;
-    width: auto!important;
-    border-radius: 3px;
-    
+.contenedor button span{
+	    font-size: 14px!important;
+	    display: inherit!important;
+	    font-weight: 100!important
 }
-.contenedor #btnCancelar:hover{
-	background: #c9c9c9;
-}
-.contenedor #btnRegistrar {
+.contenedor button,.contenedor input[type=button],.contenedor input[type=submit]{
     background: #5fcf80;
     color: #fff;
     text-shadow: none;
@@ -59,8 +94,30 @@ label{
     width: auto!important;
     border-radius: 3px;
 }
-.contenedor #btnRegistrar:hover{
+.contenedor button:hover,.contenedor input[type=button]:hover,.contenedor input[type=submit]:hover{
 	background: #55bd73;
+}
+.contenedor #btnCancelar{
+    color: #393a3c!important;
+    text-shadow: none;
+    border: 1px solid #c9c9c9!important;
+        background: #f1f2f3!important;
+    box-shadow: none;
+    font-weight: 100;
+    padding: 8px 20px;
+    width: auto!important;
+    border-radius: 3px;
+        margin-left: 0!important;
+    
+}
+.datos button, .datos input[type=button], .datos input[type=submit], .datos #btnCancelar{
+	padding: 8px 15px!important
+}
+.contenedor #btnCancelar:hover{
+	background: #c9c9c9!important;
+}
+.ui-button-text-only .ui-button-text {
+    padding: 0!important;
 }
 .ui-message-error-icon{
     vertical-align: middle;

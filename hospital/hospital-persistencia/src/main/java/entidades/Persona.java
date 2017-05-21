@@ -25,15 +25,20 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "Persona")
 @NamedQueries({
-	@NamedQuery(name=Persona.BUSCAR,query="SELECT p FROM Persona p WHERE p.numeroIdentificacion=?1 AND p.tipoIdentificacion=?2")
+	@NamedQuery(name=Persona.BUSCAR,query="SELECT p FROM Persona p WHERE p.numeroIdentificacion=?1 AND p.tipoIdentificacion=?2"),
+	@NamedQuery(name=Persona.BYTELEFONO,query="SELECT p FROM Persona p WHERE p.telefono=?1"),
+	@NamedQuery(name=Persona.BYCORREO,query="SELECT p FROM Persona p WHERE p.correo=?1")
 })
 public class Persona implements Serializable{
 	
 	public static final String BUSCAR = "Persona.buscar";
+	public static final String BYTELEFONO = "Persona.bytelefono";
+	public static final String BYCORREO = "Persona.bycorreo";
 	
 	@Id
 	@Column(name="id")
-	@SequenceGenerator(name="SEQ_PERSONA", sequenceName="SEQ_PERSONA",allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="SEQ_PERSONA") 
+	@SequenceGenerator(name="SEQ_PERSONA", sequenceName="SEQ_PERSONA",allocationSize=1) 
 	private int id;
 	
 	@Column(name="Numero_Identificacion",nullable = false,length=15)

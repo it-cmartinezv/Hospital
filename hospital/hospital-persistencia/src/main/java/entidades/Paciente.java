@@ -13,6 +13,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,8 +22,13 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "Paciente")
 @Inheritance(strategy=InheritanceType.JOINED)
+@NamedQueries({
+	@NamedQuery(name=Paciente.LISTAR, query="SELECT p FROM Paciente p")	
+})
 public class Paciente extends Persona implements Serializable{
-
+	
+	public static final String LISTAR = "Paciente.listar";
+	
 	@JoinColumn(name="EPS_Id_Eps")
 	@ManyToOne(cascade={})
 	private Eps eps;

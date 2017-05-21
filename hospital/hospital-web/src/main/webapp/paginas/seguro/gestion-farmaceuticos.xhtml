@@ -1,0 +1,130 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/template/template.xhtml">
+	<h:head>
+	</h:head>
+
+	<ui:define name="cuerpo">
+	    <!-- TITULO  --> 
+		<h1>Gestion de Farmacólogos</h1>
+		<!-- FORMULARIO, SOLO DEBE HABER UNO --> 
+		<h:form prependId="false" id="gestion">
+			<!-- PANELGRID ES UNA TABLA SE PUEDE REPETIR  --> 
+			<div class="datos">
+			<h:panelGrid id="paneldatos" columns="3">
+			
+				<h:outputLabel for="tarjetaProfesional" id="ltarjetaProfesional" value="Tarjeta Profesional:" />
+				<h:inputText id="tarjetaProfesional" value="#{farmaceuticoController.tarjetaProfesional}" />
+				<p:message for="tarjetaProfesional" />
+				
+				<p:outputLabel for="tipoId" id="ltipoId" value="#{msj['usuario.tipoId']}:" />
+				<h:selectOneMenu id="tipoId"
+					value="#{farmaceuticoController.tipoID}">
+					<f:selectItem itemValue="CEDULA_DE_CIUDADANIA" itemLabel="CEDULA DE CIUDADANIA" />					
+					<f:selectItem itemValue="TARJETA_IDENTIDAD" itemLabel="TARJETA IDENTIDAD" />
+					<f:selectItem itemValue="PASAPORTE" itemLabel="PASAPORTE" />
+					<f:selectItem itemValue="CEDULA_EXTRANGERIA" itemLabel="CEDULA EXTRANGERIA" />
+				</h:selectOneMenu>
+				<p:message for="tipoId"/>
+				
+				<h:outputLabel for="numeroIdentificacion" id="lnumeroIdentificacion" value="#{msj['usuario.numeroId']}:" />
+				<h:inputText id="numeroIdentificacion" value="#{farmaceuticoController.numeroIdentificacion}" />
+				<p:message for="numeroIdentificacion" />
+				
+				<h:outputLabel for="nombre" id="lnombre" value="#{msj['usuario.nombre']}:" />
+				<h:inputText id="nombre" value="#{farmaceuticoController.nombre}" />
+				<p:message for="nombre" />
+				
+				<h:outputLabel for="apellido" id="lapellido" value="#{msj['usuario.apellido']}:" />
+				<h:inputText id="apellido" value="#{farmaceuticoController.apellido}" />
+				<p:message for="apellido" />
+				
+				<p:outputLabel for="genero" id="lgenero" value="#{msj['usuario.genero']}:" />
+				<h:selectOneMenu id="genero"
+					value="#{farmaceuticoController.genero}">
+					<f:selectItem itemValue="HOMBRE" itemLabel="#{msj['hombre']}" />					
+					<f:selectItem itemValue="MUJER" itemLabel="#{msj['mujer']}" />
+				</h:selectOneMenu>
+				<p:message for="genero"/>
+									            
+		        <h:outputLabel for="fechaNacimiento"  id="lfechaNacimiento" value="Fecha de Nacimiento:" />
+		        <p:calendar value="#{farmaceuticoController.fechaNacimiento}" id="fechaNacimiento" pattern="dd/MM/yyyy" />
+				<p:message for="fechaNacimiento" />
+								
+				<h:outputLabel for="pais" id="lpais" value="#{msj['usuario.pais']}:" />
+				<h:selectOneMenu id="pais" value="#{farmaceuticoController.pais}" converter="paisConverter">
+					<f:selectItems value="#{farmaceuticoController.paises}" var="pais" itemValue="#{pais}" itemLabel="#{pais.nombre}"/>
+					<f:ajax event="change" execute="@this" render="departamento" listener="#{farmaceuticoController.departamentosByPais}"/>
+				</h:selectOneMenu>
+				<p:message for="pais"/>
+				
+				<h:outputLabel for="departamento" id="ldepartamento" value="#{msj['usuario.departamento']}:" />
+				<h:selectOneMenu id="departamento" value="#{farmaceuticoController.departamento}" converter="departamentoConverter">
+					<f:selectItems value="#{farmaceuticoController.departamentos}" var="depto" itemValue="#{depto}" itemLabel="#{depto.nombre}"/>
+					<f:ajax event="change" execute="@this" render="ciudad" listener="#{farmaceuticoController.ciudadesBydepartamento}"/>
+				</h:selectOneMenu>
+				<p:message for="departamento"/>
+				
+				<h:outputLabel for="ciudad" id="lciudad" value="#{msj['usuario.ciudad']}:" />
+				<h:selectOneMenu id="ciudad" value="#{farmaceuticoController.ciudad}" converter="ciudadConverter">
+					<f:selectItems value="#{farmaceuticoController.ciudades}" var="ciudad"
+						itemValue="#{ciudad}" itemLabel="#{ciudad.nombre}" />
+				</h:selectOneMenu>
+				<p:message for="ciudad"/>
+				
+				<h:outputLabel for="telefono" id="ltelefono" value="#{msj['usuario.telefono']}:" />
+				<h:inputText id="telefono" value="#{farmaceuticoController.telefono}" />
+				<p:message for="telefono" />
+				
+				<h:outputLabel for="correo" id="lcorreo" value="#{msj['usuario.correo']}:" />
+				<h:inputText id="correo" value="#{farmaceuticoController.correo}" />
+				<p:message for="correo" />
+				
+				<h:outputLabel for="password" id="lpassword" value="Contraseña:" />
+				<h:inputText id="password" value="#{farmaceuticoController.password}" />
+				<p:message for="password" />
+				
+			</h:panelGrid>
+			
+			<h:panelGrid id="acciones" columns="5">
+				<h:commandButton action="/hospital-web/?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>
+				<h:commandButton action="#{farmaceuticoController.eliminar}" value="Eliminar" id="btneliminar"/>
+				<h:commandButton action="#{farmaceuticoController.editar}" value="Editar" id="btneditar"/>
+				<p:commandButton action="#{farmaceuticoController.buscar()}" value="Buscar" update="paneldatos" process="@this,tarjetaProfesional" id="btnbuscar"/>
+				<h:commandButton action="#{farmaceuticoController.registrar}" value="Registrar" id="btnRegistrar"/>
+			</h:panelGrid>
+			</div>
+			
+			<div class="tabladatos">
+			<p:panel header="Listado de Farmacólogos" id="paneltabla">
+				<p:dataTable id="tablaMedicos" value="#{farmaceuticoController.farmaceuticos}" var="farmaceutico">
+
+					<p:column headerText="Tarjeta Profesional">
+						<h:outputLabel value="#{farmaceutico.tarjetaProfesional}" />
+					</p:column>
+
+					<p:column headerText="Nombre">
+						<h:outputLabel value="#{farmaceutico.nombre}" />
+					</p:column>
+
+					<p:column headerText="Apellido">
+						<h:outputLabel value="#{farmaceutico.apellido}" />
+					</p:column>
+
+					<p:column headerText="Telefono">
+						<h:outputLabel value="#{farmaceutico.telefono}" />
+					</p:column>
+
+					<p:column headerText="Ciudad">
+						<h:outputLabel value="#{farmaceutico.ciudad.nombre}" />
+					</p:column>
+					
+				</p:dataTable>
+			</p:panel>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

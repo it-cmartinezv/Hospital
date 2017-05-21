@@ -3,24 +3,18 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Messages;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
-
 import beans.EJBUsuario;
 import beans.EPSEJB;
 import beans.LocalizacionEJB;
 import entidades.Ciudad;
 import entidades.Departamento;
-import entidades.Eps;
-import entidades.Paciente;
+import entidades.Farmaceutico;
 import entidades.Pais;
 import excepciones.ExcepcionNegocio;
-
 import javax.inject.Named;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -32,13 +26,13 @@ import javax.faces.context.FacesContext;
 /**
  * 
  * @author Carlos Alfredo Martinez Villada
- * Clase que controla la ventana de paciente 
+ * Clase que controla la ventana de Farmaceutico 
  * 
  */
 
-@Named("pacienteController")
+@Named("farmaceuticoController")
 @ViewScoped
-public class PacienteController implements Serializable{
+public class FarmaceuticoController implements Serializable{
 	
 	@EJB
 	private EJBUsuario usuarioEJB;
@@ -79,18 +73,17 @@ public class PacienteController implements Serializable{
 	private Pais pais;
 	private Departamento departamento;
 	private Ciudad ciudad;
-	private Eps eps;
+	private String tarjetaProfesional;
 	
 	private List<Pais> paises;
 	private List<Departamento> departamentos;
 	private List<Ciudad> ciudades;
-	private List<Eps> listaEps;
-	
+	private List<Farmaceutico> farmaceuticos;
 	@PostConstruct
 	public void inicializar(){
 		try{
-			listaEps = epsEJB.listar();
 			paises = localizacionEJB.listarPaises();
+			farmaceuticos = usuarioEJB.listarFarmaceuticos();
 			if(!paises.isEmpty()){
 				departamentos = localizacionEJB.departamentosByPais(paises.get(0));
 				if(!departamentos.isEmpty()){
@@ -109,23 +102,56 @@ public class PacienteController implements Serializable{
 	 */
 	public void registrar(){
 		try{
-			Paciente paciente = new Paciente();
-			paciente.setNombre(nombre);
-			paciente.setApellido(apellido);
-			paciente.setCorreo(correo);
-			paciente.setGenero(genero);
-			paciente.setCiudad(ciudad);
-			paciente.setFechaNacimiento(fechaNacimiento);
-			paciente.setNumeroIdentificacion(numeroIdentificacion);
-			paciente.setTipoIdentificacion(tipoID);
-			paciente.setTelefono(telefono);
-			paciente.setPassword(password);
-			paciente.setEps(eps);		
-			System.out.println(paciente.toString());
-			usuarioEJB.registrarPaciente(paciente);
+			Farmaceutico farmaceutico = new Farmaceutico();
+			farmaceutico.setNombre(nombre);
+			farmaceutico.setApellido(apellido);
+			farmaceutico.setCorreo(correo);
+			farmaceutico.setGenero(genero);
+			farmaceutico.setCiudad(ciudad);
+			farmaceutico.setFechaNacimiento(fechaNacimiento);
+			farmaceutico.setNumeroIdentificacion(numeroIdentificacion);
+			farmaceutico.setTipoIdentificacion(tipoID);
+			farmaceutico.setTelefono(telefono);
+			farmaceutico.setPassword(password);
+			farmaceutico.setTarjetaProfesional(tarjetaProfesional);
+			usuarioEJB.registrarFarmaceutico(farmaceutico);
 			limpiar();
-			Messages.addFlashGlobalInfo("Te has registrado exitosamente");
+			Messages.addFlashGlobalInfo("Farmaceutico "+nombre+" "+apellido+" registrado exitosamente");
 
+		}catch(ExcepcionNegocio e){
+			Messages.addGlobalError(e.getMessage());
+		}
+	}
+	
+	/**
+	 * Buscar
+	 * 
+	 */
+	public void buscar(){
+		try{
+			if(tarjetaProfesional != null){
+				//Farmaceutico Farmaceutico = usuarioEJB.buscarFarmaceutico(tipoID, numeroIdentificacion);
+				Farmaceutico farmaceutico = usuarioEJB.buscarFarmaceuticoByTarjeta(tarjetaProfesional);
+				if(farmaceutico != null){
+					nombre = farmaceutico.getNombre();
+					apellido = farmaceutico.getApellido();
+					correo = farmaceutico.getCorreo();
+					telefono = farmaceutico.getTelefono();
+					password = farmaceutico.getPassword();
+					numeroIdentificacion = farmaceutico.getNumeroIdentificacion();
+					tarjetaProfesional = farmaceutico.getTarjetaProfesional();
+					pais = farmaceutico.getCiudad().getDepartamento().getPais();
+					departamento = farmaceutico.getCiudad().getDepartamento();
+					ciudad = farmaceutico.getCiudad();
+					fechaNacimiento = farmaceutico.getFechaNacimiento();
+					tipoID = farmaceutico.getTipoIdentificacion();
+					password = farmaceutico.getPassword();
+				}else{
+					Messages.addGlobalError("No se ha encontrado ningun Farmaceutico con este numero de tarjeta profesional");
+				}
+			}else{
+				Messages.addGlobalError("Por favor ingrese el numero de tarjeta profesional del Farmaceutico a buscar");
+			}
 		}catch(ExcepcionNegocio e){
 			Messages.addGlobalError(e.getMessage());
 		}
@@ -138,9 +164,51 @@ public class PacienteController implements Serializable{
 		telefono = "";
 		password = "";
 		numeroIdentificacion = "";
+		tarjetaProfesional = "";
 		fechaNacimiento = null;
 	}
 	
+	/**
+	 * Registrar
+	 * 
+	 */
+	public void editar(){
+		try{
+			Farmaceutico farmaceutico = usuarioEJB.buscarFarmaceuticoByTarjeta(tarjetaProfesional);
+			if(farmaceutico != null){
+				farmaceutico.setNombre(nombre);
+				farmaceutico.setApellido(apellido);
+				farmaceutico.setCorreo(correo);
+				farmaceutico.setGenero(genero);
+				farmaceutico.setCiudad(ciudad);
+				farmaceutico.setFechaNacimiento(fechaNacimiento);
+				farmaceutico.setNumeroIdentificacion(numeroIdentificacion);
+				farmaceutico.setTipoIdentificacion(tipoID);
+				farmaceutico.setTelefono(telefono);
+				farmaceutico.setPassword(password);
+				usuarioEJB.editarFarmaceutico(farmaceutico);
+				limpiar();
+				Messages.addFlashGlobalInfo("El Farmaceutico "+nombre+" "+apellido+" se ha actualizado exitosamente");
+			}else{
+				Messages.addGlobalError("Por favor ingrese el numero de tarjeta profesional del Farmaceutico a buscar");
+			}
+		}catch(ExcepcionNegocio e){
+			Messages.addGlobalError(e.getMessage());
+		}
+	}
+	
+	/**
+	 * Eliminar
+	 */
+	public void eliminar(){
+		try{
+			usuarioEJB.eliminarFarmaceutico(tarjetaProfesional);
+			limpiar();
+			Messages.addGlobalError("Se ha eliminado correctamente");
+		}catch(ExcepcionNegocio e){
+			Messages.addGlobalError(e.getMessage());
+		}
+	}
 	/**
 	 * Listar departamentos de un respectivo pais
 	 */
@@ -289,21 +357,6 @@ public class PacienteController implements Serializable{
 		this.ciudades = ciudades;
 	}
 
-	public List<Eps> getListaEps() {
-		return listaEps;
-	}
-
-	public void setListaEps(List<Eps> listaEps) {
-		this.listaEps = listaEps;
-	}
-
-	public Eps getEps() {
-		return eps;
-	}
-
-	public void setEps(Eps eps) {
-		this.eps = eps;
-	}
 
 	public String getPassword() {
 		return password;
@@ -319,5 +372,21 @@ public class PacienteController implements Serializable{
 
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public String getTarjetaProfesional() {
+		return tarjetaProfesional;
+	}
+
+	public void setTarjetaProfesional(String tarjetaProfesional) {
+		this.tarjetaProfesional = tarjetaProfesional;
+	}
+
+	public List<Farmaceutico> getFarmaceuticos() {
+		return farmaceuticos;
+	}
+
+	public void setFarmaceuticos(List<Farmaceutico> farmaceuticos) {
+		this.farmaceuticos = farmaceuticos;
 	}
 }

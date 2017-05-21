@@ -1,0 +1,11 @@
+---------------------------------------------------- CRONOGRAMA DE ACTIVIDADES ----------------------------------------------------
+
+--------------------------- CARLOS MARTINEZ --------------------------------
+1. Registro de paciente publico : http://localhost:8081/hospital-web/paginas/publico/registro-paciente.xhtml
+2. Gestion de pacientes : http://localhost:8081/hospital-web/paginas/seguro/gestion-pacientes.xhtml
+3. Gestion de Medicos : http://localhost:8081/hospital-web/paginas/seguro/gestion-medicos.xhtml
+4. Gestion de Farmaceuticos : http://localhost:8081/hospital-web/paginas/seguro/gestion-farmaceuticos.xhtml
+
+---------------------------  ALEJANDRO MATALLANA --------------------------- 
+
+--------------------------- SEBASTIAN SALAZAR ------------------------------ 
