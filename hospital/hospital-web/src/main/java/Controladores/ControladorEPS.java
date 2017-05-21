@@ -9,7 +9,9 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
+import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.Length;
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Messages;
 
@@ -30,15 +32,29 @@ public class ControladorEPS implements Serializable {
 	private EPSEJB epsEJB;
 	
 	private int id;
+	
+	@Pattern(regexp="[a-zA-Z ]*",message="Nombre No valido")
+	@Length(min=4,max=50,message="longitud entre 4 y 50")
 	private String nombre;
+	
+	@Pattern(regexp="[a-zA-Z ]*",message="Direccion No valida")
+	@Length(min=4,max=50,message="longitud entre 4 y 50")
 	private String direccion;
+	
+	@Pattern(regexp="[0-9]*",message="Solo numeros")
+	@Length(min=5,max=20,message="longitud entre 5 y 20")
 	private String telefono;
-	private List<TipoEps> tiposEPS;
-	private TipoEps tipo;
+	
+	private List<TipoEps> listaTiposEPS;
+	private TipoEps tipoEPS;
+	
+	private List<Eps> listaEPS;
 	
 	@PostConstruct
 	public void iniciar(){
-	tiposEPS = epsEJB.listaTipos();
+		listaTiposEPS = epsEJB.listaTipos();
+		listaEPS = epsEJB.listar();
+		
 	}
 
 	/**
@@ -46,9 +62,10 @@ public class ControladorEPS implements Serializable {
 	 * 
 	 */
 	public void crear() {
-		System.out.println("OEEEEE!!!!!!!mkon jajajaja no funciona :p !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		Eps eps = new Eps(nombre, direccion, telefono, tipo);
+		
+		Eps eps = new Eps(nombre, direccion, telefono, tipoEPS);
 		epsEJB.crear(eps);
+		limpiar();
 		Messages.addFlashGlobalInfo("Se ha registrado exitosamente");
 
 	}
@@ -57,14 +74,14 @@ public class ControladorEPS implements Serializable {
 	 * Metodo para buscar una eps
 	 */
 	public void buscar() {
-		Eps eps = epsEJB.buscar(id);
+		Eps eps = epsEJB.buscarPorNombre(nombre);
 		if (eps != null) {
 			direccion = eps.getDireccion();
 			telefono = eps.getTelefono();
 			nombre = eps.getNombre();
-			// tiposEPS = eps.getTipoEps();
+			tipoEPS = eps.getTipoEps();
 		} else {
-			Messages.addFlashGlobalInfo("No hay ninguna eps con este dato");
+			Messages.addFlashGlobalInfo("No hay ninguna eps con este nombre");
 		}
 	}
 
@@ -72,13 +89,14 @@ public class ControladorEPS implements Serializable {
 	 * Metodo para editar una eps
 	 */
 	public void editar() {
-		Eps eps = epsEJB.buscar(id);
+		Eps eps = epsEJB.buscarPorNombre(nombre);
 		if (eps != null) {
 			eps.setDireccion(direccion);
 			eps.setTelefono(telefono);
 			eps.setNombre(nombre);
-			eps.setTipoEps(tipo);
+			eps.setTipoEps(tipoEPS);
 			epsEJB.editar(eps);
+			limpiar();
 			Messages.addFlashGlobalInfo("Se ha editado correctamente");
 		} else {
 			Messages.addFlashGlobalInfo("No hay ninguna eps con este dato");
@@ -89,12 +107,20 @@ public class ControladorEPS implements Serializable {
 	 * Metodo para eliminar una EPS
 	 */
 	public void eliminar() {
-		Eps eps = epsEJB.buscar(id);
+		Eps eps = epsEJB.buscarPorNombre(nombre);
 		if (eps != null) {
 			epsEJB.eliminar(eps);
+			Messages.addFlashGlobalInfo("Se ha eliminado correctamente la EPS");
 		} else {
 			Messages.addFlashGlobalInfo("No hay ninguna EPS con estos datos");
 		}
+	}
+	
+	public void limpiar(){
+		nombre = "";
+		direccion = "";
+		telefono = "";
+		tipoEPS = null;
 	}
 
 	public String getNombre() {
@@ -136,21 +162,30 @@ public class ControladorEPS implements Serializable {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
+
+	public List<TipoEps> getListaTiposEPS() {
+		return listaTiposEPS;
+	}
+
+	public void setListaTiposEPS(List<TipoEps> listaTiposEPS) {
+		this.listaTiposEPS = listaTiposEPS;
+	}
+
+	public TipoEps getTipoEPS() {
+		return tipoEPS;
+	}
+
+	public void setTipoEPS(TipoEps tipoEPS) {
+		this.tipoEPS = tipoEPS;
+	}
+
+	public List<Eps> getListaEPS() {
+		return listaEPS;
+	}
+
+	public void setListaEPS(List<Eps> listaEPS) {
+		this.listaEPS = listaEPS;
+	}
 	
-	public TipoEps getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoEps tipo) {
-		this.tipo = tipo;
-	}
-
-	public List<TipoEps> getTiposEPS() {
-		return tiposEPS;
-	}
-
-	public void setTiposEPS(List<TipoEps> tiposEPS) {
-		this.tiposEPS = tiposEPS;
-	}
-
+	
 }

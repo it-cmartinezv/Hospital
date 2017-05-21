@@ -9,21 +9,25 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Farmacia")
 @NamedQueries({
-	@NamedQuery(name=Farmacia.listaFarmacias,query="SELECT f FROM Farmacia f")
+	@NamedQuery(name=Farmacia.listaFarmacias,query="SELECT f FROM Farmacia f"),
+	@NamedQuery(name=Farmacia.busquedaNombre, query="SELECT f FROM Farmacia f where f.nombre=?1")
 })
 public class Farmacia implements Serializable{
 	
 	public static final String listaFarmacias = "Farmacia.listarFarmacia";
+	public static final String busquedaNombre = "Farmacia.farmaciaNom";
 	
 	
 	@Id
 	@Column(name="Id_Farmacia")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_FARMACIA")
+	@SequenceGenerator(name = "SEQ_FARMACIA", sequenceName = "SEQ_FARMACIA", allocationSize = 1)
 	private int id;
 	
 	@Column(name="Nombre",nullable = false,length=30)
@@ -50,10 +54,10 @@ public class Farmacia implements Serializable{
 	
 	
 	
-	public Farmacia(int id, String nombre, String direccion, String telefono, Ciudad ciudad,
+	public Farmacia(String nombre, String direccion, String telefono, Ciudad ciudad,
 			Farmaceutico farmaceutico) {
 		super();
-		this.id = id;
+		
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.telefono = telefono;

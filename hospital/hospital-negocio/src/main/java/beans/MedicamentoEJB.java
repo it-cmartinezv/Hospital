@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import entidades.Eps;
 import entidades.Farmacia;
 import entidades.Medicamento;
 import entidades.TipoMedicamento;
@@ -39,6 +40,32 @@ public class MedicamentoEJB {
 	 */
 	public Medicamento buscar(int id){
 		return em.find(Medicamento.class, id);
+	}
+	
+	
+	/**
+	 * Metodo que me busca un medicamento por su nombre
+	 * @param nombre, el nombre del medicamento que se va a buscar
+	 * @return, una lista con el medicamento si se encuentra
+	 */
+	public Medicamento buscarNombre(String nombre){
+		Query q = em.createNamedQuery(Medicamento.BUSCARMEDICAMENTONOM);
+		q.setParameter(1, nombre);
+		List<Medicamento> lista = q.getResultList();
+		if (lista.size() > 0) {
+			return lista.get(0);
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * MEtodo para buscar un tipo de medicamento por el ID
+	 * @param id
+	 * @return
+	 */
+	public TipoMedicamento buscarTipo(int id){
+		return em.find(TipoMedicamento.class, id);
 	}
 	
 	/**
@@ -75,6 +102,16 @@ public class MedicamentoEJB {
 		Query q = em.createNamedQuery(Farmacia.listaFarmacias);
 		List<Farmacia> lista = q.getResultList();
 		
+		return lista;
+	}
+	
+	/**
+	 * Lista que carga todos los medicamentos
+	 * @return
+	 */
+	public List<Medicamento> listaMedicamentos(){
+		Query q = em.createNamedQuery(Medicamento.LISTARMEDICAMENTOS);
+		List<Medicamento> lista = q.getResultList();
 		return lista;
 	}
 	

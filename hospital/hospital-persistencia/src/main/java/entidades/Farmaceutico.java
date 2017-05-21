@@ -45,8 +45,4 @@ public class Farmaceutico extends Persona implements Serializable{
 	public static String getListarfarmaceuticos() {
 		return listarFarmaceuticos;
 	}
-	
-	
-	
-	
 }

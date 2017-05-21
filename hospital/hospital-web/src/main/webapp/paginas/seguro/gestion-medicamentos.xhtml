@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+
+	<ui:define name="cuerpo">
+
+		<h1>Gestion de Medicamentos</h1>
+
+		<h:form id="gestion" prependId="false">
+
+			<div class="datos">
+
+				<h:panelGrid id="paneldatos" columns="3">
+
+					<h:outputLabel for="nombre" id="nom" value="Nombre"/>
+					<h:inputText id="nombre" value="#{Medicamento.nombre}"  />
+					<p:message for="nombre" />
+
+					<h:outputLabel for="descripcion" id="descrip" value="Descripcion"/>
+					<h:inputText value="#{Medicamento.descripcion}" id="descripcion" />
+					<p:message for="descripcion" />
+
+					<h:outputLabel for="cantidad" id="Lacantidad" value="Cantidad"/>
+					<h:inputText value="#{Medicamento.cantidad}" id="cantidad" />
+					<!--   <p:message for="cantidad" />-->
+
+					<h:outputLabel for="fechaVencimiento" id="fechaVencimiento" value="Fecha Vencimiento"/>
+					<p:calendar value="#{Medicamento.fechaMedicamento}"	pattern="dd/MM/yyyy" id="fecha" />
+					<p:message for="fechaVencimiento" />
+					
+
+					<h:outputLabel for="medicamento" id="Timedicamentos" value="Tipo Medicamento" />
+					<h:selectOneMenu id="medicamento"
+						value="#{Medicamento.tipoMedicamento}" 	converter="tipoMedicamentoConverter">
+						<f:selectItems value="#{Medicamento.listaTipos}" var="tip" itemValue="#{tip}" itemLabel="#{tip.nombre}" />
+
+					</h:selectOneMenu>
+					<p:message for="medicamento" />
+
+					<h:outputLabel for="farmacia" id="lisFarma" value="Farmacia"/>
+					<h:selectOneMenu id="farmacia" value="#{Medicamento.farmacia}" converter="farmaciaConverter">
+						<f:selectItems value="#{Medicamento.listaFarmacias}" var="f" itemValue="#{f}" itemLabel="#{f.nombre}" />
+						
+					</h:selectOneMenu>
+					<p:message for="farmacia" />
+
+				</h:panelGrid>
+
+
+				<h:panelGrid id="acciones" columns="5">
+				
+				<h:commandButton action="/hospital-web/?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>
+				
+					<h:commandButton action="#{Medicamento.crear()}" value="Crear Medicina" id="btnCrearMedi" />
+
+					<h:commandButton action="#{Medicamento.buscar()}" value="Buscar" id="btnBuscarMedi" update="paneldatos" process="@this,nombre" />
+
+					<h:commandButton action="#{Medicamento.editar()}" value="Editar" id="btnEditarMedi" />
+
+					<h:commandButton action="#{Medicamento.eliminar()}" value="Eliminar" id="btnEliminarMedi" />
+
+				</h:panelGrid>
+			</div>
+			
+			
+			
+			<!-- este div es el que otorga el estilo a la tabla que ponga dentro -->
+			<div class="tabladatos">
+			<p:panel header="Listado de Medicamentos" id="paneltabla">
+				<p:dataTable id="tablaMedicamentos" value="#{Medicamento.listarMedicamento}" var="medicamento">
+
+					<p:column headerText="Nombre">
+						<h:outputLabel value="#{medicamento.nombre}" />
+					</p:column>
+
+					<p:column headerText="Descripcion">
+						<h:outputLabel value="#{medicamento.descripcion}" />
+					</p:column>
+
+					<p:column headerText="Fecha Vencimiento">
+						<h:outputLabel value="##{medicamento.fechaVencimiento}" />
+					</p:column>
+
+					<p:column headerText="Cantidad">
+						<h:outputLabel value="#{medicamento.cantidad}" />
+					</p:column>
+
+					<p:column headerText="Farmacia">
+						<h:outputLabel value="#{medicamento.farmacia.nombre}" />
+					</p:column>
+					
+					<p:column headerText="Tipo Medicamento">
+						<h:outputLabel value="#{medicamento.tipoMedicamento.nombre}" />
+					</p:column>
+					
+				</p:dataTable>
+			</p:panel>
+			</div>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

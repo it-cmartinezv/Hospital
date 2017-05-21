@@ -9,7 +9,9 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
+import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.Length;
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Messages;
 
@@ -27,12 +29,22 @@ public class ControladorMedicamento implements Serializable {
 	private MedicamentoEJB medicamentoEJB;
 	
 	private int id;
+	
+	@Pattern(regexp="[a-zA-Z ]*",message="Nombre No valido")
+	@Length(min=4,max=50,message="longitud entre 4 y 50")
 	private String nombre;
+	
+	@Pattern(regexp="[a-zA-Z ]*",message="Descripcion No valida")
+	@Length(min=4,max=50,message="longitud entre 4 y 50")
 	private String descripcion;
+	
+	//@Length(min=4,max=200,message="longitud entre 4 y 200")
 	private int cantidad;
+	
 	private TipoMedicamento tipoMedicamento;
 	private Date fechaMedicamento;
 	private Farmacia farmacia;
+	private List<Medicamento> listarMedicamento;
 	
 
 	/**
@@ -47,26 +59,31 @@ public class ControladorMedicamento implements Serializable {
 
 	@PostConstruct
 	public void iniciar() {
-		//listaFarmacias = medicamentoEJB.listaFarmacia();
+		listaFarmacias = medicamentoEJB.listaFarmacia();
 		listaTipos = medicamentoEJB.listarTipoMedicamentos();
+		listarMedicamento = medicamentoEJB.listaMedicamentos();
 	}
 
 	/**
-	 * Metodo para crear una farmacia
+	 * Metodo para crear un medicamento
 	 */
 	public void crear() {
-		Medicamento medicamento = new Medicamento();
-		medicamento.setNombre("Acetaminofe");
-		medicamento.setCantidad(10);
-		medicamento.setDescripcion("Sirve para todo");
-		Date date = new Date();
-		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String convertido = fechaHora.format(date);
-		medicamento.setFechaVencimiento(date);
-		medicamento.setTipoMedicamento(tipoMedicamento);
-		medicamento.setFarmacia(farmacia);
+		
+		Medicamento medicamento = new Medicamento(nombre, descripcion, cantidad, tipoMedicamento, fechaMedicamento, farmacia);
+//		
+		//medicamento.setNombre(nombre);
+//		medicamento.setCantidad(10);
+//		medicamento.setDescripcion("Sirve para todo");
+//		Date date = new Date();
+//		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		String convertido = fechaHora.format(date);
+//		medicamento.setFechaVencimiento(date);
+//		medicamento.setTipoMedicamento(tipoMedicamento);
+//		medicamento.setFarmacia(farmacia);
+		
 		medicamentoEJB.crear(medicamento);
-		Messages.addFlashGlobalInfo("Medicamento creado exitosamente");
+		limpiar();
+		Messages.addFlashGlobalInfo("El medicamento se ha creado exitosamente");
 
 	}
 	
@@ -74,7 +91,7 @@ public class ControladorMedicamento implements Serializable {
 	 * Metodo para buscar un medicamento
 	 */
 	public void buscar(){
-		Medicamento medicamento = medicamentoEJB.buscar(id);
+		Medicamento medicamento = medicamentoEJB.buscarNombre(nombre);
 		if (medicamento!=null) {
 			nombre = medicamento.getNombre();
 			descripcion = medicamento.getDescripcion();
@@ -82,6 +99,7 @@ public class ControladorMedicamento implements Serializable {
 			farmacia = medicamento.getFarmacia();
 			tipoMedicamento = medicamento.getTipoMedicamento();
 			fechaMedicamento = medicamento.getFechaVencimiento();
+			
 		} else {
 			Messages.addFlashGlobalInfo("No hay medicamentos con este dato");
 		}
@@ -91,15 +109,16 @@ public class ControladorMedicamento implements Serializable {
 	 * MEtodo para editar un medicamento
 	 */
 	public void editar(){
-		Medicamento medi = medicamentoEJB.buscar(id);
+		Medicamento medi = medicamentoEJB.buscarNombre(nombre);
 		if (medi!=null) {
 			medi.setCantidad(cantidad);
 			medi.setDescripcion(descripcion);
 			medi.setFarmacia(farmacia);
-			//medi.setFechaVencimiento(fechaVencimiento);
+			medi.setFechaVencimiento(fechaMedicamento);
 			medi.setNombre(nombre);
 			medi.setTipoMedicamento(tipoMedicamento);
 			medicamentoEJB.editar(medi);
+			limpiar();
 			Messages.addFlashGlobalInfo("Se ha editado correctamente");
 		}else {
 			Messages.addFlashGlobalInfo("No hay medicamentos con este dato");
@@ -111,7 +130,7 @@ public class ControladorMedicamento implements Serializable {
 	 * Metodo para eliminar medicamentos
 	 */
 	public void eliminar(){
-		Medicamento medicamento = medicamentoEJB.buscar(id);
+		Medicamento medicamento = medicamentoEJB.buscarNombre(nombre);
 		if (medicamento!=null) {
 			medicamentoEJB.eliminar(medicamento);
 		} else {
@@ -119,6 +138,14 @@ public class ControladorMedicamento implements Serializable {
 		}
 	}
 	
+	public void limpiar(){
+		nombre = "";
+		descripcion = "";
+		cantidad = 0;
+		fechaMedicamento = null;
+		tipoMedicamento = null;
+		farmacia = null;
+	}
 
 	public int getId() {
 		return id;
@@ -200,5 +227,14 @@ public class ControladorMedicamento implements Serializable {
 		this.listaFarmacias = listaFarmacias;
 	}
 
+	public List<Medicamento> getListarMedicamento() {
+		return listarMedicamento;
+	}
+
+	public void setListarMedicamento(List<Medicamento> listarMedicamento) {
+		this.listarMedicamento = listarMedicamento;
+	}
+
+	
 	
 }

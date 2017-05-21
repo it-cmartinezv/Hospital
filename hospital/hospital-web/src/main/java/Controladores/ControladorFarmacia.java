@@ -3,16 +3,22 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.Remote;
 import javax.inject.Named;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Messages;
 import beans.FarmaciaEJB;
 import entidades.Ciudad;
 import entidades.Farmaceutico;
 import entidades.Farmacia;
+import remote.IFarmaciaRemote;
 
 @ViewScoped
 @Named("Farmacia")
+@Remote(IFarmaciaRemote.class)
 public class ControladorFarmacia implements Serializable{
 
 	
@@ -20,45 +26,57 @@ public class ControladorFarmacia implements Serializable{
 	FarmaciaEJB farmaciaEJB;
 	
 	private int id;
+	
+	//@Length(min=4,max=50,message="longitud entre 4 y 50")
 	private String nombre;
+	
+	//@Length(min=4,max=50,message="longitud entre 4 y 50")
 	private String direccion;
+	
+	//@Pattern(regexp="[0-9]*",message="Solo numeros")
+	//@Length(min=4,max=50,message="longitud entre 4 y 50")
 	private String telefono;
+	
 	private Ciudad ciudad;
 	private Farmaceutico farmaceutico;
 	private String purbeaCiudad;
 	private List<Ciudad>listaCiudad;
 	
 	private List<Farmaceutico>listaFarmaceutico;
+	private List<Farmacia> farmacias;
+	
 	
 	@PostConstruct
 	public void iniciar(){
 		listaCiudad = farmaciaEJB.listaCiudades();
-		//listaFarmaceutico = farmaciaEJB.listarFarmaceuticos();
+		listaFarmaceutico = farmaciaEJB.listarFarmaceuticos();
+		farmacias = farmaciaEJB.listar();
 	}
 	
 	
-	/**
+	/**ahi 
 	 * Metodo para crear una farmacia
 	 */
 	public void crearFarmacia(){
-		Farmacia farma = new Farmacia(id, nombre, direccion, telefono, ciudad, farmaceutico);
-		farmaciaEJB.crear(farma);
-		Messages.addFlashGlobalInfo("Se ha creado exitosamente");
-		
+		try{
+			Farmacia farma = new Farmacia(nombre, direccion, telefono, ciudad, farmaceutico);
+			farmaciaEJB.crear(farma);
+			Messages.addFlashGlobalInfo("Se ha registrado exitosamente la farmacia");
+		}catch(Exception e){
+			e.printStackTrace(); // Esto siempre hay que ponerlo para que imprima las excepciones
+		}
 	}
 	
 	/*+
 	 * Metodo para buscar una farmacia
 	 */
 	public void buscar(){
-		Farmacia far = farmaciaEJB.buscar(id);
+		Farmacia far = farmaciaEJB.buscarNombre(nombre);
 		if (far!=null) {
-			nombre = far.getNombre();
 			direccion = far.getDireccion();
 			telefono = far.getTelefono();
 			ciudad = far.getCiudad();
 			farmaceutico = far.getFarmaceutico();				
-			
 		}else {
 			Messages.addFlashGlobalInfo("No hay ninguna farmacia con ese dato");
 		}
@@ -69,16 +87,15 @@ public class ControladorFarmacia implements Serializable{
 	 * Metodo para editar una farmacia
 	 */
 	public void editar(){
-		Farmacia far = farmaciaEJB.buscar(id);
+		Farmacia far = farmaciaEJB.buscarNombre(nombre);
 		if (far!=null) {
-			
 			far.setNombre(nombre);
 			far.setTelefono(telefono);
 			far.setDireccion(direccion);
 			far.setCiudad(ciudad);
 			far.setFarmaceutico(farmaceutico);
 			farmaciaEJB.editar(far);
-			Messages.addFlashGlobalInfo("Se ha eliminado exitosamente");
+			Messages.addFlashGlobalInfo("Se ha editado exitosamente");
 		}else {
 			Messages.addFlashGlobalInfo("No hay ninguna farmacia con ese dato");
 		}
@@ -88,10 +105,11 @@ public class ControladorFarmacia implements Serializable{
 	 * Metodo para eliminar una farmacia
 	 */
 	public void eliminar(){
-		Farmacia far = farmaciaEJB.buscar(id);
+		Farmacia far = farmaciaEJB.buscarNombre(nombre);
+		System.out.println(far);
 		if (far!=null) {
 			farmaciaEJB.eliminar(far);
-			Messages.addFlashGlobalInfo("Se ha eliminado exitosamente");
+			Messages.addFlashGlobalInfo("Se ha eliminado exitosamente la farmacia");
 		}else {
 			Messages.addFlashGlobalInfo("No hay ninguna farmacia con ese dato");
 		}
@@ -164,8 +182,14 @@ public class ControladorFarmacia implements Serializable{
 	public void setListaFarmaceutico(List<Farmaceutico> listaFarmaceutico) {
 		this.listaFarmaceutico = listaFarmaceutico;
 	}
-	
-	
-	
-	
+
+
+	public List<Farmacia> getFarmacias() {
+		return farmacias;
+	}
+
+
+	public void setFarmacias(List<Farmacia> farmacias) {
+		this.farmacias = farmacias;
+	}
 }

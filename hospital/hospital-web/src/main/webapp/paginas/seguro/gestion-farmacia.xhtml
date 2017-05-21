@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+
+	<ui:define name="cuerpo">
+
+		<h1>Gestion de Farmacias</h1>
+		<!-- DEje el id siempre como gestion, ya que ese id nos proporciona estilos -->
+		<h:form prependId="false" id="gestion" >
+			<div class="datos">
+				<h:panelGrid id="paneldatos" columns="3">
+
+					<h:outputLabel for="nombre" id="lnombre">Nombre </h:outputLabel>
+					<h:inputText value="#{Farmacia.nombre}" id="nombre" />
+					<!--  <p:message for="nombre" />-->
+					
+					<h:outputLabel for="direccion" id="ldireccion">Direccion </h:outputLabel>
+					<h:inputText value="#{Farmacia.direccion}" id="direccion" />
+					<!-- <p:message for="direccion" />  -->
+					
+					<h:outputLabel for="telefono" id="ltelefono">Telefono </h:outputLabel>
+					<h:inputText value="#{Farmacia.telefono}" id="telefono" />
+					<!--  <p:message for="telefono" />-->
+										
+					<h:outputLabel for="farmacologo" id="lfarmacologo" value="Farmaceutico:" />
+					<h:selectOneMenu id="farmacologo" value="#{Farmacia.farmaceutico}" converter="fConverter">
+						<f:selectItems value="#{Farmacia.listaFarmaceutico}" var="farma"
+							itemValue="#{farma}" itemLabel="#{farma.nombre}" />
+					</h:selectOneMenu>
+					<p:message for="farmacologo"/>
+					
+					<h:outputLabel for="ciudades" id="ciudad" value="Ciudad" />
+					<h:selectOneMenu id="ciudades" value="#{Farmacia.ciudad}" converter="ciudadConverter">
+						<f:selectItems value="#{Farmacia.listaCiudad}" var="ciudad" itemValue="#{c}" itemLabel="#{c.nombre}" />
+					</h:selectOneMenu>
+					<p:message for="ciudades" />
+
+				</h:panelGrid>
+
+				<h:panelGrid id="acciones" columns="5">
+				<!-- Los id se pueden repetir entre ventanas, mas no en la misma ventana. -->
+					<h:commandButton action="/hospital-web/?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>
+					<h:commandButton action="#{Farmacia.crearFarmacia()}" value="Crear " id="btnCrearMedi" />
+					<h:commandButton action="#{Farmacia.buscar()}" value="Buscar" id="btnBuscarMedi" update="paneldatos" process="@this,nombre"/>
+					<h:commandButton action="#{Farmacia.editar()}" value="Editar" id="btnEditarMedi" />
+					<h:commandButton action="#{Farmacia. eliminar()}" value="Eliminar" id="btnEliminarMedi" />
+				</h:panelGrid>
+
+			</div>
+
+
+			<!-- este div es el que otorga el estilo a la tabla que ponga dentro -->
+			<div class="tabladatos">
+			<p:panel header="Listado de Farmacias" id="paneltabla">
+				<p:dataTable id="tablaFarmacias" value="#{Farmacia.farmacias}" var="farmacia">
+
+					<p:column headerText="Nombre">
+						<h:outputLabel value="#{farmacia.nombre}" />
+					</p:column>
+
+					<p:column headerText="Direccion">
+						<h:outputLabel value="#{farmacia.direccion}" />
+					</p:column>
+
+					<p:column headerText="Telefono">
+						<h:outputLabel value="#{farmacia.telefono}" />
+					</p:column>
+
+					<p:column headerText="Ciudad">
+						<h:outputLabel value="#{farmacia.ciudad.nombre}" />
+					</p:column>
+
+					<p:column headerText="Farmaceutico">
+						<h:outputLabel value="#{farmacia.farmaceutico.nombre}" />
+					</p:column>
+					
+				</p:dataTable>
+			</p:panel>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+		<h1>Gestion de EPS</h1>
+		<!-- id="gestion" es el que otorga estilos -->
+		<h:form id="gestion" prependId="false">
+			<div class="datos">
+				<h:panelGrid id="paneldatos" columns="3">
+
+					<h:outputLabel for="nombre" id="nom" value="Nombre"/> 
+					<h:inputText value="#{EPS.nombre}" id="nombre" />
+					<p:message for="nombre" />
+
+					<h:outputLabel for="direccion" value="Direccion" id="dir"/> 
+					<h:inputText value="#{EPS.direccion}" id="direccion" />
+					<p:message for="direccion" />
+					
+
+					<h:outputLabel for="telefono" id="tel" value="Telefono"/>
+					<h:inputText value="#{EPS.telefono}" id="telefono" />
+					<p:message for="telefono" />
+
+					<h:outputLabel for="tipos" id="tipo" value="Tipos EPS" />
+					<h:selectOneMenu id="tipos" value="#{EPS.tipoEPS}" converter="tipoEPSConverter">
+						<f:selectItems value="#{EPS.listaTiposEPS}" var="e" itemValue="#{e}" itemLabel="#{e.tipo}" />
+					</h:selectOneMenu>
+					<p:message for="tipos" />
+
+				</h:panelGrid>
+
+				<h:panelGrid id="acciones" columns="5">
+					<h:commandButton action="/hospital-web/?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>				
+					<h:commandButton action="#{EPS.crear()}" value="Crear" id="btnCrearEPS" />
+					<p:commandButton action="#{EPS.buscar()}" value="Buscar" update="paneldatos" process="@this,nombre" id="btnbuscar"/>
+					<h:commandButton action="#{EPS.editar()}" value="Editar" id="btnEditarEPS" />
+					<h:commandButton action="#{EPS.eliminar()}" value="Eliminar" id="btnEliminarEPS" />
+				</h:panelGrid>
+			</div>
+			
+			<!-- este div es el que otorga el estilo a la tabla que ponga dentro -->
+			<div class="tabladatos">
+			<p:panel header="Listado de EPS" id="paneltabla">
+				<p:dataTable id="tablaEPS" value="#{EPS.listaEPS}" var="eps">
+
+					<p:column headerText="Nombre">
+						<h:outputLabel value="#{eps.nombre}" />
+					</p:column>
+
+					<p:column headerText="Direccion">
+						<h:outputLabel value="#{eps.direccion}" />
+					</p:column>
+
+					<p:column headerText="Telefono">
+						<h:outputLabel value="#{eps.telefono}" />
+					</p:column>
+
+					<p:column headerText="Tipo">
+						<h:outputLabel value="#{eps.tipoEps}" />
+					</p:column>
+					
+				</p:dataTable>
+			</p:panel>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

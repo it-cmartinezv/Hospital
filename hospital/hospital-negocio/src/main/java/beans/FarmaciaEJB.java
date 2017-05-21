@@ -1,17 +1,15 @@
 package beans;
-
 import java.util.List;
-
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import entidades.Ciudad;
 import entidades.Farmaceutico;
 import entidades.Farmacia;
-import entidades.TipoMedicamento;
 
 /**
  * @author AlejandroM
@@ -43,6 +41,21 @@ public class FarmaciaEJB {
 	}
 	
 	/**
+	 * Metodo para buscar una farmacia por su nombre
+	 * @param nombre, el nombre de la farmacia que se va a eliminar
+	 * @return, una lista con la farmacia encontrada si esta
+	 */
+	public Farmacia buscarNombre(String nombre){
+		Query q = em.createNamedQuery(Farmacia.busquedaNombre);
+		q.setParameter(1,nombre);
+		List<Farmacia> lista = q.getResultList();
+		if (lista.size() > 0) {
+			return lista.get(0);
+		}
+		return null;
+	}
+	
+	/**
 	 * Metodo para editar una farmacia
 	 * @param farmacia
 	 */
@@ -55,13 +68,13 @@ public class FarmaciaEJB {
 	 * @param farmacia
 	 */
 	public void eliminar(Farmacia farmacia) {
-		em.remove(farmacia);
-
+			em.remove(farmacia);
 	}
 	
 	/**
 	 * Lista que me trae todas las ciudades 
 	 * @return, la lista con las ciudades
+	 * ESTE METODO YA ESTABA, CUANDO NECESITE ALGO DE UBICACION, VA A LocalizacionEJB
 	 */
 	public List<Ciudad>listaCiudades(){
 		Query q = em.createNamedQuery(Ciudad.LISTAR);
@@ -79,7 +92,12 @@ public class FarmaciaEJB {
 		return lista;
 	}
 	
-
-	
+	/**
+	 * Listar Farmacias
+	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Farmacia> listar(){
+		return em.createNamedQuery(Farmacia.listaFarmacias).getResultList();
+	}
 	
 }

@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import entidades.Ciudad;
 import entidades.Farmaceutico;
+import entidades.Farmacia;
 import entidades.Medico;
 import entidades.Paciente;
 import entidades.Pais;
@@ -37,8 +38,8 @@ public class EJBUsuario implements Serializable{
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public Persona buscarUsuario(String tipoId, String numeroId){
 		Query q = em.createNamedQuery(Persona.BUSCAR);
-		q.setParameter(1, tipoId);
-		q.setParameter(2, numeroId);
+		q.setParameter(1, numeroId);
+		q.setParameter(2, tipoId);
 		List<Persona> lista = q.getResultList();
 		if(lista.size() > 0){
 			return lista.get(0);
@@ -331,5 +332,12 @@ public class EJBUsuario implements Serializable{
 		}else{
 			throw new excepciones.ExcepcionNegocio("No se ha encontrado ningun farmaceutico");
 		}
+	}
+	
+	/**
+	 * Buscar Farmaceutico por ID
+	 */
+	public Farmaceutico buscarFarmaceutico(int id){
+		return em.find(Farmaceutico.class, id);
 	}
 }
