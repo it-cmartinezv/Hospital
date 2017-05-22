@@ -27,14 +27,14 @@ public class ControladorFarmacia implements Serializable{
 	
 	private int id;
 	
-	//@Length(min=4,max=50,message="longitud entre 4 y 50")
+	@Length(min=4,max=50,message="longitud entre 4 y 50")
 	private String nombre;
 	
-	//@Length(min=4,max=50,message="longitud entre 4 y 50")
+	@Length(min=4,max=50,message="longitud entre 4 y 50")
 	private String direccion;
 	
-	//@Pattern(regexp="[0-9]*",message="Solo numeros")
-	//@Length(min=4,max=50,message="longitud entre 4 y 50")
+	@Pattern(regexp="[0-9]*",message="Solo numeros")
+	@Length(min=4,max=50,message="longitud entre 4 y 50")
 	private String telefono;
 	
 	private Ciudad ciudad;

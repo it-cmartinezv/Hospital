@@ -16,15 +16,15 @@
 
 					<h:outputLabel for="nombre" id="lnombre">Nombre </h:outputLabel>
 					<h:inputText value="#{Farmacia.nombre}" id="nombre" />
-					<!--  <p:message for="nombre" />-->
+					  <p:message for="nombre" />
 					
 					<h:outputLabel for="direccion" id="ldireccion">Direccion </h:outputLabel>
 					<h:inputText value="#{Farmacia.direccion}" id="direccion" />
-					<!-- <p:message for="direccion" />  -->
+					 <p:message for="direccion" />
 					
 					<h:outputLabel for="telefono" id="ltelefono">Telefono </h:outputLabel>
 					<h:inputText value="#{Farmacia.telefono}" id="telefono" />
-					<!--  <p:message for="telefono" />-->
+					<p:message for="telefono" />
 										
 					<h:outputLabel for="farmacologo" id="lfarmacologo" value="Farmaceutico:" />
 					<h:selectOneMenu id="farmacologo" value="#{Farmacia.farmaceutico}" converter="fConverter">
@@ -41,11 +41,11 @@
 
 				</h:panelGrid>
 
-				<h:panelGrid id="acciones" columns="5">
+				<h:panelGrid id="acciones" columns="6">
 				<!-- Los id se pueden repetir entre ventanas, mas no en la misma ventana. -->
 					<h:commandButton action="/hospital-web/?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>
 					<h:commandButton action="#{Farmacia.crearFarmacia()}" value="Crear " id="btnCrearMedi" />
-					<h:commandButton action="#{Farmacia.buscar()}" value="Buscar" id="btnBuscarMedi" update="paneldatos" process="@this,nombre"/>
+					<p:commandButton action="#{Farmacia.buscar()}" value="Buscar" update="paneldatos" process="@this,nombre" id="btnbuscar"/>
 					<h:commandButton action="#{Farmacia.editar()}" value="Editar" id="btnEditarMedi" />
 					<h:commandButton action="#{Farmacia. eliminar()}" value="Eliminar" id="btnEliminarMedi" />
 				</h:panelGrid>

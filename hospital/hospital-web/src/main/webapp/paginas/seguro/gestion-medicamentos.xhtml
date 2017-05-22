@@ -55,9 +55,9 @@
 				
 				<h:commandButton action="/hospital-web/?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>
 				
-					<h:commandButton action="#{Medicamento.crear()}" value="Crear Medicina" id="btnCrearMedi" />
+					<h:commandButton action="#{Medicamento.crear()}" value="Crear" id="btnCrearMedi" />
 
-					<h:commandButton action="#{Medicamento.buscar()}" value="Buscar" id="btnBuscarMedi" update="paneldatos" process="@this,nombre" />
+					<p:commandButton action="#{Medicamento.buscar()}" value="Buscar" update="paneldatos" process="@this,nombre" id="btnbuscar"/>
 
 					<h:commandButton action="#{Medicamento.editar()}" value="Editar" id="btnEditarMedi" />
 
