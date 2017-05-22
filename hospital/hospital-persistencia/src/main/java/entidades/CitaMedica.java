@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,7 +19,8 @@ import javax.persistence.TemporalType;
 public class CitaMedica implements Serializable{
 	@Id
 	@Column(name="id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CITAS_MEDICAS")
+	@SequenceGenerator(name = "SEQ_CITAS_MEDICAS", sequenceName = "SEQ_CITAS_MEDICAS", allocationSize = 1)
 	private int id;
 	
 	@Column(name="Caracter")
@@ -49,4 +51,115 @@ public class CitaMedica implements Serializable{
 	@JoinColumn(name="Sintomas")
 	@ManyToOne(cascade={})
 	private Sintoma sintoma;
+
+	public CitaMedica(boolean caracter, Date fecha, Time hora, String tipo, Paciente paciente, Medico medico,
+			Sintoma sintoma) {
+		super();
+		this.caracter = caracter;
+		this.fecha = fecha;
+		this.hora = hora;
+		this.tipo = tipo;
+		this.paciente = paciente;
+		this.medico = medico;
+		this.sintoma = sintoma;
+	}
+
+	public CitaMedica() {
+		super();
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public boolean isCaracter() {
+		return caracter;
+	}
+
+	public void setCaracter(boolean caracter) {
+		this.caracter = caracter;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public Time getHora() {
+		return hora;
+	}
+
+	public void setHora(Time hora) {
+		this.hora = hora;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
+
+	public Medico getMedico() {
+		return medico;
+	}
+
+	public void setMedico(Medico medico) {
+		this.medico = medico;
+	}
+
+	public Sintoma getSintoma() {
+		return sintoma;
+	}
+
+	public void setSintoma(Sintoma sintoma) {
+		this.sintoma = sintoma;
+	}
+
+	@Override
+	public String toString() {
+		return "CitaMedica [caracter=" + caracter + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CitaMedica other = (CitaMedica) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
+	
+	
+	
 }

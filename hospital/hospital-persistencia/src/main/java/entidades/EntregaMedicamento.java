@@ -6,16 +6,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "Entrega_Medicamento")
+@NamedQueries({ 
+	@NamedQuery(name = EntregaMedicamento.entregasListar, query = "SELECT e FROM EntregaMedicamento e")
+	//Ahi depronto genera problema porque la entregaMedicamento le falta el raya piso entrega_medicamento
+	//pero si lo pongo asi va a generar un error
+	
+})
 public class EntregaMedicamento implements Serializable{
+	
+	public static final String entregasListar = "EntregaMedicamento.listar";
+	
 	@Id
 	@Column(name="Id_Entrega")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ENTREGA_MEDICAMENTO")
+	@SequenceGenerator(name = "SEQ_ENTREGA_MEDICAMENTO", sequenceName = "SEQ_ENTREGA_MEDICAMENTO", allocationSize = 1)
 	private int id;
 	
 	@Temporal(TemporalType.DATE)
