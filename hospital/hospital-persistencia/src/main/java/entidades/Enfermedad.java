@@ -7,11 +7,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Enfermedad")
+@NamedQueries({
+	@NamedQuery(name=Enfermedad.listarEnfermedadSintoma, query="SELECT e FROM Enfermedad e WHERE e.sintomas = ?1"),
+	@NamedQuery(name=Enfermedad.listarEnfermedadTratamiento, query="SELECT e FROM Enfermedad e WHERE e.tratamiento = ?1")
+})
 public class Enfermedad implements Serializable{
+	
+	public static final String listarEnfermedadSintoma = "Enfermedad.listarEnfermedadSintoma";
+	public static final String listarEnfermedadTratamiento = "Enfermedad.listarEnfermedadTratamiento";
+	
 	@Id
 	@Column(name="Id_Enfermedad")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

@@ -7,11 +7,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Orden_Cirugia")
+@NamedQueries({
+	@NamedQuery(name=OrdenCirugia.listarCirugia, query="SELECT oC FROM OrdenCirugia oC WHERE oC.cirugia =?1")
+})
 public class OrdenCirugia implements Serializable{
+	
+	public static final String listarCirugia = "Cirugia.listarOrdenCirugiaCirugia";
+	
 	@Id
 	@Column(name="Id_Orden")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

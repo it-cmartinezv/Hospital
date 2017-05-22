@@ -5,11 +5,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Quirofano")
+@NamedQueries({
+	@NamedQuery(name=Quirofano.listarQuirofano, query="SELECT q FROM Quirofano q")
+})
 public class Quirofano implements Serializable{
+	
+	public static final String listarQuirofano = "Quirofano.listarQuirofano";
+	
 	@Id
 	@Column(name="Id_Quirofano")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -55,6 +63,8 @@ public class Quirofano implements Serializable{
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
+
+	
 
 	@Override
 	public int hashCode() {
