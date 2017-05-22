@@ -10,4 +10,5 @@
 Gestion de EPS
 Gestion de Farmacia
 Gestion de medicamentos
---------------------------- SEBASTIAN SALAZAR ------------------------------ 
+--------------------------- SEBASTIAN SALAZAR ------------------------------
+Gestion de Cirugia : http://localhost:8081/hospital-web/paginas/seguro/gestion-cirugia.xhtml 
