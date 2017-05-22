@@ -121,7 +121,7 @@ public class CirugiaController implements Serializable{
 	public void eliminar(){
 		try{
 			cirugiaEJB.eliminar(nombre);
-			Messages.addFlashGlobalInfo("La cirugia "+nombre+"  se ha actualizado exitosamente");
+			Messages.addFlashGlobalInfo("La cirugia "+nombre+"  se ha eliminado exitosamente");
 			limpiar();
 		}catch(ExcepcionNegocio ex){
 			Messages.addFlashGlobalError(ex.getMessage());

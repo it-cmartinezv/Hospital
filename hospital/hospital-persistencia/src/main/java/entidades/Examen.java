@@ -7,14 +7,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Examen")
+@NamedQueries({
+	@NamedQuery(name=Examen.listarExamen, query="SELECT e FROM Examen e"),
+	@NamedQuery(name=Examen.BYNOMBRE, query="SELECT e FROM Examen e WHERE e.nombre=?1")
+})
 public class Examen implements Serializable{
+	
+	public static final String listarExamen = "Examen.listarExamen";
+	public static final String BYNOMBRE = "Examen.bynombre";
+	
 	@Id
 	@Column(name="Id_Examen")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="SEQ_EXAMEN") 
+	@SequenceGenerator(name="SEQ_EXAMEN", sequenceName="SEQ_EXAMEN",allocationSize=1) 
 	private int id;
 	
 	@Column(name="Nombre",nullable = false,length=30)
