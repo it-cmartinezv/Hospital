@@ -32,7 +32,7 @@ public class Examen implements Serializable{
 	@Column(name="Nombre",nullable = false,length=30)
 	private String nombre;
 	
-	@Column(name="Descripcion",nullable = false,length=50)
+	@Column(name="Descripcion",nullable = false,length=200)
 	private String descripcion;
 	
 
