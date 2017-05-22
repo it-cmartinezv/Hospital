@@ -19,7 +19,7 @@ import excepciones.ExcepcionNegocio;
 
 /**
  * 
- * @author Sebastian
+ * @author Sebastian Salazar
  *
  */
 @Named("examenController")
