@@ -1,5 +1,5 @@
 -- Generado por Oracle SQL Developer Data Modeler 4.1.3.901
---   en:        2017-05-20 13:37:54 COT
+--   en:        2017-05-22 01:06:56 COT
 --   sitio:      Oracle Database 11g
 --   tipo:      Oracle Database 11g
 
@@ -107,10 +107,9 @@ ALTER TABLE Entrega_Medicamento ADD CONSTRAINT Entrega_Medicamento_PK PRIMARY KE
 
 CREATE TABLE Examen
   (
-    Id_Examen              INTEGER NOT NULL ,
-    Nombre                 VARCHAR2 (30) NOT NULL ,
-    Descripcion            VARCHAR2 (50) NOT NULL ,
-    Resultado_Id_Resultado INTEGER NOT NULL
+    Id_Examen   INTEGER NOT NULL ,
+    Nombre      VARCHAR2 (30) NOT NULL ,
+    Descripcion VARCHAR2 (50) NOT NULL
   ) ;
 ALTER TABLE Examen ADD CONSTRAINT Examen_PK PRIMARY KEY ( Id_Examen ) ;
 
