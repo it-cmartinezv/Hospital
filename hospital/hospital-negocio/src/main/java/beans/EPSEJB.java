@@ -116,7 +116,7 @@ public class EPSEJB {
 	 * 
 	 * @return toda la lista de eps
 	 */
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public List<Eps> listar() {
 		return em.createNamedQuery(Eps.LISTAR).getResultList();
 	}

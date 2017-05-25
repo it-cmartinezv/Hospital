@@ -17,7 +17,6 @@ public class Pais implements Serializable{
 	
 	@Id
 	@Column(name="Id_Pais")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idPais;
 	
 	@Column(name="Nombre",nullable = false,length=30)

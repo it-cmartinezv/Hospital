@@ -1,6 +1,8 @@
 package beans;
 import java.io.Serializable;
 import java.util.List;
+
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -9,6 +11,8 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import beansSeguridad.UsuarioRolEJB;
 import entidades.Ciudad;
 import entidades.Farmaceutico;
 import entidades.Farmacia;
@@ -18,6 +22,8 @@ import entidades.Pais;
 import entidades.Persona;
 import remote.ILocalizacionRemote;
 import remote.IUsuarioRemote;
+import seguridad.Rol;
+import seguridad.UsuarioRol;
 
 /**
  * 
@@ -29,8 +35,49 @@ import remote.IUsuarioRemote;
 @Remote(IUsuarioRemote.class)
 public class EJBUsuario implements Serializable{
 	
+	@EJB
+	private UsuarioRolEJB usuarioRolEJB;
+	
+	@EJB
+	private RolEJB rolEJB;
+	
 	@PersistenceContext
 	private EntityManager em;
+	
+	/**
+	 * Edita una persona en la base de datos
+	 * @param medico
+	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void editarPersona(Persona persona){
+		Persona telefono = usuarioByTelefono(persona.getTelefono());
+		if(telefono != null){
+			if(!telefono.getCorreo().equalsIgnoreCase(persona.getCorreo())){
+				throw new excepciones.ExcepcionNegocio("Ya existe un usuario registrado con este telefono");
+			}
+		}
+		Persona correo = usuarioByCorreo(persona.getCorreo());
+		if(correo != null){
+			if(!correo.getTelefono().equalsIgnoreCase(persona.getTelefono())){
+				throw new excepciones.ExcepcionNegocio("Ya existe un usuario registrado con este correo");
+			}
+		}
+		em.merge(persona);
+	}
+	
+	/**
+	 * Eliminar una persona
+	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void eliminarPersona(String tipoId, String numeroId){
+		Persona persona = buscarUsuario(tipoId, numeroId);
+		if(persona != null){
+			em.remove(persona);
+		}else{
+			throw new excepciones.ExcepcionNegocio("No se ha encontrado ningun usuario con estas credenciales");
+		}
+	}
+	
 	
 	/**
 	 * Buscar persona por tipo identificacion y numero identificacion
@@ -78,6 +125,40 @@ public class EJBUsuario implements Serializable{
 	}
 	
 	/**
+	 * Registra una persona en la base de datos
+	 * @param medico
+	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void registrarPersona(Persona laPersona, int elRol){
+		Persona persona = buscarUsuario(laPersona.getTipoIdentificacion(), laPersona.getNumeroIdentificacion());
+		if(persona == null){
+			Persona telefono = usuarioByTelefono(laPersona.getTelefono());
+			if(telefono == null){
+				Persona correo = usuarioByCorreo(laPersona.getCorreo());
+				if(correo == null){
+					Rol rol = rolEJB.buscar(elRol);
+					if(rol != null){
+						em.persist(laPersona);
+						Persona usuario = usuarioByCorreo(laPersona.getCorreo());
+						if(usuario != null){
+							UsuarioRol usuarioRol = new UsuarioRol(usuario, rol);
+							usuarioRolEJB.crear(usuarioRol);
+						}
+					}else{
+						throw new excepciones.ExcepcionNegocio("No existe el rol "+elRol+", registrelo antes de registrar");
+					}
+				}else{
+					throw new excepciones.ExcepcionNegocio("Ya existe un usuario registrado con este correo");
+				}
+			}else{
+				throw new excepciones.ExcepcionNegocio("Ya existe un usuario registrado con este telefono");
+			}
+		}else{
+			throw new excepciones.ExcepcionNegocio("Ya existen estas credenciales");
+		}
+	}
+	
+	/**
 	 * Registra un paciente en la bd
 	 * @param paciente
 	 */
@@ -89,7 +170,17 @@ public class EJBUsuario implements Serializable{
 			if(telefono == null){
 				Persona correo = usuarioByCorreo(paciente.getCorreo());
 				if(correo == null){
-					em.persist(paciente);
+					Rol rol = rolEJB.buscar(4);
+					if(rol != null){
+						em.persist(paciente);
+						Persona usuario = usuarioByCorreo(paciente.getCorreo());
+						if(usuario != null){
+							UsuarioRol usuarioRol = new UsuarioRol(usuario, rol);
+							usuarioRolEJB.crear(usuarioRol);
+						}
+					}else{
+						throw new excepciones.ExcepcionNegocio("No existe el rol paciente, registrelo antes de registrar un paciente");
+					}
 				}else{
 					throw new excepciones.ExcepcionNegocio("Ya existe un cliente registrado con este correo");
 				}
@@ -170,7 +261,17 @@ public class EJBUsuario implements Serializable{
 			if(telefono == null){
 				Persona correo = usuarioByCorreo(medico.getCorreo());
 				if(correo == null){
-					em.persist(medico);
+					Rol rol = rolEJB.buscar(2);
+					if(rol != null){
+						em.persist(medico);
+						Persona usuario = usuarioByCorreo(medico.getCorreo());
+						if(usuario != null){
+							UsuarioRol usuarioRol = new UsuarioRol(usuario, rol);
+							usuarioRolEJB.crear(usuarioRol);
+						}
+					}else{
+						throw new excepciones.ExcepcionNegocio("No existe el rol medico, registrelo antes de registrar un medico");
+					}
 				}else{
 					throw new excepciones.ExcepcionNegocio("Ya existe un usuario registrado con este correo");
 				}
@@ -266,7 +367,17 @@ public class EJBUsuario implements Serializable{
 			if(telefono == null){
 				Persona correo = usuarioByCorreo(farmaceutico.getCorreo());
 				if(correo == null){
-					em.persist(farmaceutico);
+					Rol rol = rolEJB.buscar(3);
+					if(rol != null){
+						em.persist(farmaceutico);
+						Persona usuario = usuarioByCorreo(farmaceutico.getCorreo());
+						if(usuario != null){
+							UsuarioRol usuarioRol = new UsuarioRol(usuario, rol);
+							usuarioRolEJB.crear(usuarioRol);
+						}
+					}else{
+						throw new excepciones.ExcepcionNegocio("No existe el rol farmaceutico, registrelo antes de registrar un farmaceutico");
+					}
 				}else{
 					throw new excepciones.ExcepcionNegocio("Ya existe un usuario registrado con este correo");
 				}

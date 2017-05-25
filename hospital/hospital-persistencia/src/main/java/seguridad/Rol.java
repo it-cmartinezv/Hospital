@@ -1,47 +1,45 @@
-package entidades;
+package seguridad;
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+/**
+ * @author Carlos Martinez
+ * Roles Definidos:
+ * 1 Administrador
+ * 2 Medico
+ * 3 Farmaceutico
+ * 4 Paciente
+ */
+
 @Entity
-@Table(name = "Departamento")
+@Table(name="Rol")
 @NamedQueries({
-	@NamedQuery(name=Departamento.LISTAR, query="SELECT d FROM Departamento d"),
-	@NamedQuery(name=Departamento.BYPAIS, query="SELECT d FROM Departamento d WHERE d.pais = ?1")
+	@NamedQuery(name=Rol.LISTA,query="SELECT r FROM Rol r")
 })
-public class Departamento implements Serializable{
-	
-	public static final String LISTAR = "Departamento.listar";
-	public static final String BYPAIS = "Departamento.bypais";
-	
+public class Rol implements Serializable{
+
+	public static final String LISTA = "Rol.lista";
+
 	@Id
-	@Column(name="Id_Departamento")
+	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="SEQ_ROL") 
+	@SequenceGenerator(name="SEQ_ROL", sequenceName="SEQ_ROL",allocationSize=1) 
 	private int id;
 	
-	@Column(name="Nombre",nullable = false,length=30)
+	@Column(name="nombre",nullable = false,length=50)
 	private String nombre;
 	
-	@JoinColumn(name="Pais_Id_Pais")
-	@ManyToOne(cascade={})
-	private Pais pais;
-
-	public Departamento() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Departamento(String nombre, Pais pais) {
-		super();
-		this.nombre = nombre;
-		this.pais = pais;
+	public Rol(){
+		
 	}
 
 	public int getId() {
@@ -60,14 +58,6 @@ public class Departamento implements Serializable{
 		this.nombre = nombre;
 	}
 
-	public Pais getPais() {
-		return pais;
-	}
-
-	public void setPais(Pais pais) {
-		this.pais = pais;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -84,7 +74,7 @@ public class Departamento implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Departamento other = (Departamento) obj;
+		Rol other = (Rol) obj;
 		if (id != other.id)
 			return false;
 		return true;

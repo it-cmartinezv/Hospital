@@ -5,6 +5,15 @@
     Author URL: https://bootstrapmade.com
 */
 /* Submenu */
+.offs a{
+	color: #8c2922;
+    font-size: 14px;
+    font-weight: 700;
+    vertical-align: middle;
+    line-height: 59px;
+    margin: 10px 5px;
+    padding: 10px 15px;
+}
 .nav>li {
     height: 63px!important;
 }
@@ -207,6 +216,7 @@ a{
 }
 a:hover, a:focus{
     color: #5fcf80;
+    text-decoration: none;
 }
 /***********************************
 Navigation bar

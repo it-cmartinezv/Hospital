@@ -7,10 +7,11 @@ import org.primefaces.event.SelectEvent;
 import beans.EJBUsuario;
 import beans.EPSEJB;
 import beans.LocalizacionEJB;
+import beansSeguridad.UsuarioRolEJB;
 import entidades.Ciudad;
 import entidades.Departamento;
 import entidades.Eps;
-import entidades.Paciente;
+import entidades.Persona;
 import entidades.Pais;
 import excepciones.ExcepcionNegocio;
 import seguridad.Rol;
@@ -29,16 +30,19 @@ import javax.faces.context.FacesContext;
 /**
  * 
  * @author Carlos Alfredo Martinez Villada
- * Clase que controla la ventana de Paciente 
+ * Clase que controla la ventana de gestion administradores
  * 
  */
 
-@Named("gpacienteController")
+@Named("gadministradorController")
 @ViewScoped
-public class GestionPacienteController implements Serializable{
+public class AdministradorController implements Serializable{
 	
 	@EJB
 	private EJBUsuario usuarioEJB;
+	
+	@EJB
+	private UsuarioRolEJB usuarioRolEJB;
 	
 	@EJB
 	private LocalizacionEJB localizacionEJB;
@@ -76,20 +80,17 @@ public class GestionPacienteController implements Serializable{
 	private Pais pais;
 	private Departamento departamento;
 	private Ciudad ciudad;
-	private Eps eps;
 	
 	private List<Pais> paises;
 	private List<Departamento> departamentos;
 	private List<Ciudad> ciudades;
-	private List<Paciente> pacientes;
-	private List<Eps> listaEps;
+	private List<Persona> personas;
 	
 	@PostConstruct
 	public void inicializar(){
 		try{
-			listaEps = epsEJB.listar();
 			paises = localizacionEJB.listarPaises();
-			pacientes = usuarioEJB.listarPacientes();
+			personas = usuarioRolEJB.listarPersonasByRol(1); // Lista personas del rol 1 = Administrador
 			if(!paises.isEmpty()){
 				departamentos = localizacionEJB.departamentosByPais(paises.get(0));
 				if(!departamentos.isEmpty()){
@@ -108,21 +109,20 @@ public class GestionPacienteController implements Serializable{
 	 */
 	public void registrar(){
 		try{
-			Paciente paciente = new Paciente();
-			paciente.setNombre(nombre);
-			paciente.setApellido(apellido);
-			paciente.setCorreo(correo);
-			paciente.setGenero(genero);
-			paciente.setCiudad(ciudad);
-			paciente.setFechaNacimiento(fechaNacimiento);
-			paciente.setNumeroIdentificacion(numeroIdentificacion);
-			paciente.setTipoIdentificacion(tipoID);
-			paciente.setTelefono(telefono);
-			paciente.setPassword(password);
-			paciente.setEps(eps);
-			usuarioEJB.registrarPaciente(paciente);
+			Persona persona = new Persona();
+			persona.setNombre(nombre);
+			persona.setApellido(apellido);
+			persona.setCorreo(correo);
+			persona.setGenero(genero);
+			persona.setCiudad(ciudad);
+			persona.setFechaNacimiento(fechaNacimiento);
+			persona.setNumeroIdentificacion(numeroIdentificacion);
+			persona.setTipoIdentificacion(tipoID);
+			persona.setTelefono(telefono);
+			persona.setPassword(password);
+			usuarioEJB.registrarPersona(persona, 1); // 1 = Rol Administrador
 			limpiar();
-			Messages.addFlashGlobalInfo("Paciente "+nombre+" "+apellido+" registrado exitosamente");
+			Messages.addFlashGlobalInfo(nombre+" "+apellido+" registrado exitosamente");
 
 		}catch(ExcepcionNegocio e){
 			Messages.addGlobalError(e.getMessage());
@@ -136,27 +136,26 @@ public class GestionPacienteController implements Serializable{
 	public void buscar(){
 		try{
 			if(numeroIdentificacion != null){
-				//Paciente Paciente = usuarioEJB.buscarPaciente(tipoID, numeroIdentificacion);
-				Paciente paciente = usuarioEJB.buscarPaciente(tipoID, numeroIdentificacion);
-				if(paciente != null){
-					nombre = paciente.getNombre();
-					apellido = paciente.getApellido();
-					correo = paciente.getCorreo();
-					telefono = paciente.getTelefono();
-					password = paciente.getPassword();
-					numeroIdentificacion = paciente.getNumeroIdentificacion();
-					pais = paciente.getCiudad().getDepartamento().getPais();
-					departamento = paciente.getCiudad().getDepartamento();
-					ciudad = paciente.getCiudad();
-					fechaNacimiento = paciente.getFechaNacimiento();
-					tipoID = paciente.getTipoIdentificacion();
-					password = paciente.getPassword();
-					eps = paciente.getEps();
+				//Persona Persona = usuarioEJB.buscarPersona(tipoID, numeroIdentificacion);
+				Persona persona = usuarioEJB.buscarUsuario(tipoID, numeroIdentificacion);
+				if(persona != null){
+					nombre = persona.getNombre();
+					apellido = persona.getApellido();
+					correo = persona.getCorreo();
+					telefono = persona.getTelefono();
+					password = persona.getPassword();
+					numeroIdentificacion = persona.getNumeroIdentificacion();
+					pais = persona.getCiudad().getDepartamento().getPais();
+					departamento = persona.getCiudad().getDepartamento();
+					ciudad = persona.getCiudad();
+					fechaNacimiento = persona.getFechaNacimiento();
+					tipoID = persona.getTipoIdentificacion();
+					password = persona.getPassword();
 				}else{
-					Messages.addGlobalError("No se ha encontrado ningun Paciente con estas credenciales");
+					Messages.addGlobalError("No se ha encontrado ningun Persona con estas credenciales");
 				}
 			}else{
-				Messages.addGlobalError("Por favor ingrese el numero de identificacion del Paciente a buscar");
+				Messages.addGlobalError("Por favor ingrese el numero de identificacion del Persona a buscar");
 			}
 		}catch(ExcepcionNegocio e){
 			Messages.addGlobalError(e.getMessage());
@@ -180,27 +179,26 @@ public class GestionPacienteController implements Serializable{
 	public void editar(){
 		try{
 			if(numeroIdentificacion != null){
-				Paciente paciente = usuarioEJB.buscarPaciente(tipoID, numeroIdentificacion);
-				if(paciente != null){
-					paciente.setNombre(nombre);
-					paciente.setApellido(apellido);
-					paciente.setCorreo(correo);
-					paciente.setGenero(genero);
-					paciente.setCiudad(ciudad);
-					paciente.setFechaNacimiento(fechaNacimiento);
-					paciente.setNumeroIdentificacion(numeroIdentificacion);
-					paciente.setTipoIdentificacion(tipoID);
-					paciente.setTelefono(telefono);
-					paciente.setPassword(password);
-					paciente.setEps(eps);
-					usuarioEJB.editarPaciente(paciente);
+				Persona persona = usuarioEJB.buscarUsuario(tipoID, numeroIdentificacion);
+				if(persona != null){
+					persona.setNombre(nombre);
+					persona.setApellido(apellido);
+					persona.setCorreo(correo);
+					persona.setGenero(genero);
+					persona.setCiudad(ciudad);
+					persona.setFechaNacimiento(fechaNacimiento);
+					persona.setNumeroIdentificacion(numeroIdentificacion);
+					persona.setTipoIdentificacion(tipoID);
+					persona.setTelefono(telefono);
+					persona.setPassword(password);
+					usuarioEJB.editarPersona(persona);
 					limpiar();
-					Messages.addFlashGlobalInfo("El Paciente "+nombre+" "+apellido+" se ha actualizado exitosamente");
+					Messages.addFlashGlobalInfo(nombre+" "+apellido+" se ha actualizado exitosamente");
 				}else{
-					Messages.addGlobalError("No se ha encontrado ningun paciente para actualizar");
+					Messages.addGlobalError("No se ha encontrado ningun persona para actualizar");
 				}
 			}else{
-				Messages.addGlobalError("Por favor ingrese el numero de identificacion del paciente a editar");
+				Messages.addGlobalError("Por favor ingrese el numero de identificacion del persona a editar");
 			}
 		}catch(ExcepcionNegocio e){
 			Messages.addGlobalError(e.getMessage());
@@ -213,11 +211,11 @@ public class GestionPacienteController implements Serializable{
 	public void eliminar(){
 		try{
 			if(numeroIdentificacion != null){
-				usuarioEJB.eliminarPaciente(tipoID,numeroIdentificacion);
+				usuarioEJB.eliminarPersona(tipoID,numeroIdentificacion);
 				limpiar();
 				Messages.addGlobalError("Se ha eliminado correctamente");
 			}else{
-				Messages.addGlobalError("Por favor ingrese el numero de identificacion del paciente a editar");
+				Messages.addGlobalError("Por favor ingrese el numero de identificacion del persona a eliminar");
 			}
 		}catch(ExcepcionNegocio e){
 			Messages.addGlobalError(e.getMessage());
@@ -388,27 +386,11 @@ public class GestionPacienteController implements Serializable{
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public Eps getEps() {
-		return eps;
+	public List<Persona> getPersonas() {
+		return personas;
 	}
 
-	public void setEps(Eps eps) {
-		this.eps = eps;
-	}
-
-	public List<Eps> getListaEps() {
-		return listaEps;
-	}
-
-	public void setListaEps(List<Eps> listaEps) {
-		this.listaEps = listaEps;
-	}
-
-	public List<Paciente> getPacientes() {
-		return pacientes;
-	}
-
-	public void setPacientes(List<Paciente> pacientes) {
-		this.pacientes = pacientes;
+	public void setPersonas(List<Persona> personas) {
+		this.personas = personas;
 	}
 }

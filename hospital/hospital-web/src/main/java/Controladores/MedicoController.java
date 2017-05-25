@@ -12,6 +12,8 @@ import entidades.Departamento;
 import entidades.Medico;
 import entidades.Pais;
 import excepciones.ExcepcionNegocio;
+import seguridad.Rol;
+
 import javax.inject.Named;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;

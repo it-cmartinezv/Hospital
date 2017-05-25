@@ -1,9 +1,24 @@
 -- Generado por Oracle SQL Developer Data Modeler 4.1.3.901
---   en:        2017-05-22 01:06:56 COT
+--   en:        2017-05-24 20:30:16 COT
 --   sitio:      Oracle Database 11g
 --   tipo:      Oracle Database 11g
 
 
+
+
+CREATE TABLE Acceso
+  (
+    id     NUMBER NOT NULL ,
+    nombre VARCHAR2 (100) NOT NULL ,
+    url    VARCHAR2 (300) NOT NULL
+  ) ;
+ALTER TABLE Acceso ADD CONSTRAINT Acceso_PK PRIMARY KEY ( id ) ;
+
+
+CREATE TABLE AccesoRol
+  ( Rol NUMBER NOT NULL , Acceso NUMBER NOT NULL
+  ) ;
+ALTER TABLE AccesoRol ADD CONSTRAINT AccesoRol_PK PRIMARY KEY ( Acceso, Rol ) ;
 
 
 CREATE TABLE Camas
@@ -250,6 +265,12 @@ ALTER TABLE Persona ADD CONSTRAINT Persona__UNv1 UNIQUE ( Correo ) ;
 ALTER TABLE Persona ADD CONSTRAINT Persona__UNv2 UNIQUE ( telefono ) ;
 
 
+CREATE TABLE PersonaRol
+  ( Persona NUMBER NOT NULL , Rol NUMBER NOT NULL
+  ) ;
+ALTER TABLE PersonaRol ADD CONSTRAINT PersonaRol_PK PRIMARY KEY ( Rol, Persona ) ;
+
+
 CREATE TABLE Quirofano
   (
     Id_Quirofano INTEGER NOT NULL ,
@@ -257,6 +278,12 @@ CREATE TABLE Quirofano
     Estado       CHAR (1) NOT NULL
   ) ;
 ALTER TABLE Quirofano ADD CONSTRAINT Quirofano_PK PRIMARY KEY ( Id_Quirofano ) ;
+
+
+CREATE TABLE Rol
+  ( id NUMBER NOT NULL , nombre VARCHAR2 (50) NOT NULL
+  ) ;
+ALTER TABLE Rol ADD CONSTRAINT Rol_PK PRIMARY KEY ( id ) ;
 
 
 CREATE TABLE Sintomas
@@ -293,6 +320,8 @@ CREATE TABLE Tratamiento
   ) ;
 ALTER TABLE Tratamiento ADD CONSTRAINT Tratamiento_PK PRIMARY KEY ( Id_Tratamiento ) ;
 
+
+ALTER TABLE AccesoRol ADD CONSTRAINT AccesoRol_Acceso_FK FOREIGN KEY ( Acceso ) REFERENCES Acceso ( id ) ;
 
 ALTER TABLE Orden_Cirugia ADD CONSTRAINT Cirugia_FK FOREIGN KEY ( Cirugia_Id_Cirugia ) REFERENCES Cirugia ( Id_Cirugia ) ;
 
@@ -360,14 +389,20 @@ ALTER TABLE Paciente ADD CONSTRAINT Paciente_Persona_FK FOREIGN KEY ( id ) REFER
 
 ALTER TABLE Farmaceutico ADD CONSTRAINT Persona_FK FOREIGN KEY ( id ) REFERENCES Persona ( id ) ;
 
+ALTER TABLE PersonaRol ADD CONSTRAINT Persona_FKv2 FOREIGN KEY ( Persona ) REFERENCES Persona ( id ) ;
+
+ALTER TABLE AccesoRol ADD CONSTRAINT Rol_FK FOREIGN KEY ( Rol ) REFERENCES Rol ( id ) ;
+
+ALTER TABLE PersonaRol ADD CONSTRAINT Rol_FKv2 FOREIGN KEY ( Rol ) REFERENCES Rol ( id ) ;
+
 ALTER TABLE Medicamento ADD CONSTRAINT Tipo_Medicamento_FK FOREIGN KEY ( Tipo_Medicamento ) REFERENCES Tipo_Medicamento ( Id_Tipo_Medicamento ) ;
 
 
 -- Informe de Resumen de Oracle SQL Developer Data Modeler: 
 -- 
--- CREATE TABLE                            29
+-- CREATE TABLE                            33
 -- CREATE INDEX                             0
--- ALTER TABLE                             64
+-- ALTER TABLE                             72
 -- CREATE VIEW                              0
 -- ALTER VIEW                               0
 -- CREATE PACKAGE                           0

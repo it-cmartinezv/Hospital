@@ -7,6 +7,22 @@
   </parent>
   <artifactId>hospital-web</artifactId>
   <packaging>war</packaging>
+  
+	<url>http://wildfly.org</url>
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<distribution>repo</distribution>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+		</license>
+	</licenses>
+	<repositories>
+		<repository>
+			<id>ossh</id>
+			<name>maven central</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</repository>
+	</repositories>
   <dependencies>
   	<dependency>
   		<groupId>co.edu.eam.ingsoft</groupId>
@@ -80,6 +96,12 @@
             <version>3.0.1</version>
             <scope>provided</scope>
         </dependency>
+		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
   </dependencies>
   
 	<build>

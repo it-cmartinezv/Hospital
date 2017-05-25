@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import seguridad.Rol;
+
 /**
  * Entidad que representa a todas las personas que usan el aplicativo
  * 
@@ -27,7 +29,7 @@ import javax.persistence.TemporalType;
 @NamedQueries({
 	@NamedQuery(name=Persona.BUSCAR,query="SELECT p FROM Persona p WHERE p.numeroIdentificacion=?1 AND p.tipoIdentificacion=?2"),
 	@NamedQuery(name=Persona.BYTELEFONO,query="SELECT p FROM Persona p WHERE p.telefono=?1"),
-	@NamedQuery(name=Persona.BYCORREO,query="SELECT p FROM Persona p WHERE p.correo=?1")
+	@NamedQuery(name=Persona.BYCORREO,query="SELECT p FROM Persona p WHERE p.correo=?1"),
 })
 public class Persona implements Serializable{
 	
@@ -72,7 +74,7 @@ public class Persona implements Serializable{
 	@JoinColumn(name="Ciudad")
 	@ManyToOne(cascade={})
 	private Ciudad ciudad;
-
+	
 	public Persona() {
 		super();
 	}

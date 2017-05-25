@@ -15,6 +15,7 @@ import entidades.Eps;
 import entidades.Paciente;
 import entidades.Pais;
 import excepciones.ExcepcionNegocio;
+import seguridad.Rol;
 
 import javax.inject.Named;
 import javax.validation.constraints.Pattern;

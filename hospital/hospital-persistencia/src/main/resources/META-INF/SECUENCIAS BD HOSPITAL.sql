@@ -1,4 +1,10 @@
---Secuencia person
+--Secuencia acceso
+CREATE SEQUENCE SEQ_ACCESO INCREMENT BY 1;
+
+--Secuencia rol
+CREATE SEQUENCE SEQ_ROL INCREMENT BY 1;
+
+--Secuencia persona
 CREATE SEQUENCE SEQ_PERSONA INCREMENT BY 1;
 
 --Secuencia tipo de eps

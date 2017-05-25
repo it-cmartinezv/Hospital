@@ -19,7 +19,6 @@ public class Horario implements Serializable{
 	
 	@Id
 	@Column(name="id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
 	@Column(name="Dia",nullable = false,length=15)
