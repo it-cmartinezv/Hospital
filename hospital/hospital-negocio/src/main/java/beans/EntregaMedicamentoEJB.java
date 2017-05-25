@@ -11,7 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import entidades.EntregaMedicamento;
+//import entidades.EntregaMedicamento;
 import entidades.Medicamento;
 
 /**
@@ -31,20 +31,20 @@ public class EntregaMedicamentoEJB {
 	 * Metodo que entregara un medicamento a un paciente
 	 * @param entregaMedicamento
 	 */
-	public void entregarMedicamento(EntregaMedicamento entregaMedicamento){
-		em.persist(entregaMedicamento);
-	}
+//	public void entregarMedicamento(EntregaMedicamento entregaMedicamento){
+//		em.persist(entregaMedicamento);
+//	}
 	
 	/**
 	 * Metodo encargado de traer todos las entregas realizadas
 	 * @return
 	 */
-	public List<EntregaMedicamento> listaEntregas(){
-		Query q = em.createNamedQuery(EntregaMedicamento.entregasListar);
-		List<EntregaMedicamento> lista = q.getResultList();
-		return lista;
-		
-	}
-	
+//	public List<EntregaMedicamento> listaEntregas(){
+//		Query q = em.createNamedQuery(EntregaMedicamento.entregasListar);
+//		List<EntregaMedicamento> lista = q.getResultList();
+//		return lista;
+//		
+//	}
+//	
 	
 }

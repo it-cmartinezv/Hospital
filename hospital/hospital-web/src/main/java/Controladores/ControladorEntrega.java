@@ -17,7 +17,7 @@ import org.omnifaces.util.Messages;
 import beans.EntregaMedicamentoEJB;
 import beans.MedicamentoEJB;
 import entidades.CitaMedica;
-import entidades.EntregaMedicamento;
+//import entidades.EntregaMedicamento;
 import entidades.Medicamento;
 
 /**
@@ -39,13 +39,13 @@ public class ControladorEntrega implements Serializable {
 
 	private int cantidad;
 	private Date fechaReclamacion;
-	private List<EntregaMedicamento> listaEntregas;
+//	private List<EntregaMedicamento> listaEntregas;
 
 	@PostConstruct
-	public void iniciar() {
-		listaEntregas = ejb.listaEntregas();
-
-	}
+//	public void iniciar() {
+//		listaEntregas = ejb.listaEntregas();
+//
+//	}
 
 	/**
 	 * Metodo para entregar un medicamento a un paciente validando que la fecha
@@ -64,8 +64,8 @@ public class ControladorEntrega implements Serializable {
 				medicamento.setCantidad(medicamento.getCantidad()- cantidad );
 
 				// Guardo La entrega del medicamento y edito el objeto medicamento con la nueva cantidad
-				EntregaMedicamento entregaMedicamento = new EntregaMedicamento(fechaReclamacion, cantidad);
-				ejb.entregarMedicamento(entregaMedicamento);
+//				EntregaMedicamento entregaMedicamento = new EntregaMedicamento(fechaReclamacion, cantidad);
+//				ejb.entregarMedicamento(entregaMedicamento);
 				medicamentoEJB.editar(medicamento);
 				
 				Messages.addFlashGlobalInfo("Se ha entregado el medicamento exitosamente");
@@ -94,12 +94,12 @@ public class ControladorEntrega implements Serializable {
 		this.fechaReclamacion = fechaReclamacion;
 	}
 
-	public List<EntregaMedicamento> getListaEntregas() {
-		return listaEntregas;
-	}
-
-	public void setListaEntregas(List<EntregaMedicamento> listaEntregas) {
-		this.listaEntregas = listaEntregas;
-	}
+//	public List<EntregaMedicamento> getListaEntregas() {
+//		return listaEntregas;
+//	}
+//
+//	public void setListaEntregas(List<EntregaMedicamento> listaEntregas) {
+//		this.listaEntregas = listaEntregas;
+//	}
 
 }
