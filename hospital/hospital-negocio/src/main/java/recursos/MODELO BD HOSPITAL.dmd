@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="MODELO BD HOSPITAL" id="0B01D05F-2206-E4B2-C054-AEB24A357221" version="3.5">
+<createdBy>Sebastian</createdBy>
+<createdTime>2017-02-18 15:04:34 UTC</createdTime>
+<ownerDesignName>Modelo Relacional</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>0B01D05F-2206-E4B2-C054-AEB24A357221</designId>
+</OSDM_Design>

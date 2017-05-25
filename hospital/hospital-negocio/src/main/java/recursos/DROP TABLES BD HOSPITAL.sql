@@ -1,3 +1,7 @@
+drop table HT_FARMACEUTICO cascade constraints;
+drop table HT_MEDICO cascade constraints;
+drop table HT_PACIENTE cascade constraints;
+drop table HT_PERSONA cascade constraints;
 drop table ACCESO cascade constraints;
 drop table ROL cascade constraints;
 drop table CAMAS cascade constraints;
