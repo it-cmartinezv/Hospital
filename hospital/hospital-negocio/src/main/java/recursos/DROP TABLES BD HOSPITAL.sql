@@ -40,3 +40,6 @@ drop table SINTOMAS cascade constraints;
 drop table TIPO_EPS cascade constraints;
 drop table TIPO_MEDICAMENTO cascade constraints;
 drop table TRATAMIENTO cascade constraints;
+drop table ACCESOROL cascade constraints;
+drop table DETALLE_ORDENMEDICAMENTO cascade constraints;
+drop table PERSONAROL cascade constraints;

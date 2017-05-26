@@ -1,6 +1,8 @@
 package entidades;
 
-public class detalleOrdenMedicamentePK {
+import java.io.Serializable;
+
+public class detalleOrdenMedicamentePK implements Serializable{
 	
 	private int ordenMedicamento;
 	private int medicamento;
@@ -11,6 +13,22 @@ public class detalleOrdenMedicamentePK {
 	public detalleOrdenMedicamentePK(int ordenMedicamento, int medicamento) {
 		super();
 		this.ordenMedicamento = ordenMedicamento;
+		this.medicamento = medicamento;
+	}
+	
+	public int getOrdenMedicamento() {
+		return ordenMedicamento;
+	}
+
+	public void setOrdenMedicamento(int ordenMedicamento) {
+		this.ordenMedicamento = ordenMedicamento;
+	}
+
+	public int getMedicamento() {
+		return medicamento;
+	}
+
+	public void setMedicamento(int medicamento) {
 		this.medicamento = medicamento;
 	}
 
@@ -38,20 +56,5 @@ public class detalleOrdenMedicamentePK {
 			return false;
 		return true;
 	}
-
-	public int getOrdenMedicamento() {
-		return ordenMedicamento;
-	}
-
-	public void setOrdenMedicamento(int ordenMedicamento) {
-		this.ordenMedicamento = ordenMedicamento;
-	}
-
-	public int getMedicamento() {
-		return medicamento;
-	}
-
-	public void setMedicamento(int medicamento) {
-		this.medicamento = medicamento;
-	}	
+	
 }

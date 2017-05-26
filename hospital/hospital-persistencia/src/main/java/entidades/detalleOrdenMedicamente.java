@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import seguridad.AccesoRolPK;
 
 @Entity
-@Table(name="detalle_ordenmedicamente")
+@Table(name="detalle_ordenmedicamento")
 @IdClass(detalleOrdenMedicamentePK.class)
 public class detalleOrdenMedicamente implements Serializable{
 	@Id
@@ -25,7 +25,7 @@ public class detalleOrdenMedicamente implements Serializable{
 	@JoinColumn(name="Medicamento")
 	private Medicamento medicamento;
 	
-	@Column(name="cantidad")
+	@Column(name="cantidad",nullable = false)
 	private int cantidad;
 	
 	@Column(name="estado")
@@ -73,5 +73,36 @@ public class detalleOrdenMedicamente implements Serializable{
 
 	public void setEntregado(boolean entregado) {
 		this.entregado = entregado;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((medicamento == null) ? 0 : medicamento.hashCode());
+		result = prime * result + ((ordenMedicamento == null) ? 0 : ordenMedicamento.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		detalleOrdenMedicamente other = (detalleOrdenMedicamente) obj;
+		if (medicamento == null) {
+			if (other.medicamento != null)
+				return false;
+		} else if (!medicamento.equals(other.medicamento))
+			return false;
+		if (ordenMedicamento == null) {
+			if (other.ordenMedicamento != null)
+				return false;
+		} else if (!ordenMedicamento.equals(other.ordenMedicamento))
+			return false;
+		return true;
 	}	
 }

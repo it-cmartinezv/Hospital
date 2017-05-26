@@ -1,4 +1,4 @@
-INSERT INTO PAIS (ID_PAIS, NOMBRE) VALUES ('1', 'Colombia');
+INSERT INTO PAIS (ID_PAIS, NOMBRE) VALUES ('1', 'Colombia');
 INSERT INTO PAIS (ID_PAIS, NOMBRE) VALUES ('2', 'Estados Unidos');
 INSERT INTO PAIS (ID_PAIS, NOMBRE) VALUES ('3', 'Alemania');
 INSERT INTO PAIS (ID_PAIS, NOMBRE) VALUES ('4', 'Espania');
@@ -23,12 +23,8 @@ INSERT INTO EPS (ID_EPS, NOMBRE, DIRECCION, TELEFONO, TIPO_EPS_ID_TIPO_EPS) VALU
 
 ------------------------------------------------- MEDICOS -------------------------------------------------------------------
 
-INSERT INTO PERSONA (ID, NUMERO_IDENTIFICACION, TIPO_IDENTIFICACION, NOMBRE, APELLIDO, FECHA_NACIMIENTO, GENERO, CORREO, PASSWORD, TELEFONO, CIUDAD) VALUES ('3', '1000', 'CEDULA_DE_CIUDADANIA', 'Diego', 'Valencia', TO_DATE('1978-10-12 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'HOMBRE', 'valencia@gmail.com', 'valencia123', '3214886789', '1');
+INSERT INTO PERSONA (ID, NUMERO_IDENTIFICACION, TIPO_IDENTIFICACION, NOMBRE, APELLIDO, FECHA_NACIMIENTO, GENERO, CORREO, PASSWORD, TELEFONO, CIUDAD) VALUES ('3', '1000', 'CEDULA_DE_CIUDADANIA', 'Diego', 'Valencia', TO_DATE('1978-10-12 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'HOMBRE', 'valencia@gmail.com', 'valencia123', '3214886789', '1');
 INSERT INTO MEDICO (ID, ESTADO, TARJETA_PROFESIONAL) VALUES ('3', '1', '123456789');
-
---------------- ACCESOS DEL ROL -------------------------------
-
-INSERT INTO ACCESO (ID, URL, ROL) VALUES ('1', '/paginas/seguro/paciente.xhtml', '4');
 
 --------------- ROLES NO CAMBIAR ------------------------------
 
@@ -39,16 +35,20 @@ INSERT INTO ROL (ID, NOMBRE) VALUES ('4', 'Paciente');
 
 --------------- PAGINAS DE ACCESO -----------------------------
 
-INSERT INTO ACCESO (NOMBRE, URL) VALUES ('Gestionar medicos', '/paginas/seguro/gestion-medicos.xhtml');
-INSERT INTO ACCESO (NOMBRE, URL) VALUES ('Gestionar pacientes', '/paginas/seguro/gestion-pacientes.xhtml');
-INSERT INTO ACCESO (NOMBRE, URL) VALUES ('Gestionar farmaceuticos', '/paginas/seguro/gestion-farmaceuticos.xhtml');
-INSERT INTO ACCESO (NOMBRE, URL) VALUES ('Registro paciente', '/paginas/publico/registro-paciente.xhtml');
-
+INSERT INTO ACCESO (ID,NOMBRE, URL) VALUES (1,'Gestionar medicos', '/paginas/seguro/gestion-medicos.xhtml');
+INSERT INTO ACCESO (ID,NOMBRE, URL) VALUES (2,'Gestionar pacientes', '/paginas/seguro/gestion-pacientes.xhtml');
+INSERT INTO ACCESO (ID,NOMBRE, URL) VALUES (3,'Gestionar farmaceuticos', '/paginas/seguro/gestion-farmaceuticos.xhtml');
+INSERT INTO ACCESO (ID,NOMBRE, URL) VALUES (4,'Gestionar administradores', '/paginas/seguro/gestion-administradores.xhtml');
+INSERT INTO ACCESO (ID,NOMBRE, URL) VALUES (5,'Gestion eps', '/paginas/seguro/gestion-EPS.xhtml');
+INSERT INTO ACCESO (ID,NOMBRE, URL) VALUES (6,'Gestionar farmacias', '/paginas/seguro/gestion-farmacia.xhtml');
+INSERT INTO ACCESO (ID,NOMBRE, URL) VALUES (7,'Gestionar medicamentos', '/paginas/seguro/gestion-medicamentos.xhtml');
+INSERT INTO ACCESO (ID,NOMBRE, URL) VALUES (8,'Gestionar cirugias', '/paginas/seguro/gestion-cirugia.xhtml');
+INSERT INTO ACCESO (ID,NOMBRE, URL) VALUES (9,'Gestionar examenes', '/paginas/seguro/gestion-examen.xhtml');
 
 --------------- ADMINISTRADOR -------------------------------------
 
-INSERT INTO PERSONA (NUMERO_IDENTIFICACION, TIPO_IDENTIFICACION, NOMBRE, APELLIDO, FECHA_NACIMIENTO, GENERO, CORREO, PASSWORD, TELEFONO, CIUDAD) VALUES ('1', 'CEDULA_DE_CIUDADANIA', 'Carlos', 'Martinez', TO_DATE('1994-05-05 03:26:09', 'YYYY-MM-DD HH24:MI:SS'), 'HOMBRE', 'admin@hospital.com', '123', '3213456789', '1');
-INSERT INTO PERSONAROL (PERSONA, ROL) VALUES ('ESPECIFIQUE AQUI EL ID DEL ADMINISTRADOR QUE SE ACABO DE REGISTRAR', '1')
+INSERT INTO PERSONA (ID,NUMERO_IDENTIFICACION, TIPO_IDENTIFICACION, NOMBRE, APELLIDO, FECHA_NACIMIENTO, GENERO, CORREO, PASSWORD, TELEFONO, CIUDAD) VALUES ('1','1500000', 'CEDULA_DE_CIUDADANIA', 'Carlos', 'Martinez', TO_DATE('1994-05-05 03:26:09', 'YYYY-MM-DD HH24:MI:SS'), 'HOMBRE', 'admin@hospital.com', '123', '3213456789', '1');
+INSERT INTO PERSONAROL (PERSONA, ROL) VALUES ('1', '1');
 
 --------------- ASIGNAMOS LOS ACCESOS DEL ADMINISTRADOR (ID = 1) -----------
 
@@ -57,3 +57,7 @@ INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '2');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '3');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '4');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '5');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '6');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '7');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '8');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '9');

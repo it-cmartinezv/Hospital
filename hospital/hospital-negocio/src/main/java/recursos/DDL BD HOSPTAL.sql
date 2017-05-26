@@ -1,5 +1,5 @@
 -- Generado por Oracle SQL Developer Data Modeler 4.1.3.901
---   en:        2017-05-24 20:30:16 COT
+--   en:        2017-05-25 17:56:57 COT
 --   sitio:      Oracle Database 11g
 --   tipo:      Oracle Database 11g
 
@@ -111,15 +111,6 @@ CREATE TABLE Enfermedad
 ALTER TABLE Enfermedad ADD CONSTRAINT Enfermedad_PK PRIMARY KEY ( Id_Enfermedad ) ;
 
 
-CREATE TABLE Entrega_Medicamento
-  (
-    Id_Entrega INTEGER NOT NULL ,
-    Fecha      DATE NOT NULL ,
-    Cantidad   INTEGER NOT NULL
-  ) ;
-ALTER TABLE Entrega_Medicamento ADD CONSTRAINT Entrega_Medicamento_PK PRIMARY KEY ( Id_Entrega ) ;
-
-
 CREATE TABLE Examen
   (
     Id_Examen   INTEGER NOT NULL ,
@@ -222,13 +213,13 @@ ALTER TABLE Orden_Hospitalizacion ADD CONSTRAINT Orden_Hospitalizacion_PK PRIMAR
 
 CREATE TABLE Orden_Medicamento
   (
-    Id_Orden                       INTEGER NOT NULL ,
-    posologia                      VARCHAR2 (300) NOT NULL ,
-    Citas_Medicas_Id_Cita          NUMBER NOT NULL ,
-    Medicamento_Id_Medicamento     INTEGER NOT NULL ,
-    Entrega_Medicamento_Id_Entrega INTEGER NOT NULL
+    Id            INTEGER NOT NULL ,
+    fecha         DATE NOT NULL ,
+    posologia     VARCHAR2 (300) NOT NULL ,
+    estado        CHAR (1) NOT NULL ,
+    Citas_Medicas NUMBER NOT NULL
   ) ;
-ALTER TABLE Orden_Medicamento ADD CONSTRAINT Orden_Medicamento_PK PRIMARY KEY ( Id_Orden ) ;
+ALTER TABLE Orden_Medicamento ADD CONSTRAINT Orden_Medicamento_PK PRIMARY KEY ( Id ) ;
 
 
 CREATE TABLE Paciente
@@ -321,6 +312,16 @@ CREATE TABLE Tratamiento
 ALTER TABLE Tratamiento ADD CONSTRAINT Tratamiento_PK PRIMARY KEY ( Id_Tratamiento ) ;
 
 
+CREATE TABLE detalle_ordenmedicamento
+  (
+    Orden_Medicamento INTEGER NOT NULL ,
+    Medicamento       INTEGER NOT NULL ,
+    cantidad          NUMBER NOT NULL ,
+    estado            CHAR (1) NOT NULL
+  ) ;
+ALTER TABLE detalle_ordenmedicamento ADD CONSTRAINT detalle_ordenmedicamente_PK PRIMARY KEY ( Medicamento, Orden_Medicamento ) ;
+
+
 ALTER TABLE AccesoRol ADD CONSTRAINT AccesoRol_Acceso_FK FOREIGN KEY ( Acceso ) REFERENCES Acceso ( id ) ;
 
 ALTER TABLE Orden_Cirugia ADD CONSTRAINT Cirugia_FK FOREIGN KEY ( Cirugia_Id_Cirugia ) REFERENCES Cirugia ( Id_Cirugia ) ;
@@ -331,7 +332,7 @@ ALTER TABLE Orden_Examen ADD CONSTRAINT Citas_Medicas_FK FOREIGN KEY ( Citas_Med
 
 ALTER TABLE Orden_Hospitalizacion ADD CONSTRAINT Citas_Medicas_FKv2 FOREIGN KEY ( Citas_Medicas_Id_Cita ) REFERENCES Citas_Medicas ( id ) ;
 
-ALTER TABLE Orden_Medicamento ADD CONSTRAINT Citas_Medicas_FKv3 FOREIGN KEY ( Citas_Medicas_Id_Cita ) REFERENCES Citas_Medicas ( id ) ;
+ALTER TABLE Orden_Medicamento ADD CONSTRAINT Citas_Medicas_FKv3 FOREIGN KEY ( Citas_Medicas ) REFERENCES Citas_Medicas ( id ) ;
 
 ALTER TABLE Citas_Medicas ADD CONSTRAINT Citas_Medicas_Medico_FK FOREIGN KEY ( Medico ) REFERENCES Medico ( id ) ;
 
@@ -353,8 +354,6 @@ ALTER TABLE Enfermedad ADD CONSTRAINT Enfermedad_Sintomas_FK FOREIGN KEY ( Sinto
 
 ALTER TABLE Enfermedad ADD CONSTRAINT Enfermedad_Tratamiento_FK FOREIGN KEY ( Tratamiento ) REFERENCES Tratamiento ( Id_Tratamiento ) ;
 
-ALTER TABLE Orden_Medicamento ADD CONSTRAINT Entrega_Medicamento_FK FOREIGN KEY ( Entrega_Medicamento_Id_Entrega ) REFERENCES Entrega_Medicamento ( Id_Entrega ) ;
-
 ALTER TABLE Farmacia ADD CONSTRAINT Farmacia_Ciudad_FK FOREIGN KEY ( Ciudad_Id_Ciudad ) REFERENCES Ciudad ( Id_Ciudad ) ;
 
 ALTER TABLE Farmacia ADD CONSTRAINT Farmacia_Farmaceutico_FK FOREIGN KEY ( Farmaceutico ) REFERENCES Farmaceutico ( id ) ;
@@ -367,7 +366,7 @@ ALTER TABLE Orden_Hospitalizacion ADD CONSTRAINT Hospitalizacion_FK FOREIGN KEY 
 
 ALTER TABLE Hospitalizacion ADD CONSTRAINT Hospitalizacion_Medico_FK FOREIGN KEY ( Medico ) REFERENCES Medico ( id ) ;
 
-ALTER TABLE Orden_Medicamento ADD CONSTRAINT Medicamento_FK FOREIGN KEY ( Medicamento_Id_Medicamento ) REFERENCES Medicamento ( Id_Medicamento ) ;
+ALTER TABLE detalle_ordenmedicamento ADD CONSTRAINT Medicamento_FK FOREIGN KEY ( Medicamento ) REFERENCES Medicamento ( Id_Medicamento ) ;
 
 ALTER TABLE Medicamento ADD CONSTRAINT Medicamento_Farmacia_FK FOREIGN KEY ( Farmacia_Id_Farmacia ) REFERENCES Farmacia ( Id_Farmacia ) ;
 
@@ -382,6 +381,8 @@ ALTER TABLE Detalle_Cirugia ADD CONSTRAINT Orden_Cirugia_FK FOREIGN KEY ( Orden_
 ALTER TABLE Detalle_Examen ADD CONSTRAINT Orden_Examen_FK FOREIGN KEY ( Orden_Examen_Id_Orden ) REFERENCES Orden_Examen ( Id_Orden ) ;
 
 ALTER TABLE Orden_Examen ADD CONSTRAINT Orden_Medica_Examen_FK FOREIGN KEY ( Examen ) REFERENCES Examen ( Id_Examen ) ;
+
+ALTER TABLE detalle_ordenmedicamento ADD CONSTRAINT Orden_Medicamento_FK FOREIGN KEY ( Orden_Medicamento ) REFERENCES Orden_Medicamento ( Id ) ;
 
 ALTER TABLE Paciente ADD CONSTRAINT Paciente_EPS_FK FOREIGN KEY ( EPS_Id_Eps ) REFERENCES EPS ( Id_Eps ) ;
 

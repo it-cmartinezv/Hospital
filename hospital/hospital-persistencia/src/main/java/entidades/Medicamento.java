@@ -164,9 +164,5 @@ public class Medicamento implements Serializable{
 		if (id != other.id)
 			return false;
 		return true;
-	}
-	
-	
-	
-	
+	}	
 }
