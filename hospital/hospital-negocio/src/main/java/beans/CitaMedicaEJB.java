@@ -9,8 +9,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import entidades.CitaMedica;
+
 import entidades.Eps;
 import entidades.Quirofano;
+
 import entidades.Sintoma;
 
 /**
@@ -36,6 +38,7 @@ public class CitaMedicaEJB {
 	}
 	
 	/**
+
 	 * Buscar cita
 	 */
 	public CitaMedica buscar(int id){
@@ -55,4 +58,7 @@ public class CitaMedicaEJB {
 	public void editar(CitaMedica cita) {
 		em.merge(cita);
 	}
+
+	
+
 }
