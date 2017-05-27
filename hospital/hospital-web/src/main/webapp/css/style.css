@@ -115,7 +115,7 @@ label{
 }
 .contenedor select,.contenedor input, .contenedor button{
     margin: 0 0 11px 10px;
-    width: 255px;
+    width: 96%;
     border: 1px solid #ced0d4;
     color: #475258;
     font-size: 14px;
@@ -125,6 +125,18 @@ label{
 	    font-size: 14px!important;
 	    display: inherit!important;
 	    font-weight: 100!important
+}
+table #acciones{width: auto!important}
+table{width: 100%!important}
+.contenedor textarea{
+    border-radius: 0px!important;
+    margin: 0px 0px 0px 10px;
+    border: 1px solid rgb(206, 208, 212)!important;
+    color: rgb(71, 82, 88);
+    font-size: 14px;
+    padding: 5px;
+    box-shadow: none !important;
+    width: 96%!important;
 }
 .contenedor button,.contenedor input[type=button],.contenedor input[type=submit]{
     background: #5fcf80;
@@ -171,6 +183,7 @@ label{
     text-align: right;
     margin-left: auto;
     margin-top: 10px;
+    width: auto!important;
 }
 
 tr div {

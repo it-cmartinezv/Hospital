@@ -1,0 +1,83 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/template/template.xhtml">
+	<h:head>
+	</h:head>
+
+	<ui:define name="cuerpo">
+	    <!-- TITULO  --> 
+		<h1>Solicitar Cita Medica</h1>
+		<!-- FORMULARIO, SOLO DEBE HABER UNO --> 
+		<h:form prependId="false" id="gestion">
+			<!-- PANELGRID ES UNA TABLA SE PUEDE REPETIR  --> 
+			<div class="datos">
+			<h:panelGrid id="paneldatos" columns="3">
+				
+				<p:outputLabel for="caracter" id="lcaracter" value="Caracter:" />
+				<h:selectOneMenu id="caracter" value="#{citaController.caracter}">
+					<f:selectItem itemValue="0" itemLabel="General" />					
+					<f:selectItem itemValue="1" itemLabel="Prioritaria" />
+				</h:selectOneMenu>
+				<p:message for="caracter"/>
+				
+				<p:outputLabel for="valoracion" id="lvaloracion" value="Valoracion" />
+				<h:selectOneMenu id="valoracion" value="#{citaController.valoracion}">
+					<f:selectItem itemValue="MEDICO_GENERAL" itemLabel="Medico General" />					
+					<f:selectItem itemValue="PEDIATRA" itemLabel="Pediatria" />
+					<f:selectItem itemValue="GINECOLOGO" itemLabel="Ginecologo" />
+					<f:selectItem itemValue="DENTISTA" itemLabel="Dentista" />
+				</h:selectOneMenu>
+				<p:message for="valoracion"/>
+								
+				<h:outputLabel for="medico" id="lmedico" value="Medico" />
+				<h:selectOneMenu id="medico" value="#{citaController.medico}" converter="medicoConverter">
+					<f:selectItems value="#{citaController.medicos}" var="medico"
+						itemValue="#{medico}" itemLabel="#{medico.nombre}" />
+				</h:selectOneMenu>
+				<p:message for="medico"/>
+				
+				<h:outputLabel for="descripcion" id="ldescripcion" value="Descripcion" />
+				<p:inputTextarea rows="10" maxlength="300" id="descripcion" value="#{citaController.descripcion}" />
+				<p:message for="descripcion" />
+				
+			</h:panelGrid>
+			
+			<h:panelGrid id="acciones" columns="5">
+				<h:commandButton action="/paciente.xhtml?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>
+				<h:commandButton action="#{citaController.cita}" value="Pedir Cita" id="btnRegistrar"/>
+			</h:panelGrid>
+			</div>
+			
+			<div class="tabladatos">
+			<p:panel header="Listado de Sintomas" id="paneltabla">
+				<p:dataTable id="tablaSintomas" value="#{citaController.medicos}" var="medico">
+
+					<p:column headerText="Tarjeta Profesional">
+						<h:outputLabel value="#{medico.tarjetaProfesional}" />
+					</p:column>
+
+					<p:column headerText="Nombre">
+						<h:outputLabel value="#{medico.nombre}" />
+					</p:column>
+
+					<p:column headerText="Apellido">
+						<h:outputLabel value="#{medico.apellido}" />
+					</p:column>
+
+					<p:column headerText="Telefono">
+						<h:outputLabel value="#{medico.telefono}" />
+					</p:column>
+
+					<p:column headerText="Ciudad">
+						<h:outputLabel value="#{medico.ciudad.nombre}" />
+					</p:column>
+					
+				</p:dataTable>
+			</p:panel>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

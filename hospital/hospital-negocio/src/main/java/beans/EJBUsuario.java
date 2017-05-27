@@ -305,6 +305,13 @@ public class EJBUsuario implements Serializable{
 	}
 	
 	/**
+	 * Buscar medico por id
+	 */
+	public Medico buscarMedicoID(int id){
+		return em.find(Medico.class, id);
+	}
+	
+	/**
 	 * Buscar un medico en la base de datos
 	 * por tipo y numero de identificacion
 	 */

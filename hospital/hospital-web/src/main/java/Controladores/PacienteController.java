@@ -108,7 +108,7 @@ public class PacienteController implements Serializable{
 	 * Registrar
 	 * 
 	 */
-	public void registrar(){
+	public String registrar(){
 		try{
 			Paciente paciente = new Paciente();
 			paciente.setNombre(nombre);
@@ -126,10 +126,11 @@ public class PacienteController implements Serializable{
 			usuarioEJB.registrarPaciente(paciente);
 			limpiar();
 			Messages.addFlashGlobalInfo("Te has registrado exitosamente");
-
+			return "/paginas/publico/iniciar-sesion.xhtmljsf?faces-redirect=true";
 		}catch(ExcepcionNegocio e){
 			Messages.addGlobalError(e.getMessage());
 		}
+		return null;
 	}
 	
 	public void limpiar(){

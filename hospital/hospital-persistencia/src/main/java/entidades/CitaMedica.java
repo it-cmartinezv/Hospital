@@ -24,7 +24,13 @@ public class CitaMedica implements Serializable{
 	private int id;
 	
 	@Column(name="Caracter")
-	private boolean caracter;
+	private int caracter;
+	
+	@Column(name="valoracion")
+	private String valoracion;
+	
+	@Column(name="estado")
+	private String estado;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="Fecha",nullable = false)
@@ -37,35 +43,32 @@ public class CitaMedica implements Serializable{
 	/**
 	 * el tipo de la cita medica: odontologia, medico general, especialista
 	 */
-	@Column(name="tipo",nullable = false, length=50)
-	private String tipo; 
-	
-	@JoinColumn(name="Paciente")
-	@ManyToOne(cascade={})
-	private Paciente paciente;
+	@Column(name="descripcion",nullable = false, length=300)
+	private String descripcion; 
 	
 	@JoinColumn(name="Medico")
 	@ManyToOne(cascade={})
 	private Medico medico;
 	
-	@JoinColumn(name="Sintomas")
+	@JoinColumn(name="Paciente")
 	@ManyToOne(cascade={})
-	private Sintoma sintoma;
-
-	public CitaMedica(boolean caracter, Date fecha, Time hora, String tipo, Paciente paciente, Medico medico,
-			Sintoma sintoma) {
-		super();
-		this.caracter = caracter;
-		this.fecha = fecha;
-		this.hora = hora;
-		this.tipo = tipo;
-		this.paciente = paciente;
-		this.medico = medico;
-		this.sintoma = sintoma;
-	}
+	private Paciente paciente;
 
 	public CitaMedica() {
 		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public CitaMedica(int id, int caracter, Date fecha, Time hora, String descripcion, Medico medico,
+			Paciente paciente) {
+		super();
+		this.id = id;
+		this.caracter = caracter;
+		this.fecha = fecha;
+		this.hora = hora;
+		this.descripcion = descripcion;
+		this.medico = medico;
+		this.paciente = paciente;
 	}
 
 	public int getId() {
@@ -76,11 +79,11 @@ public class CitaMedica implements Serializable{
 		this.id = id;
 	}
 
-	public boolean isCaracter() {
+	public int getCaracter() {
 		return caracter;
 	}
 
-	public void setCaracter(boolean caracter) {
+	public void setCaracter(int caracter) {
 		this.caracter = caracter;
 	}
 
@@ -100,20 +103,12 @@ public class CitaMedica implements Serializable{
 		this.hora = hora;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
-	public Paciente getPaciente() {
-		return paciente;
-	}
-
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	public Medico getMedico() {
@@ -124,17 +119,12 @@ public class CitaMedica implements Serializable{
 		this.medico = medico;
 	}
 
-	public Sintoma getSintoma() {
-		return sintoma;
+	public Paciente getPaciente() {
+		return paciente;
 	}
 
-	public void setSintoma(Sintoma sintoma) {
-		this.sintoma = sintoma;
-	}
-
-	@Override
-	public String toString() {
-		return "CitaMedica [caracter=" + caracter + "]";
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
 	}
 
 	@Override
@@ -158,8 +148,4 @@ public class CitaMedica implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
-	
 }

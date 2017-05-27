@@ -52,8 +52,11 @@
           		<li><a href="http://localhost:8081/hospital-web/paginas/seguro/gestion-examen.xhtml">Gestion de Examenes</a></li>
           	</ul>
           </li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#{request.contextPath}/paginas/publico/iniciar-sesion.xhtml">Iniciar Sesion</a></li>
+          <li class="submenu"><a href="#feature">#{sesionController.usuario.nombre} #{sesionController.usuario.apellido}</a>
+          	<ul>
+          		<li><a href="http://localhost:8081/hospital-web/paginas/seguro/solicitar-cita.xhtml">Solicitar cita</a></li>
+          	</ul>
+          </li>
           <li class="offs"><h:form id="ftrans"><h:commandLink action="#{sesionController.cerrarSesion}" value="Cerrar Sesion" rendered="#{sesionController.sesion}"/></h:form></li>
           <li class="btn-trial"><a href="#{request.contextPath}/paginas/publico/registro-paciente.xhtml">Registrarme</a></li>
         </ul>
