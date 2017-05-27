@@ -9,10 +9,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import entidades.CitaMedica;
+
 import entidades.Eps;
 import entidades.Medico;
 import entidades.Paciente;
 import entidades.Quirofano;
+
 import entidades.Sintoma;
 
 /**
@@ -38,6 +40,7 @@ public class CitaMedicaEJB {
 	}
 	
 	/**
+
 	 * Buscar cita
 	 */
 	public CitaMedica buscar(int id){
