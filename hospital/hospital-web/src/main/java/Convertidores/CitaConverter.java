@@ -15,7 +15,7 @@ import entidades.CitaMedica;
 
 
 /**
- * @author AlejandroM
+ * @author AlejandroMata
  *
  */
 @FacesConverter(value="citaConverter", forClass = CitaMedica.class)
