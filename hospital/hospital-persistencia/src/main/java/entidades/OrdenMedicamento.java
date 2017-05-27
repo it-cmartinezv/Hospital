@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -16,7 +18,15 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "Orden_Medicamento")
+@NamedQueries({ 
+	@NamedQuery(name = OrdenMedicamento.LISTARORDENES, query = "SELECT o FROM OrdenMedicamento o"),
+	@NamedQuery(name = OrdenMedicamento.BUSCARPORID, query = "SELECT OM FROM OrdenMedicamento OM WHERE OM.id=?1")
+})
 public class OrdenMedicamento implements Serializable{
+	
+	public static final String LISTARORDENES = "OrdenMedicamento.listar";
+	public static final String BUSCARPORID= "OrdenMedicamento.buscar";
+	
 	@Id
 	@Column(name="Id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="SEQ_ORDEN_MEDICAMENTO") 
