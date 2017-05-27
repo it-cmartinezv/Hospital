@@ -55,6 +55,8 @@
           <li class="submenu"><a href="#feature">#{sesionController.usuario.nombre} #{sesionController.usuario.apellido}</a>
           	<ul>
           		<li><a href="http://localhost:8081/hospital-web/paginas/seguro/solicitar-cita.xhtml">Solicitar cita</a></li>
+          		<li><a href="http://localhost:8081/hospital-web/paginas/seguro/citas-pendientes.xhtml">Citas pendientes</a></li>
+          		<li><a href="http://localhost:8081/hospital-web/paginas/seguro/citas-atendidas.xhtml">Citas atendidas</a></li>
           	</ul>
           </li>
           <li class="offs"><h:form id="ftrans"><h:commandLink action="#{sesionController.cerrarSesion}" value="Cerrar Sesion" rendered="#{sesionController.sesion}"/></h:form></li>

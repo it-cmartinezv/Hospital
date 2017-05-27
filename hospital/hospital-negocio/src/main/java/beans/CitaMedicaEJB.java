@@ -8,6 +8,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import entidades.CitaMedica;
+import entidades.Eps;
+import entidades.Quirofano;
 import entidades.Sintoma;
 
 /**
@@ -32,4 +35,24 @@ public class CitaMedicaEJB {
 		return lista;
 	}
 	
+	/**
+	 * Buscar cita
+	 */
+	public CitaMedica buscar(int id){
+		return em.find(CitaMedica.class, id);
+	}
+	
+	/**
+	 * Crear
+	 */
+	public void crear(CitaMedica cita) {
+		em.persist(cita);
+	}
+	
+	/**
+	 * Editar
+	 */
+	public void editar(CitaMedica cita) {
+		em.merge(cita);
+	}
 }
