@@ -14,26 +14,23 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Enfermedad")
 @NamedQueries({
-	@NamedQuery(name=Enfermedad.listarEnfermedadSintoma, query="SELECT e FROM Enfermedad e WHERE e.sintomas = ?1"),
 	@NamedQuery(name=Enfermedad.listarEnfermedadTratamiento, query="SELECT e FROM Enfermedad e WHERE e.tratamiento = ?1")
 })
 public class Enfermedad implements Serializable{
 	
-	public static final String listarEnfermedadSintoma = "Enfermedad.listarEnfermedadSintoma";
 	public static final String listarEnfermedadTratamiento = "Enfermedad.listarEnfermedadTratamiento";
 	
 	@Id
-	@Column(name="Id_Enfermedad")
+	@Column(name="Id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
 	@Column(name="Nombre",nullable = false,length=50)
 	private String nombre;
 	
-	@JoinColumn(name="Sintomas_Id_Sintomas")
-	@ManyToOne(cascade={})
-	private Sintoma sintomas;
-		
+	@Column(name="Descripcion",nullable = false,length=300)
+	private String descripcion;
+	
 	@JoinColumn(name="Tratamiento")
 	@ManyToOne(cascade={})
 	private Tratamiento tratamiento;
@@ -43,10 +40,10 @@ public class Enfermedad implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Enfermedad(String nombre, Sintoma sintomas, Tratamiento tratamiento) {
+	public Enfermedad(String nombre, String descripcion, Tratamiento tratamiento) {
 		super();
 		this.nombre = nombre;
-		this.sintomas = sintomas;
+		this.descripcion = descripcion;
 		this.tratamiento = tratamiento;
 	}
 
@@ -66,20 +63,20 @@ public class Enfermedad implements Serializable{
 		this.nombre = nombre;
 	}
 
-	public Sintoma getSintomas() {
-		return sintomas;
-	}
-
-	public void setSintomas(Sintoma sintomas) {
-		this.sintomas = sintomas;
-	}
-
 	public Tratamiento getTratamiento() {
 		return tratamiento;
 	}
 
 	public void setTratamiento(Tratamiento tratamiento) {
 		this.tratamiento = tratamiento;
+	}
+	
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	@Override

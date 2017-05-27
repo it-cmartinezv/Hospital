@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -19,14 +20,15 @@ public class Sintoma implements Serializable{
 	public static final String listarSintomas = "Sintoma.listarSintomas";
 	
 	@Id
-	@Column(name="Id_Sintomas")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="Id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="SEQ_SINTOMAS") 
+	@SequenceGenerator(name="SEQ_SINTOMAS", sequenceName="SEQ_SINTOMAS",allocationSize=1)
 	private int id;
 	
 	@Column(name="Nombre",nullable = false,length=50)
 	private String nombre;
 	
-	@Column(name="Descripcion",nullable = true,length=100)
+	@Column(name="Descripcion",nullable = true,length=300)
 	private String descripcion;
 
 	public Sintoma() {

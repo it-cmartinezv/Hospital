@@ -10,6 +10,8 @@ import javax.persistence.Query;
 
 import entidades.CitaMedica;
 import entidades.Eps;
+import entidades.Medico;
+import entidades.Paciente;
 import entidades.Quirofano;
 import entidades.Sintoma;
 
@@ -54,5 +56,45 @@ public class CitaMedicaEJB {
 	 */
 	public void editar(CitaMedica cita) {
 		em.merge(cita);
+	}
+	
+	/**
+	 * citas de un paciente
+	 */
+	public List<CitaMedica> citasByPaciente(Paciente paciente){
+		Query q = em.createNamedQuery(CitaMedica.citasByPaciente);
+		q.setParameter(1, paciente);
+		return q.getResultList();
+	}
+	
+	/**
+	 * citas de un paciente por estado
+	 * estados = Pendiente | Cancelada | Atendida
+	 */
+	public List<CitaMedica> citasByPacienteEstado(Paciente paciente, String estado){
+		Query q = em.createNamedQuery(CitaMedica.pacienteByEstado);
+		q.setParameter(1, paciente);
+		q.setParameter(2, estado);
+		return q.getResultList();
+	}
+	
+	/**
+	 * citas de un medico
+	 */
+	public List<CitaMedica> citasByMedico(Medico medico){
+		Query q = em.createNamedQuery(CitaMedica.citasByMedico);
+		q.setParameter(1, medico);
+		return q.getResultList();
+	}
+	
+	/**
+	 * citas de un paciente por estado
+	 * estados = Pendiente | Cancelada | Atendida
+	 */
+	public List<CitaMedica> citasByMedicoEstado(Medico medico, String estado){
+		Query q = em.createNamedQuery(CitaMedica.medicoByEstado);
+		q.setParameter(1, medico);
+		q.setParameter(2, estado);
+		return q.getResultList();
 	}
 }

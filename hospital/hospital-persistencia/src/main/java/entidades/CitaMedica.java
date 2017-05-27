@@ -2,6 +2,8 @@ package entidades;
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -19,11 +22,19 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "Citas_Medicas")
 @NamedQueries({
-	@NamedQuery(name=CitaMedica.LISTA_CITA, query="SELECT c FROM CitaMedica c")
+	@NamedQuery(name=CitaMedica.LISTA_CITA, query="SELECT c FROM CitaMedica c"),
+	@NamedQuery(name=CitaMedica.citasByPaciente, query="SELECT c FROM CitaMedica c WHERE c.paciente=?1"),
+	@NamedQuery(name=CitaMedica.pacienteByEstado, query="SELECT c FROM CitaMedica c WHERE c.paciente=?1 AND c.estado=?2"),
+	@NamedQuery(name=CitaMedica.citasByMedico, query="SELECT c FROM CitaMedica c WHERE c.medico=?1"),
+	@NamedQuery(name=CitaMedica.medicoByEstado, query="SELECT c FROM CitaMedica c WHERE c.medico=?1 AND c.estado=?2")
 })
 public class CitaMedica implements Serializable{
 	
 	public static final String LISTA_CITA = "CitaMedica.listar";
+	public static final String citasByPaciente = "CitaMedica.citasByPaciente";
+	public static final String pacienteByEstado = "CitaMedica.pacienteByEstado";
+	public static final String citasByMedico = "CitaMedica.citasByMedico";
+	public static final String medicoByEstado = "CitaMedica.medicoByEstado";
 	
 	@Id
 	@Column(name="id")
@@ -62,6 +73,9 @@ public class CitaMedica implements Serializable{
 	@ManyToOne(cascade={})
 	private Paciente paciente;
 
+	@OneToMany(mappedBy="cita",cascade={})
+	private List<CitaSintoma> sintomas;
+	
 	public CitaMedica() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -150,6 +164,14 @@ public class CitaMedica implements Serializable{
 
 	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
+	}
+	
+	public List<CitaSintoma> getSintomas() {
+		return sintomas;
+	}
+
+	public void setSintomas(List<CitaSintoma> sintomas) {
+		this.sintomas = sintomas;
 	}
 
 	@Override

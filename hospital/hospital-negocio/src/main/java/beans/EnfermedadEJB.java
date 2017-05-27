@@ -37,11 +37,11 @@ public class EnfermedadEJB {
 	 * Listar los sintomas de la enfermedad
 	 * @return, el listado de los sintomas de una enfermedad
 	 */
-	public List<Enfermedad>listarEnfermedadSintoma(){
-		Query q = em.createNamedQuery(Enfermedad.listarEnfermedadSintoma);
-		List<Enfermedad> lista = q.getResultList();
-		return lista;
-	}
+//	public List<Enfermedad>listarEnfermedadSintoma(){
+//		Query q = em.createNamedQuery(Enfermedad.listarEnfermedadSintoma);
+//		List<Enfermedad> lista = q.getResultList();
+//		return lista;
+//	}
 	
 	/**
 	 * Listar los tratamientos de una enfermedad

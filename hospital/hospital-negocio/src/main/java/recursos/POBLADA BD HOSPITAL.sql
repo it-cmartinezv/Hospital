@@ -45,6 +45,7 @@ INSERT INTO ACCESO (ID,NOMBRE, URL) VALUES (7,'Gestionar medicamentos', '/pagina
 INSERT INTO ACCESO (ID,NOMBRE, URL) VALUES (8,'Gestionar cirugias', '/paginas/seguro/gestion-cirugia.xhtml');
 INSERT INTO ACCESO (ID,NOMBRE, URL) VALUES (9,'Gestionar examenes', '/paginas/seguro/gestion-examen.xhtml');
 INSERT INTO ACCESO (ID,NOMBRE, URL) VALUES (10,'Solicitar cita', '/paginas/publico/solicitar-cita.xhtml');
+INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('11', 'Citas Pendientes', '/paginas/seguro/citas-pendientes.xhtml');
 
 --------------- ADMINISTRADOR -------------------------------------
 
@@ -63,4 +64,15 @@ INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '7');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '8');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '9');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '10');
-INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('4', '10')
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('4', '10');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '11');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('4', '11');
+----------------------------------- SINTOMAS ------------------------------------------------
+
+INSERT INTO SINTOMAS (ID, NOMBRE, DESCRIPCION) VALUES ('1', 'Ansiedad', 'Estado mental que se caracteriza por una gran inquietud, una intensa excitacióon y una extrema inseguridad.')
+
+INSERT INTO SINTOMAS (ID, NOMBRE, DESCRIPCION) VALUES ('2', 'Fiebre', 'Aumento temporal en la temperatura del cuerpo en respuesta a alguna enfermedad o padecimiento.');
+
+INSERT INTO SINTOMAS (ID, NOMBRE, DESCRIPCION) VALUES ('3', 'Vomitos', 'Salida, forzada o no, de los contenidos del estomago, que suben a traves del esofago para ser finalmente expulsados por la boca.');
+
+INSERT INTO SINTOMAS (ID, NOMBRE, DESCRIPCION) VALUES ('4', 'Diarrea', 'Alteración intestinal que se caracteriza por la mayor frecuencia, fluidez y, a menudo, volumen de las deposiciones.');

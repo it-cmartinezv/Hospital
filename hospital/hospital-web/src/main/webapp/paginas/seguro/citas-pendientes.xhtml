@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/template/template.xhtml">
+	<h:head>
+	</h:head>
+
+	<ui:define name="cuerpo">
+	    <!-- TITULO  --> 
+		<h1>#{sesionController.usuario.nombre} #{sesionController.usuario.apellido}, Tus citas pendientes</h1>
+		<!-- FORMULARIO, SOLO DEBE HABER UNO --> 
+		<h:form prependId="false" id="gestion">
+			<div class="tabladatos">
+			<p:panel header="Listado de citas pendientes" id="paneltabla">
+				<p:dataTable id="tablaSintomas" value="#{ppacienteController.citasPendientes}" var="cita">
+
+					<p:column headerText="Numero">
+						<h:outputLabel value="#{cita.id}" />
+					</p:column>
+
+					<p:column headerText="Valoracion">
+						<h:outputLabel value="#{cita.valoracion}" />
+					</p:column>
+					
+					<p:column headerText="Fecha">
+						<h:outputLabel value="#{cita.fecha}" />
+					</p:column>
+					
+					<p:column headerText="Hora">
+						<h:outputLabel value="#{cita.hora}" />
+					</p:column>
+					
+					<p:column headerText="Medico">
+						<h:outputLabel value="#{cita.medico.nombre} #{cita.medico.apellido}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -5,6 +5,10 @@
     Author URL: https://bootstrapmade.com
 */
 /* Submenu */
+#tablaadd{
+    border-bottom: 1px solid #f1f2f3!important;
+    margin-bottom: 10px!important;
+}
 .offs a{
 	color: #8c2922;
     font-size: 14px;
