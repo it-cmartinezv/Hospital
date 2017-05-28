@@ -7,16 +7,25 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-//@Entity
+@Entity
 @Table(name = "Detalle_Examen")
 public class DetalleExamen implements Serializable{
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_DETALLE_EXAMEN")
+	@SequenceGenerator(name = "SEQ_DETALLE_EXAMEN", sequenceName = "SEQ_DETALLE_EXAMEN", allocationSize = 1)
+	@Column(name="Id_Detalle_Examen")
+	private int id;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="Fecha_Realizacion",nullable = false)
