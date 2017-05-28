@@ -9,12 +9,12 @@
 
 	<ui:define name="cuerpo">
 	    <!-- TITULO  --> 
-		<h1>#{sesionController.usuario.nombre} #{sesionController.usuario.apellido}, Tus citas pendientes</h1>
+		<h1>#{sesionController.usuario.nombre} #{sesionController.usuario.apellido}, Tus citas atendidas</h1>
 		<!-- FORMULARIO, SOLO DEBE HABER UNO --> 
 		<h:form prependId="false" id="gestion">
 			<div class="tabladatos">
-			<p:panel header="Listado de citas pendientes" id="paneltabla">
-				<p:dataTable id="tablaCitas" value="#{ppacienteController.citasPendientes}" var="cita">
+			<p:panel header="Listado de citas atendidas" id="paneltabla">
+				<p:dataTable id="tablaCitas" value="#{ppacienteController.citasAtendidas}" var="cita">
 
 					<p:column headerText="Numero">
 						<h:outputLabel value="#{cita.id}" />
@@ -38,10 +38,6 @@
 					
 					<p:column headerText="Ciudad">
 						<h:outputLabel value="#{cita.paciente.ciudad.nombre}" />
-					</p:column>
-					
-					<p:column headerText="Cancelar">
-						<p:commandButton action="#{ppacienteController.cancelarCita(cita)}" value="Cancelar cita" update="tablaCitas" process="@this tablaCitas" id="btnbuscar"/>
 					</p:column>
 				</p:dataTable>
 			</p:panel>
