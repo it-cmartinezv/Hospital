@@ -61,7 +61,9 @@ public class ControladorOrdenMedicamento implements Serializable {
 	 */
 	public void crearOrden() {
 
-		OrdenMedicamento ordenMedi = new OrdenMedicamento(fecha, posologia, true, citaMedica);
+		// el estado de la orden siempre va a hacer false  ya que cuando se crea la orden 
+		// esta nunca va a estar de una vez entregada
+		OrdenMedicamento ordenMedi = new OrdenMedicamento(fecha, posologia, false, citaMedica);
 		ordenMedicamentoEJB.registrarOrden(ordenMedi);
 		Messages.addFlashGlobalInfo("La orden se ha creado exitosamente");
 	}

@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+		<h1>Gestion de EPS</h1>
+		<!-- id="gestion" es el que otorga estilos -->
+		<h:form id="gestion" prependId="false">
+			<div class="datos">
+				<h:panelGrid id="paneldatos" columns="3">
+				
+					<h:outputLabel for="numeroOrden" id="numeroOrden" value="Numero Orden"/> 
+					<h:inputText value="#{detalleOrden.id}" id="nombre" />
+					<p:message for="numeroOrden" />
+					
+					<h:commandButton action="#{detalleOrden.buscarOrdenMEdicamento()}" value="Buscar Orden" id="btnBuscar" />
+					
+				</h:panelGrid>
+				
+			</div>
+			
+			<!-- este div es el que otorga el estilo a la tabla que ponga dentro -->
+			<div class="tabladatos">
+			<p:panel header="Listado de medicamentos" id="paneltabla">
+				<p:dataTable id="tablaMedicamentos" value="#{detalleOrden.listaDetalle}" var="det">
+
+					<p:column headerText="Nombre">
+						<h:outputLabel value="#{det.medicamento.nombre}" />
+					</p:column>
+
+					<p:column headerText="Cantidad Solicitada">
+						<h:outputLabel value="#{det.cantidad}" />
+					</p:column>
+
+					<p:column headerText="Entrega">
+						<p:commandButton action="#{detalleOrden.entregarMedicamento(det)}" value="Entregar" update="paneltabla" process="@this" id="btnbuscar"/>
+					</p:column>
+										
+				</p:dataTable>
+			</p:panel>
+			</div>
+			
+		</h:form>
+	</ui:define>
+
+
+
+
+
+
+
+
+
+
+</ui:composition>
+
+
+

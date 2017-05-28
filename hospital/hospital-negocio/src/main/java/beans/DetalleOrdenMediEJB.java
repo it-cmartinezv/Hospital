@@ -70,5 +70,40 @@ public class DetalleOrdenMediEJB implements Serializable{
 		return lista;
 	}
 	
+	/**
+	 * Esta lista corresponde a los medicamentos que tiene una orden en especial
+	 * @return, la lista con los medicamento de una orden especifica 
+	 */
+	public List<detalleOrdenMedicamente> listaMedicamentos(OrdenMedicamento ordenMedicamento){
+		Query q = em.createNamedQuery(detalleOrdenMedicamente.LISTA_ORDEN_MEDICA);
+		q.setParameter(1, ordenMedicamento);
+		return q.getResultList();
+
+	}
+	
+	/**
+	 * Buscar una orden del medicamento por su id
+	 * @param id, el id de la orden del medicamento que se va a buscar
+	 * @return, la orden del medicamento si se encuentra
+	 */
+	public OrdenMedicamento buscarOrdenMedi(int id){
+		return em.find(OrdenMedicamento.class, id);
+	}
+	
+	
+	
+	/**
+	 * Metodo para editar el detalle del medicamento 
+	 * @param detalle
+	 */
+	public void editar(detalleOrdenMedicamente detalle){
+		em.merge(detalle);
+	}
+	
+	
+	
+	public void editarOrden(OrdenMedicamento orden){
+		em.merge(orden);
+	}
 	
 }
