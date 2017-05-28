@@ -56,6 +56,8 @@ INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('18', 'Panel medico', '/paginas/seg
 INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('19', 'Panel farmaceutico', '/paginas/seguro/farmaceutico.xhtml');
 INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('20', 'Ordenes medicamento', '/paginas/seguro/ordenes.xhtml');
 INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('21', 'Horario medicos', '/paginas/seguro/horario-medico.xhtml');
+INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('22', 'Gestion enfermedades', '/paginas/seguro/gestion-enfermedades.xhtml');
+
 
 --------------- ADMINISTRADOR -------------------------------------
 
@@ -85,6 +87,7 @@ INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '18');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '19');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '20');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '21');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '22');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('2', '11');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('2', '13');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('2', '14');

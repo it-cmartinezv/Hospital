@@ -15,7 +15,7 @@ import javax.persistence.EntityManager;
 
 /**
  * 
- * @author Carlos Martinez
+ * @author Sebastian Salazar
  *
  */
 @LocalBean

@@ -33,9 +33,11 @@ public class PanelPacienteController implements Serializable{
 	private List<CitaMedica> citasAtendidas;
 	private List<CitaMedica> citasCanceladas;
 	
+	private Paciente paciente;
+	
 	@PostConstruct
 	public void inicializar(){
-		Paciente paciente = usuarioEJB.buscarPaciente(sesion.getUsuario().getTipoIdentificacion(), sesion.getUsuario().getNumeroIdentificacion());
+		paciente = usuarioEJB.buscarPaciente(sesion.getUsuario().getTipoIdentificacion(), sesion.getUsuario().getNumeroIdentificacion());
 		if(paciente != null){
 			citasPaciente = citaMedicaEJB.citasByPaciente(paciente);
 			citasPendientes = citaMedicaEJB.citasByPacienteEstado(paciente, "Pendiente");
@@ -52,6 +54,7 @@ public class PanelPacienteController implements Serializable{
 			cita.setEstado("Cancelada");
 			citaMedicaEJB.editar(cita);
 			Messages.addFlashGlobalInfo("Se ha cancelado la cita que estaba prevista para la fecha "+cita.getFecha());
+			citasPendientes = citaMedicaEJB.citasByPacienteEstado(paciente, "Pendiente");
 		}catch(ExcepcionNegocio ex){
 			
 		}catch (Exception e) {
@@ -91,5 +94,13 @@ public class PanelPacienteController implements Serializable{
 
 	public void setCitasCanceladas(List<CitaMedica> citasCanceladas) {
 		this.citasCanceladas = citasCanceladas;
+	}
+
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
 	}
 }

@@ -1,5 +1,5 @@
 --------------------------------------------------------
--- Archivo creado  - sábado-mayo-27-2017   
+-- Archivo creado  - domingo-mayo-28-2017   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Sequence SEQ_ACCESO
@@ -20,7 +20,7 @@
 --  DDL for Sequence SEQ_CITAS_MEDICAS
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "CARLOSABD"."SEQ_CITAS_MEDICAS"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "CARLOSABD"."SEQ_CITAS_MEDICAS"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 41 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence SEQ_CIUDAD
 --------------------------------------------------------
@@ -110,7 +110,7 @@
 --  DDL for Sequence SEQ_PERSONA
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "CARLOSABD"."SEQ_PERSONA"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 48 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "CARLOSABD"."SEQ_PERSONA"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 68 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence SEQ_QUIROFANO
 --------------------------------------------------------
@@ -662,6 +662,13 @@ Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('12','Entrega Medicamento',
 Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('13','Orden Medicamento','/paginas/seguro/gestion-ordenMedicamento.xhtml');
 Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('14','Citas canceladas','/paginas/seguro/citas-canceladas.xhtml');
 Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('15','Citas atendidas','/paginas/seguro/citas-atendidas.xhtml');
+Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('16','Panel paciente','/paginas/seguro/paciente.xhtml');
+Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('17','Panel administrador','/paginas/seguro/administrador.xhtml');
+Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('18','Panel medico','/paginas/seguro/medico.xhtml');
+Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('19','Panel farmaceutico','/paginas/seguro/farmaceutico.xhtml');
+Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('20','Ordenes medicamento','/paginas/seguro/ordenes.xhtml');
+Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('21','Horario medicos','/paginas/seguro/horario-medico.xhtml');
+Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('22','Gestion enfermedades','/paginas/seguro/gestion-enfermedades.xhtml');
 Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('1','Gestionar medicos','/paginas/seguro/gestion-medicos.xhtml');
 Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('2','Gestionar pacientes','/paginas/seguro/gestion-pacientes.xhtml');
 Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('3','Gestionar farmaceuticos','/paginas/seguro/gestion-farmaceuticos.xhtml');
@@ -697,6 +704,17 @@ Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('4','14');
 Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','15');
 Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('2','15');
 Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('4','15');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','16');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('4','16');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','17');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','18');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('2','18');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','19');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('3','19');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','20');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('3','20');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','21');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','22');
 REM INSERTING into CARLOSABD.CAMAS
 SET DEFINE OFF;
 REM INSERTING into CARLOSABD.CIRUGIA
@@ -709,14 +727,24 @@ Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,P
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('5','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'Estoy teniendo mareos y mucha congestion','32','28','MEDICO_GENERAL','Cancelada');
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('6','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'Dolor en el colon, por comida pesada','32','28','MEDICO_GENERAL','Cancelada');
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('7','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'me duelen las guevas','32','28','MEDICO_GENERAL','Cancelada');
-Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('8','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'Me duelen los pies cuando me levanto de la cama','32','28','MEDICO_GENERAL','Pendiente');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('8','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'Me duelen los pies cuando me levanto de la cama','32','28','MEDICO_GENERAL','Cancelada');
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('9','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'me duele la cabeza de pensarte tanto','32','28','MEDICO_GENERAL','Pendiente');
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('10','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'me duele la cabeza','32','28','MEDICO_GENERAL','Pendiente');
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('11','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'me duele una muela','32','28','MEDICO_GENERAL','Cancelada');
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('12','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),null,'32','28','MEDICO_GENERAL','Cancelada');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('30','0',to_date('28/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'mal de amores','48','28','MEDICO_GENERAL','Pendiente');
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('13','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'me duele la cabeza','32','28','MEDICO_GENERAL','Pendiente');
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('14','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'pedir cita','32','28','MEDICO_GENERAL','Pendiente');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('21','0',to_date('28/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'me duelen las muñecas, ojala no sea nada grave','32','28','MEDICO_GENERAL','Pendiente');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('27','0',to_date('28/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'la cita es muy buena para ','32','28','MEDICO_GENERAL','Pendiente');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('28','0',to_date('28/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'se pone una trampa','32','28','MEDICO_GENERAL','Pendiente');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('29','0',to_date('28/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),null,'32','28','MEDICO_GENERAL','Pendiente');
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('3','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'sasa','32','28','MEDICO_GENERAL','Pendiente');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('22','0',to_date('28/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'duele la cabeza de pensarte tanto','32','28','MEDICO_GENERAL','Pendiente');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('23','0',to_date('28/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'tengo ojor llorosos, rojos aguados por trasnochar tanto haciendo el proyecto de triviño','32','28','MEDICO_GENERAL','Pendiente');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('24','0',to_date('28/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'me arden los ojos','32','28','MEDICO_GENERAL','Pendiente');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('25','0',to_date('28/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'las piernas desgastadas de jugar','32','28','MEDICO_GENERAL','Pendiente');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('26','0',to_date('28/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'me duele la cabeza de pensarte tanto','32','28','MEDICO_GENERAL','Pendiente');
 REM INSERTING into CARLOSABD.CIUDAD
 SET DEFINE OFF;
 Insert into CARLOSABD.CIUDAD (ID_CIUDAD,NOMBRE,DEPARTAMENTO_ID_DEPARTAMENTO) values ('1','Armenia','1');
@@ -764,7 +792,8 @@ REM INSERTING into CARLOSABD.MEDICAMENTO
 SET DEFINE OFF;
 REM INSERTING into CARLOSABD.MEDICO
 SET DEFINE OFF;
-Insert into CARLOSABD.MEDICO (ID,ESTADO,TARJETA_PROFESIONAL) values ('32','1',null);
+Insert into CARLOSABD.MEDICO (ID,ESTADO,TARJETA_PROFESIONAL) values ('48','1','1');
+Insert into CARLOSABD.MEDICO (ID,ESTADO,TARJETA_PROFESIONAL) values ('32','1','12345');
 REM INSERTING into CARLOSABD.ORDEN_CIRUGIA
 SET DEFINE OFF;
 REM INSERTING into CARLOSABD.ORDEN_EXAMEN
@@ -786,6 +815,7 @@ Insert into CARLOSABD.PAIS (ID_PAIS,NOMBRE) values ('3','Alemania');
 Insert into CARLOSABD.PAIS (ID_PAIS,NOMBRE) values ('4','Espania');
 REM INSERTING into CARLOSABD.PERSONA
 SET DEFINE OFF;
+Insert into CARLOSABD.PERSONA (ID,NUMERO_IDENTIFICACION,TIPO_IDENTIFICACION,NOMBRE,APELLIDO,FECHA_NACIMIENTO,GENERO,CORREO,PASSWORD,TELEFONO,CIUDAD) values ('48','1091231','CEDULA_DE_CIUDADANIA','Juan camilo','martinez',to_date('12/10/78','DD/MM/RR'),'MUJER','camilo@hospital.com','camilo123','3214569999','1');
 Insert into CARLOSABD.PERSONA (ID,NUMERO_IDENTIFICACION,TIPO_IDENTIFICACION,NOMBRE,APELLIDO,FECHA_NACIMIENTO,GENERO,CORREO,PASSWORD,TELEFONO,CIUDAD) values ('28','1094','CEDULA_DE_CIUDADANIA','alejandra','barriga',to_date('12/10/78','DD/MM/RR'),'HOMBRE','aleja123@gmail.com','aleja123','3214561231','1');
 Insert into CARLOSABD.PERSONA (ID,NUMERO_IDENTIFICACION,TIPO_IDENTIFICACION,NOMBRE,APELLIDO,FECHA_NACIMIENTO,GENERO,CORREO,PASSWORD,TELEFONO,CIUDAD) values ('1','1500000','CEDULA_DE_CIUDADANIA','Carlos','Martinez',to_date('05/05/94','DD/MM/RR'),'HOMBRE','admin@gmail.com','123','3213456789','1');
 Insert into CARLOSABD.PERSONA (ID,NUMERO_IDENTIFICACION,TIPO_IDENTIFICACION,NOMBRE,APELLIDO,FECHA_NACIMIENTO,GENERO,CORREO,PASSWORD,TELEFONO,CIUDAD) values ('27','1','CEDULA_DE_CIUDADANIA','Carlos','Martinez',to_date('21/08/90','DD/MM/RR'),'HOMBRE','admin@hospital.com','admin123','3214567890','1');
@@ -799,6 +829,7 @@ Insert into CARLOSABD.PERSONAROL (PERSONA,ROL) values ('1','1');
 Insert into CARLOSABD.PERSONAROL (PERSONA,ROL) values ('27','1');
 Insert into CARLOSABD.PERSONAROL (PERSONA,ROL) values ('29','1');
 Insert into CARLOSABD.PERSONAROL (PERSONA,ROL) values ('32','2');
+Insert into CARLOSABD.PERSONAROL (PERSONA,ROL) values ('48','2');
 Insert into CARLOSABD.PERSONAROL (PERSONA,ROL) values ('28','4');
 Insert into CARLOSABD.PERSONAROL (PERSONA,ROL) values ('30','4');
 Insert into CARLOSABD.PERSONAROL (PERSONA,ROL) values ('31','4');
@@ -813,6 +844,9 @@ Insert into CARLOSABD.ROL (ID,NOMBRE) values ('4','Paciente');
 REM INSERTING into CARLOSABD.SINTOMAS
 SET DEFINE OFF;
 Insert into CARLOSABD.SINTOMAS (ID,NOMBRE,DESCRIPCION) values ('1','Ansiedad','Estado mental que se caracteriza por una gran inquietud, una intensa excitación y una extrema inseguridad.');
+Insert into CARLOSABD.SINTOMAS (ID,NOMBRE,DESCRIPCION) values ('2','Fiebre','Aumento temporal en la temperatura del cuerpo en respuesta a alguna enfermedad o padecimiento.');
+Insert into CARLOSABD.SINTOMAS (ID,NOMBRE,DESCRIPCION) values ('3','Vomitos','Salida, forzada o no, de los contenidos del estomago, que suben a traves del esofago para ser finalmente expulsados por la boca.');
+Insert into CARLOSABD.SINTOMAS (ID,NOMBRE,DESCRIPCION) values ('4','Diarrea','Alteración intestinal que se caracteriza por la mayor frecuencia, fluidez y, a menudo, volumen de las deposiciones.');
 REM INSERTING into CARLOSABD.SINTOMAS_ENFERMEDAD
 SET DEFINE OFF;
 REM INSERTING into CARLOSABD.TIPO_EPS

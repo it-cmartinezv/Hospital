@@ -9,25 +9,31 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Enfermedad")
 @NamedQueries({
-	@NamedQuery(name=Enfermedad.listarEnfermedadTratamiento, query="SELECT e FROM Enfermedad e WHERE e.tratamiento = ?1")
+	@NamedQuery(name=Enfermedad.listarEnfermedadTratamiento, query="SELECT e FROM Enfermedad e WHERE e.tratamiento = ?1"),
+	@NamedQuery(name=Enfermedad.listarEnfemedad, query="SELECT e FROM Enfermedad e"),
+	@NamedQuery(name=Enfermedad.BYNOMBRE, query="SELECT e FROM Enfermedad e WHERE e.nombre=?1")
 })
 public class Enfermedad implements Serializable{
 	
 	public static final String listarEnfermedadTratamiento = "Enfermedad.listarEnfermedadTratamiento";
+	public static final String listarEnfemedad = "Enfermedad.listarEnfermedad";
+	public static final String BYNOMBRE = "Enfermedad.bynombre";
 	
 	@Id
-	@Column(name="Id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="SEQ_ENFERMEDAD") 
+	@SequenceGenerator(name="SEQ_ENFERMEDAD", sequenceName="SEQ_ENFERMEDAD",allocationSize=1) 
+	@Column(name="Id_Enfermedad")
 	private int id;
 	
 	@Column(name="Nombre",nullable = false,length=50)
 	private String nombre;
-	
+		
 	@Column(name="Descripcion",nullable = false,length=300)
 	private String descripcion;
 	
