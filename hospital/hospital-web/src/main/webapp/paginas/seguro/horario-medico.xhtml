@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/template/template.xhtml">
+	<h:head>
+	</h:head>
+
+	<ui:define name="cuerpo">
+	    <!-- TITULO  --> 
+		<h1>Asignar Horario Medicos</h1>
+		<!-- FORMULARIO, SOLO DEBE HABER UNO --> 
+		<h:form prependId="false" id="gestion">
+			<!-- PANELGRID ES UNA TABLA SE PUEDE REPETIR  --> 
+			<div class="datos">
+			<h:panelGrid id="paneldatos" columns="3">
+				<h:outputLabel for="nombre" id="lnombre" value="Medico:" />
+				<h:inputText id="nombre" value="#{horarioController.nombre}" />
+				<p:message for="nombre" />
+				
+				<p:outputLabel for="dia" id="ldia" value="Dia:" />
+				<h:selectOneMenu id="dia" value="#{horarioController.dia}">
+					<f:selectItem itemValue="Lunes" itemLabel="Lunes" />					
+					<f:selectItem itemValue="Martes" itemLabel="Martes" />
+					<f:selectItem itemValue="Miercoles" itemLabel="Miercoles" />
+					<f:selectItem itemValue="Jueves" itemLabel="Jueves" />
+					<f:selectItem itemValue="Viernes" itemLabel="Viernes" />
+					<f:selectItem itemValue="Sabado" itemLabel="Sabado" />
+					<f:selectItem itemValue="Domingo" itemLabel="Domingo" />
+				</h:selectOneMenu>
+				<p:message for="dia"/>
+												
+			</h:panelGrid>
+			
+			<h:panelGrid id="acciones" columns="5">
+				<h:commandButton action="/paciente.xhtml?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>
+				<p:commandButton action="#{horarioController.registrar}" value="Registrar horario" id="btnRegistrar" update="paneltabla" process="@this,gestion"/>
+			</h:panelGrid>
+						
+			</div>
+			
+			
+			<div class="tabladatos">
+			<h:panelGrid id="tablaadd" columns="3">
+				<h:outputLabel for="tarjeta" id="ltarjeta" value="Tarjeta profesional:" />
+				<h:inputText style="width:290px!important" id="tarjeta" value="#{horarioController.tarjeta}" />
+				<p:commandButton action="#{horarioController.buscarMedico}" value="Buscar medico" id="btnRegistrars" update="gestion" process="@this tarjeta"/>
+			</h:panelGrid>
+			
+			<p:panel header="Horario medico" id="paneltabla">
+				<p:dataTable id="tablaSintomas" value="#{horarioController.horarios}" var="horario">
+
+					<p:column headerText="Dia">
+						<h:outputLabel value="#{horario.dia}" />
+					</p:column>
+
+					<p:column headerText="Hora incio">
+						<h:outputLabel value="#{horario.horaInicio}" />
+					</p:column>
+					
+					<p:column headerText="Hora Fin">
+						<h:outputLabel value="#{horario.horaFinal}" />
+					</p:column>
+					
+					<p:column headerText="Medico">
+						<h:outputLabel value="#{horario.medico.nombre} #{horario.medico.apellido}" />
+					</p:column>
+					
+					<p:column headerText="Eliminar">
+						<p:commandButton action="#{horarioController.eliminar(horario)}" value="Eliminar" update="paneltabla" process="@this" id="btnbuscar"/>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
