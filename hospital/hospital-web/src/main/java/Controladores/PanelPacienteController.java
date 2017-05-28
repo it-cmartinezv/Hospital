@@ -7,11 +7,13 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.omnifaces.cdi.ViewScoped;
+import org.omnifaces.util.Messages;
 
 import beans.CitaMedicaEJB;
 import beans.EJBUsuario;
 import entidades.CitaMedica;
 import entidades.Paciente;
+import excepciones.ExcepcionNegocio;
 import seguridad.SesionBean;
 
 @Named("ppacienteController")
@@ -42,6 +44,20 @@ public class PanelPacienteController implements Serializable{
 		}
 	}
 	
+	/**
+	 * cancelar cita medica
+	 */
+	public void cancelarCita(CitaMedica cita){
+		try{
+			cita.setEstado("Cancelada");
+			citaMedicaEJB.editar(cita);
+			Messages.addFlashGlobalInfo("Se ha cancelado la cita que estaba prevista para la fecha "+cita.getFecha());
+		}catch(ExcepcionNegocio ex){
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public List<CitaMedica> getCitasPendientes() {
 		return citasPendientes;

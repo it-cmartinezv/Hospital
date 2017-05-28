@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import seguridad.AccesoRolPK;
@@ -14,7 +16,13 @@ import seguridad.AccesoRolPK;
 @Entity
 @Table(name="detalle_ordenmedicamento")
 @IdClass(detalleOrdenMedicamentePK.class)
+@NamedQueries({ 
+	@NamedQuery(name = detalleOrdenMedicamente.LISTA_DETALLES, query = "SELECT dm FROM detalleOrdenMedicamente dm")
+})
 public class detalleOrdenMedicamente implements Serializable{
+	
+	public static final String LISTA_DETALLES = "detalleOrdenMedicamente.listar";
+	
 	@Id
 	@ManyToOne(cascade={})
 	@JoinColumn(name="Orden_Medicamento")

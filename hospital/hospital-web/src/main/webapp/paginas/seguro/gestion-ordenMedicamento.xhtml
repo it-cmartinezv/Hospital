@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+
+	<ui:define name="cuerpo">
+		<h1>Gestion de Orden de Medicamentos</h1>
+		<!-- id="gestion" es el que otorga estilos -->
+		<h:form id="gestion" prependId="false">
+			<div class="datos">
+			<h:panelGrid id="paneldatos" columns="3">
+			
+					<h:outputLabel for="id" value="Numero orden" id="id"/> 
+					<h:inputText value="#{ordenMedicamento.id}" id="identi" />
+					<p:message for="id" />
+			
+			
+				<h:outputLabel for="fechaEntre"  id="fechaE" value="Fecha entrega" />
+		        <p:calendar value="#{ordenMedicamento.fecha}" id="fechaEntre" pattern="dd/MM/yyyy" />
+				<p:message for="fechaEntre" />
+				
+				
+					<h:outputLabel for="citas" id="cita" value="Citas" />
+					<h:selectOneMenu id="citas" value="#{ordenMedicamento.citaMedica}" converter="citaConverter">
+						<f:selectItems value="#{ordenMedicamento.listaCitas}" var="c" itemValue="#{c}" itemLabel="#{c.paciente.id} #{c.paciente.nombre}" />
+					</h:selectOneMenu>
+					<p:message for="citas" />
+				
+					<h:outputLabel for="posologia" id="posologia" value="Posologia"/> 
+					<p:inputTextarea maxlength="300" rows="10" value="#{ordenMedicamento.posologia}" id="Posologia" />
+					<p:message for="posologia" />
+			
+			</h:panelGrid>
+			
+				<h:panelGrid id="acciones" columns="5">
+					<h:commandButton action="/hospital-web/?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>				
+					<h:commandButton action="#{ordenMedicamento.crearOrden()}" value="Crear" id="btnCrear" />
+					<h:commandButton action="#{ordenMedicamento.buscarOrden()}" value="Buscar" id="btnBus" />
+					<h:commandButton action="#{ordenMedicamento.editarOrden()}" value="Editar" id="btnEditar" />
+					<h:commandButton action="#{ordenMedicamento.eliminarOrden()}" value="Eliminar" id="btnEliminar" />
+				</h:panelGrid>
+			
+			</div>
+			
+			<!-- este div es el que otorga el estilo a la tabla que ponga dentro -->
+			<div class="tabladatos">
+			<p:panel header="Listado de Ordenes" id="paneltabla">
+				<p:dataTable id="tablaOrden" value="#{ordenMedicamento.listaOrdenes}" var="orden">
+
+
+
+					<p:column headerText="Id">
+						<h:outputLabel value="#{orden.id}" />
+					</p:column>
+					
+					<p:column headerText="Nombre paciente">
+						<h:outputLabel value="#{orden.citaMedica.paciente.nombre} #{orden.citaMedica.paciente.apellido}" />
+					</p:column>
+
+					<p:column headerText="Fecha">
+						<h:outputLabel value="#{orden.fecha}" />
+					</p:column>
+					
+				</p:dataTable>
+			</p:panel>
+			</div>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

@@ -132,9 +132,13 @@ public class CitaController implements Serializable{
 		}
 	}
 	
+	/**
+	 * listar sintomas de una cita
+	 */
 	public void citaSintomas(){
 		citaSintomas = citaSintomaEJB.listarSintomasByCita(cita);
 	}
+		
 	/**
 	 * Accesores y Modificadores
 	 * 

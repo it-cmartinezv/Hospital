@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+
+	<ui:define name="cuerpo">
+		<h1>Gestion de entrega</h1>
+		<!-- id="gestion" es el que otorga estilos -->
+		<h:form id="gestion" prependId="false">
+			<div class="datos">
+				<h:panelGrid id="paneldatos" columns="3">
+				
+				
+					<h:outputLabel for="OrdenMedica" id="ordenMe" value="Orden medicamento" />
+					<h:selectOneMenu id="OrdenMedica" value="#{detalleOrden.ordenMedicamento}" converter="OrdenMedicamentoConverter">
+						<f:selectItems value="#{detalleOrden.listaOrdenes}" var="om" itemValue="#{om}" itemLabel="#{om.citaMedica.paciente.nombre}" />
+					</h:selectOneMenu>
+					<p:message for="OrdenMedica" />
+					
+					
+					<h:outputLabel for="Medicamento" id="medicamento" value="Medicamento" />
+					<h:selectOneMenu id="Medicamento" value="#{detalleOrden.medicamento}" converter="medicamentoConverte">
+						<f:selectItems value="#{detalleOrden.listaMEdicamenos}" var="me" itemValue="#{me}" itemLabel="#{me.nombre}" />
+					</h:selectOneMenu>
+					<p:message for="Medicamento" />
+
+					<h:outputLabel for="canti" value="Cantidad" id="can"/> 
+					<h:inputText value="#{detalleOrden.cantidad}" id="canti" />
+					<p:message for="canti" />
+
+				</h:panelGrid>
+				
+				
+				<h:panelGrid id="acciones" columns="2">
+					<h:commandButton action="/hospital-web/?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>				
+					<h:commandButton action="#{detalleOrden.crearDetalle()}" value="Crear" id="btnCrearEPS" />
+				</h:panelGrid>
+
+			</div>
+			
+			
+			<!-- este div es el que otorga el estilo a la tabla que ponga dentro -->
+			<div class="tablaMedicamento">
+			<p:panel header="Listado de detalles" id="paneltabla">
+				<p:dataTable id="tablaDetalle" value="#{detalleOrden.listaDetalle}" var="detalle">
+
+					<p:column headerText="Cita paciente">
+						<h:outputLabel value="#{detalle.ordenMedicamento.citaMedica.paciente.nombre}" />
+					</p:column>
+
+					<p:column headerText="Medicamento">
+						<h:outputLabel value="#{detalle.medicamento.nombre}" />
+					</p:column>
+
+					<p:column headerText="Cantidad">
+						<h:outputLabel value="#{detalle.cantidad}" />
+					</p:column>
+
+					
+				</p:dataTable>
+			</p:panel>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
