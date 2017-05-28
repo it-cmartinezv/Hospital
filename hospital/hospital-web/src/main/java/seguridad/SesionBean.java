@@ -55,7 +55,30 @@ public class SesionBean implements Serializable {
 			roles = seguridadEJB.listarRolesUsuario(usuario);
 			accesos = seguridadEJB.listarAccesosRol(roles);
 			Messages.addFlashGlobalInfo("Bienvenido "+usuario.getNombre()+" "+usuario.getApellido()+", su ingreso ha sido exitoso");
-			return "/jsf?faces-redirect=true";
+			if(roles != null){
+				String url = "";
+				switch (roles.get(0).getId()) {
+				case 1:
+					// Administrador
+					url = "/paginas/seguro/administrador.xhtml";
+					break;
+				case 2:
+					// Medico
+					url = "/paginas/seguro/medico.xhtml";
+					break;
+				case 3:
+					// Farmaceutico
+					url = "/paginas/seguro/farmaceutico.xhtml";
+					break;
+				case 4:
+					// Paciente
+					url = "/paginas/seguro/paciente.xhtml";
+					break;
+				}
+				return url+"?faces-redirect=true";
+			}else{
+				return "/jsf?faces-redirect=true";
+			}
 		} else {
 			usuario = null;
 			roles = null;

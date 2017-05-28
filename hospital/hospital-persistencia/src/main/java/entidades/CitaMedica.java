@@ -79,8 +79,8 @@ public class CitaMedica implements Serializable{
 	@ManyToOne(cascade={})
 	private Paciente paciente;
 
-	@OneToMany(mappedBy="cita",cascade={})
-	private List<CitaSintoma> sintomas;
+//	@OneToMany(mappedBy="cita",cascade={})
+//	private List<CitaSintoma> sintomas;
 	
 	public CitaMedica() {
 		super();
@@ -172,13 +172,13 @@ public class CitaMedica implements Serializable{
 		this.paciente = paciente;
 	}
 	
-	public List<CitaSintoma> getSintomas() {
-		return sintomas;
-	}
-
-	public void setSintomas(List<CitaSintoma> sintomas) {
-		this.sintomas = sintomas;
-	}
+//	public List<CitaSintoma> getSintomas() {
+//		return sintomas;
+//	}
+//
+//	public void setSintomas(List<CitaSintoma> sintomas) {
+//		this.sintomas = sintomas;
+//	}
 
 	@Override
 	public int hashCode() {

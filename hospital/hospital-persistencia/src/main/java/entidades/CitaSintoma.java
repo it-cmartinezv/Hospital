@@ -1,6 +1,8 @@
 package entidades;
 
 import java.io.Serializable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -21,12 +23,12 @@ public class CitaSintoma implements Serializable{
 	public static final String BYCITA = "CitaSintoma.bycita";
 	
 	@Id
-	@ManyToOne(cascade={})
+	@ManyToOne(cascade={CascadeType.MERGE})
 	@JoinColumn(name="Cita")
 	private CitaMedica cita;
 	
 	@Id
-	@ManyToOne(cascade={})
+	@ManyToOne(cascade={CascadeType.MERGE})
 	@JoinColumn(name="Sintoma")
 	private Sintoma sintoma;
 

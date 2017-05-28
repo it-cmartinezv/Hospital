@@ -50,6 +50,11 @@ INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('12', 'Entrega Medicamento', '/pagi
 INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('13', 'Orden Medicamento', '/paginas/seguro/gestion-ordenMedicamento.xhtml');
 INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('14', 'Citas canceladas', '/paginas/seguro/citas-canceladas.xhtml');
 INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('15', 'Citas atendidas', '/paginas/seguro/citas-atendidas.xhtml');
+INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('16', 'Panel paciente', '/paginas/seguro/paciente.xhtml');
+INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('17', 'Panel administrador', '/paginas/seguro/administrador.xhtml');
+INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('18', 'Panel medico', '/paginas/seguro/medico.xhtml');
+INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('19', 'Panel farmaceutico', '/paginas/seguro/farmaceutico.xhtml');
+INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('20', 'Ordenes medicamento', '/paginas/seguro/ordenes.xhtml');
 --------------- ADMINISTRADOR -------------------------------------
 
 INSERT INTO PERSONA (ID,NUMERO_IDENTIFICACION, TIPO_IDENTIFICACION, NOMBRE, APELLIDO, FECHA_NACIMIENTO, GENERO, CORREO, PASSWORD, TELEFONO, CIUDAD) VALUES ('1','1500000', 'CEDULA_DE_CIUDADANIA', 'Carlos', 'Martinez', TO_DATE('1994-05-05 03:26:09', 'YYYY-MM-DD HH24:MI:SS'), 'HOMBRE', 'admin@hospital.com', '123', '3213456789', '1');
@@ -72,15 +77,25 @@ INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '12');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '13');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '14');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '15');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '16');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '17');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '18');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '19');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '20');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('2', '11');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('2', '13');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('2', '14');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('2', '18');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('2', '15');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('3', '12');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('3', '19');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('3', '20');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('4', '10');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('4', '11');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('4', '14');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('4', '15');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('4', '16');
+
 
 ----------------------------------- SINTOMAS ------------------------------------------------
 
