@@ -1,14 +1,24 @@
 package entidades;
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Tratamiento")
-public class Tratamiento {
+@NamedQueries({
+	@NamedQuery(name=Tratamiento.listarTratamiento, query="SELECT t FROM Tratamiento t")
+})
+public class Tratamiento implements Serializable{
+	
+	public static final String listarTratamiento = "Tratamiento.listarTratamiento";
+	
 	@Id
 	@Column(name="Id_Tratamiento")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
