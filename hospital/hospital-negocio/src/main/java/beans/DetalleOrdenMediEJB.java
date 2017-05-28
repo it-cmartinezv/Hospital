@@ -106,4 +106,14 @@ public class DetalleOrdenMediEJB implements Serializable{
 		em.merge(orden);
 	}
 	
+	
+	/**
+	 * Esta lista trae todos los detalles de medicamentos entregados 
+	 * @return
+	 */
+	public List<detalleOrdenMedicamente> listaEntre(){
+		Query q = em.createNamedQuery(detalleOrdenMedicamente.LISTA_ORDEN_ENTREGADAS);
+		List<detalleOrdenMedicamente> lista = q.getResultList();
+		return lista;
+	}
 }

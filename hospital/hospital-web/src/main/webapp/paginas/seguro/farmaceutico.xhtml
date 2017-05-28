@@ -7,14 +7,54 @@
 	<h:head>
 	</h:head>
 
-	<ui:define name="cuerpo">
-	    <!-- TITULO  --> 
-		<h1>EL TITULO DE LO QUE SE ESTE GESTIONANDO</h1>
+
+		<ui:define name="cuerpo">
+		
+		<h1>#{sesionController.usuario.nombre} #{sesionController.usuario.apellido}, Bienvenid@.</h1>
 		<!-- FORMULARIO, SOLO DEBE HABER UNO --> 
-		<h:form prependId="false" id="fasociar">
-			<!-- PANELGRID ES UNA TABLA SE PUEDE REPETIR  --> 
-			<h:panelGrid id="paneldatos" columns="3">
+		<h:form prependId="false" id="gestion">
+			<div class="tabladatos">
+			<h:panelGrid id="acciones" columns="2">
+				<h:commandButton action="/paginas/seguro/ordenes.xhtml?faces-redirect=true" value="Entregar Medicamento" id="btnEntrega"/>
+				<h:commandButton action="/paginas/seguro/citas-canceladas.xhtml?faces-redirect=true" value="Citas canceladas" id="btnbuscar"/>
+				
 			</h:panelGrid>
-		</h:form>
-	</ui:define>
+			
+				<p:panel header="Listado de medicamentos entregados" id="paneltabla">
+					<p:dataTable id="tablaDeta" value="#{detalleOrden.listaDetalle}" var="lista">
+			
+					<p:column headerText="Paciente">
+						<h:outputLabel value="#{lista.ordenMedicamento.citaMedica.paciente.nombre} #{lista.ordenMedicamento.citaMedica.paciente.apellido}" />
+					</p:column>
+					
+					
+					<p:column headerText="Fecha">
+						<h:outputLabel value="#{lista.ordenMedicamento.fecha}" />
+					</p:column>
+					
+					
+					<p:column headerText="Estado">
+						<h:outputLabel value="#{lista.entregado}" />
+					</p:column>
+					
+					
+					<p:column headerText="Fecha">
+						<h:outputLabel value="#{lista.medicamento.nombre}" />
+					</p:column>
+					
+					<p:column headerText="Cantidad">
+						<h:outputLabel value="#{lista.medicamento.cantidad}" />
+					</p:column>
+			
+					</p:dataTable>
+				</p:panel>
+			
+			</div>
+			
+			
+			</h:form>
+		
+		</ui:define>
+
+	
 </ui:composition>

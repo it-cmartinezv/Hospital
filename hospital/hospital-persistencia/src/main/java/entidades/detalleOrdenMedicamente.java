@@ -18,12 +18,15 @@ import seguridad.AccesoRolPK;
 @IdClass(detalleOrdenMedicamentePK.class)
 @NamedQueries({ 
 	@NamedQuery(name = detalleOrdenMedicamente.LISTA_DETALLES, query = "SELECT dm FROM detalleOrdenMedicamente dm"),
-	@NamedQuery(name = detalleOrdenMedicamente.LISTA_ORDEN_MEDICA, query = "select d from detalleOrdenMedicamente d where d.ordenMedicamento=?1 and d.entregado=false") 									
+	@NamedQuery(name = detalleOrdenMedicamente.LISTA_ORDEN_MEDICA, query = "select d from detalleOrdenMedicamente d where d.ordenMedicamento=?1 and d.entregado=false"),
+	@NamedQuery(name = detalleOrdenMedicamente.LISTA_ORDEN_ENTREGADAS, query = "SELECT D FROM detalleOrdenMedicamente D WHERE d.entregado=TRUE")
+	
 })
 public class detalleOrdenMedicamente implements Serializable{
 	
 	public static final String LISTA_DETALLES = "detalleOrdenMedicamente.listar";
 	public static final String LISTA_ORDEN_MEDICA= "detalleOrdenMedicamente.listarDetalleMedi";
+	public static final String LISTA_ORDEN_ENTREGADAS = "detalleOrdenMedicamente. listarEntregados";
 	
 	@Id
 	@ManyToOne(cascade={})

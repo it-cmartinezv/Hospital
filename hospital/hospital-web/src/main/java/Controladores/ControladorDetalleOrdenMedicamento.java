@@ -52,6 +52,7 @@ public class ControladorDetalleOrdenMedicamento implements Serializable {
 		listaMEdicamenos = ordenMediEJB.listaMedicamento();
 		listaOrdenes = ordenMediEJB.listarOrden();
 		listaDetalle = ordenMediEJB.listaDetalle();
+		listaDetalle = ordenMediEJB.listaEntre();
 	}
 
 	/**
@@ -107,6 +108,18 @@ public class ControladorDetalleOrdenMedicamento implements Serializable {
 			ordenMediEJB.editarOrden(detalleOrdenMedicamente.getOrdenMedicamento());
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 	public List<detalleOrdenMedicamente> getListaDetalle() {
