@@ -23,10 +23,12 @@ import javax.persistence.TemporalType;
 @Table(name = "Paciente")
 @Inheritance(strategy=InheritanceType.JOINED)
 @NamedQueries({
+	@NamedQuery(name=Paciente.PACIENTE, query="SELECT p FROM Paciente p WHERE p.numeroIdentificacion=?1 AND p.tipoIdentificacion=?2"),
 	@NamedQuery(name=Paciente.LISTAR, query="SELECT p FROM Paciente p")	
 })
 public class Paciente extends Persona implements Serializable{
 	
+	public static final String PACIENTE = "Paciente.paciente";
 	public static final String LISTAR = "Paciente.listar";
 	
 	@JoinColumn(name="EPS_Id_Eps")

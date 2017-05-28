@@ -25,7 +25,9 @@
 				
 					<h:outputLabel for="citas" id="cita" value="Citas" />
 					<h:selectOneMenu id="citas" value="#{ordenMedicamento.citaMedica}" converter="citaConverter">
-						<f:selectItems value="#{ordenMedicamento.listaCitas}" var="c" itemValue="#{c}" itemLabel="#{c.tipo}" />
+
+						<f:selectItems value="#{ordenMedicamento.listaCitas}" var="c" itemValue="#{c}" itemLabel="#{c.paciente.id} #{c.paciente.nombre}" />
+
 					</h:selectOneMenu>
 					<p:message for="citas" />
 				

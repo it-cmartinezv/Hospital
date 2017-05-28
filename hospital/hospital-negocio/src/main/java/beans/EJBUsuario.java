@@ -197,7 +197,7 @@ public class EJBUsuario implements Serializable{
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Paciente buscarPaciente(String tipoid, String numid){
-		Query q = em.createNamedQuery(Paciente.BUSCAR);
+		Query q = em.createNamedQuery(Paciente.PACIENTE);
 		q.setParameter(1, numid);
 		q.setParameter(2, tipoid);
 		List<Paciente> lista = q.getResultList();
@@ -302,6 +302,13 @@ public class EJBUsuario implements Serializable{
 			}
 		}
 		em.merge(medico);
+	}
+	
+	/**
+	 * Buscar medico por id
+	 */
+	public Medico buscarMedicoID(int id){
+		return em.find(Medico.class, id);
 	}
 	
 	/**

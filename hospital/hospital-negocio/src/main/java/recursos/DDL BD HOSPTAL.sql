@@ -1,10 +1,3 @@
--- Generado por Oracle SQL Developer Data Modeler 4.1.3.901
---   en:        2017-05-25 17:56:57 COT
---   sitio:      Oracle Database 11g
---   tipo:      Oracle Database 11g
-
-
-
 
 CREATE TABLE Acceso
   (
@@ -40,16 +33,25 @@ CREATE TABLE Cirugia
 ALTER TABLE Cirugia ADD CONSTRAINT Cirugia_PK PRIMARY KEY ( Id_Cirugia ) ;
 
 
+CREATE TABLE Cita_Sintomas
+  (
+    Cita    NUMBER NOT NULL ,
+    Sintoma INTEGER NOT NULL
+  ) ;
+ALTER TABLE Cita_Sintomas ADD CONSTRAINT Cita_Sintomas_PK PRIMARY KEY ( Sintoma, Cita ) ;
+
+
 CREATE TABLE Citas_Medicas
   (
-    id       NUMBER NOT NULL ,
-    Caracter CHAR (1) NOT NULL ,
-    Fecha    DATE NOT NULL ,
-    Hora     DATE NOT NULL ,
-    tipo     VARCHAR2 (50) ,
-    Sintomas INTEGER NOT NULL ,
-    Medico   NUMBER NOT NULL ,
-    Paciente NUMBER NOT NULL
+    id          NUMBER NOT NULL ,
+    Caracter    SMALLINT NOT NULL ,
+    valoracion  VARCHAR2 (100) NOT NULL ,
+    estado      VARCHAR2 (50) NOT NULL ,
+    Fecha       DATE NOT NULL ,
+    Hora        DATE NOT NULL ,
+    descripcion VARCHAR2 (300) ,
+    Medico      NUMBER NOT NULL ,
+    Paciente    NUMBER NOT NULL
   ) ;
 ALTER TABLE Citas_Medicas ADD CONSTRAINT Citas_Medicas_PK PRIMARY KEY ( id ) ;
 
@@ -103,12 +105,12 @@ ALTER TABLE EPS ADD CONSTRAINT EPS_PK PRIMARY KEY ( Id_Eps ) ;
 
 CREATE TABLE Enfermedad
   (
-    Id_Enfermedad        INTEGER NOT NULL ,
-    Nombre               VARCHAR2 (50) NOT NULL ,
-    Sintomas_Id_Sintomas INTEGER NOT NULL ,
-    Tratamiento          INTEGER NOT NULL
+    Id          INTEGER NOT NULL ,
+    Nombre      VARCHAR2 (50) NOT NULL ,
+    Descripcion VARCHAR2 (300) NOT NULL ,
+    Tratamiento INTEGER NOT NULL
   ) ;
-ALTER TABLE Enfermedad ADD CONSTRAINT Enfermedad_PK PRIMARY KEY ( Id_Enfermedad ) ;
+ALTER TABLE Enfermedad ADD CONSTRAINT Enfermedad_PK PRIMARY KEY ( Id ) ;
 
 
 CREATE TABLE Examen
@@ -279,11 +281,19 @@ ALTER TABLE Rol ADD CONSTRAINT Rol_PK PRIMARY KEY ( id ) ;
 
 CREATE TABLE Sintomas
   (
-    Id_Sintomas INTEGER NOT NULL ,
+    Id          INTEGER NOT NULL ,
     Nombre      VARCHAR2 (50) NOT NULL ,
-    Descripcion VARCHAR2 (100)
+    Descripcion VARCHAR2 (300) NOT NULL
   ) ;
-ALTER TABLE Sintomas ADD CONSTRAINT Sintomas_PK PRIMARY KEY ( Id_Sintomas ) ;
+ALTER TABLE Sintomas ADD CONSTRAINT Sintomas_PK PRIMARY KEY ( Id ) ;
+
+
+CREATE TABLE Sintomas_Enfermedad
+  (
+    Enfermedad INTEGER NOT NULL ,
+    Sintoma    INTEGER NOT NULL
+  ) ;
+ALTER TABLE Sintomas_Enfermedad ADD CONSTRAINT Sintomas_Enfermedad_PK PRIMARY KEY ( Enfermedad, Sintoma ) ;
 
 
 CREATE TABLE Tipo_Eps
@@ -334,11 +344,11 @@ ALTER TABLE Orden_Hospitalizacion ADD CONSTRAINT Citas_Medicas_FKv2 FOREIGN KEY 
 
 ALTER TABLE Orden_Medicamento ADD CONSTRAINT Citas_Medicas_FKv3 FOREIGN KEY ( Citas_Medicas ) REFERENCES Citas_Medicas ( id ) ;
 
+ALTER TABLE Cita_Sintomas ADD CONSTRAINT Citas_Medicas_FKv4 FOREIGN KEY ( Cita ) REFERENCES Citas_Medicas ( id ) ;
+
 ALTER TABLE Citas_Medicas ADD CONSTRAINT Citas_Medicas_Medico_FK FOREIGN KEY ( Medico ) REFERENCES Medico ( id ) ;
 
 ALTER TABLE Citas_Medicas ADD CONSTRAINT Citas_Medicas_Paciente_FK FOREIGN KEY ( Paciente ) REFERENCES Paciente ( id ) ;
-
-ALTER TABLE Citas_Medicas ADD CONSTRAINT Citas_Medicas_Sintomas_FK FOREIGN KEY ( Sintomas ) REFERENCES Sintomas ( Id_Sintomas ) ;
 
 ALTER TABLE Persona ADD CONSTRAINT Ciudad FOREIGN KEY ( Ciudad ) REFERENCES Ciudad ( Id_Ciudad ) ;
 
@@ -350,7 +360,7 @@ ALTER TABLE Detalle_Cirugia ADD CONSTRAINT Detalle_Cirugia_Medico_FK FOREIGN KEY
 
 ALTER TABLE EPS ADD CONSTRAINT EPS_Tipo_Eps_FK FOREIGN KEY ( Tipo_Eps_Id_Tipo_Eps ) REFERENCES Tipo_Eps ( Id_Tipo_Eps ) ;
 
-ALTER TABLE Enfermedad ADD CONSTRAINT Enfermedad_Sintomas_FK FOREIGN KEY ( Sintomas_Id_Sintomas ) REFERENCES Sintomas ( Id_Sintomas ) ;
+ALTER TABLE Sintomas_Enfermedad ADD CONSTRAINT Enfermedad_FK FOREIGN KEY ( Enfermedad ) REFERENCES Enfermedad ( Id ) ;
 
 ALTER TABLE Enfermedad ADD CONSTRAINT Enfermedad_Tratamiento_FK FOREIGN KEY ( Tratamiento ) REFERENCES Tratamiento ( Id_Tratamiento ) ;
 
@@ -396,47 +406,8 @@ ALTER TABLE AccesoRol ADD CONSTRAINT Rol_FK FOREIGN KEY ( Rol ) REFERENCES Rol (
 
 ALTER TABLE PersonaRol ADD CONSTRAINT Rol_FKv2 FOREIGN KEY ( Rol ) REFERENCES Rol ( id ) ;
 
+ALTER TABLE Sintomas_Enfermedad ADD CONSTRAINT Sintomas_FK FOREIGN KEY ( Sintoma ) REFERENCES Sintomas ( Id ) ;
+
+ALTER TABLE Cita_Sintomas ADD CONSTRAINT Sintomas_FKv2 FOREIGN KEY ( Sintoma ) REFERENCES Sintomas ( Id ) ;
+
 ALTER TABLE Medicamento ADD CONSTRAINT Tipo_Medicamento_FK FOREIGN KEY ( Tipo_Medicamento ) REFERENCES Tipo_Medicamento ( Id_Tipo_Medicamento ) ;
-
-
--- Informe de Resumen de Oracle SQL Developer Data Modeler: 
--- 
--- CREATE TABLE                            33
--- CREATE INDEX                             0
--- ALTER TABLE                             72
--- CREATE VIEW                              0
--- ALTER VIEW                               0
--- CREATE PACKAGE                           0
--- CREATE PACKAGE BODY                      0
--- CREATE PROCEDURE                         0
--- CREATE FUNCTION                          0
--- CREATE TRIGGER                           0
--- ALTER TRIGGER                            0
--- CREATE COLLECTION TYPE                   0
--- CREATE STRUCTURED TYPE                   0
--- CREATE STRUCTURED TYPE BODY              0
--- CREATE CLUSTER                           0
--- CREATE CONTEXT                           0
--- CREATE DATABASE                          0
--- CREATE DIMENSION                         0
--- CREATE DIRECTORY                         0
--- CREATE DISK GROUP                        0
--- CREATE ROLE                              0
--- CREATE ROLLBACK SEGMENT                  0
--- CREATE SEQUENCE                          0
--- CREATE MATERIALIZED VIEW                 0
--- CREATE SYNONYM                           0
--- CREATE TABLESPACE                        0
--- CREATE USER                              0
--- 
--- DROP TABLESPACE                          0
--- DROP DATABASE                            0
--- 
--- REDACTION POLICY                         0
--- 
--- ORDS DROP SCHEMA                         0
--- ORDS ENABLE SCHEMA                       0
--- ORDS ENABLE OBJECT                       0
--- 
--- ERRORS                                   0
--- WARNINGS                                 0

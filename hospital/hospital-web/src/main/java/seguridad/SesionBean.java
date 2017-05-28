@@ -54,7 +54,7 @@ public class SesionBean implements Serializable {
 			Faces.getSession().setAttribute("usuario", usuario);
 			roles = seguridadEJB.listarRolesUsuario(usuario);
 			accesos = seguridadEJB.listarAccesosRol(roles);
-			Messages.addFlashGlobalInfo("Bienvenido, su ingreso ha sido exitoso");
+			Messages.addFlashGlobalInfo("Bienvenido "+usuario.getNombre()+" "+usuario.getApellido()+", su ingreso ha sido exitoso");
 			return "/jsf?faces-redirect=true";
 		} else {
 			usuario = null;
