@@ -71,7 +71,28 @@ public class CitaController implements Serializable{
 		numeroIdentificacion = sesion.getUsuario().getNumeroIdentificacion();
 		sintomas = sintomaEJB.listarSintoma();
 	}
-
+	/**
+	 * Tender cita
+	 */
+	public String atender(){
+		try{
+			if(cita != null){
+				cita.setEstado("Atendida");
+				cita.setDescripcion(descripcion);
+				citaEJB.editar(cita);
+				Messages.addFlashGlobalInfo("La cita se atendio correctamente");
+				return "/paginas/seguro/medico.xhtml?faces-redirect=true";
+			}else{
+				Messages.addFlashGlobalInfo("Busque la cita primero");
+			}
+		}catch (excepciones.ExcepcionNegocio e){
+			Messages.addFlashGlobalError(e.getMessage());
+		}catch (Exception ex){
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
 	/**
 	 * Registrar cita
 	 */

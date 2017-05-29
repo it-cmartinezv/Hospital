@@ -47,8 +47,8 @@
 			</h:panelGrid>
 			
 			<h:panelGrid id="acciones" columns="5">
-				<h:commandButton action="/paciente.xhtml?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>
-				<p:commandButton action="#{citaController.pedirCita}" value="Pedir Cita" id="btnRegistrar" update="gestion" process="@this,gestion"/>
+				<h:commandButton action="/paginas/seguro/medico.xhtml?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>
+				<p:commandButton action="#{citaController.atender}" value="Atender Cita" id="btnRegistrar" update="gestion" process="@this,gestion"/>
 			</h:panelGrid>
 						
 			</div>
