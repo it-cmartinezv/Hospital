@@ -134,4 +134,14 @@ public class CitaMedicaEJB {
 			return null;
 		}
 	}
+	
+	/**
+	 * Listar todas las citas
+	 * @return, el listado de todas las citas
+	 */
+	public List<CitaMedica> listarCitasMedicas(){
+		Query q = em.createNamedQuery(CitaMedica.LISTA_CITA);
+		List<CitaMedica> lista = q.getResultList();
+		return lista;
+	}
 }

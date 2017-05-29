@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+		<h1>Gestion de Orden de Hospitalizacion</h1>
+		<!-- id="gestion" es el que otorga estilos -->
+		<h:form id="gestion" prependId="false">
+			<div class="datos">
+				<h:panelGrid id="paneldatos" columns="3">
+				
+					<h:outputLabel for="citas" id="cita" value="Citas Medicas: " />
+					<h:selectOneMenu id="citas" value="#{OrdenHospitalizacion.cita}" converter="citaConverter">
+						<f:selectItems value="#{ordenHospitalizacionController.listarCitasMedicas}" var="c" itemValue="#{c}" itemLabel="#{c.id} " />
+					</h:selectOneMenu>
+					<p:message for="citas" />
+					
+					<h:outputLabel for="hospitalizacion" id="hospitalizacion" value="Hospitalizacion" />
+					<h:selectOneMenu id="hospitalizacion" value="#{ordenHospitalizacionController.hospitalizacion}" converter="hospitalizacionConverter">
+						<f:selectItems value="#{ordenHospitalizacionController.listaHospitalizaciones}" var="hospitalizacion" itemValue="#{hospitalizacion}" itemLabel="#{hospitalizacion.id}" />
+					</h:selectOneMenu>
+					<p:message for="hospitalizacion" />
+					
+				
+				</h:panelGrid>
+				
+				
+				
+				<h:panelGrid id="acciones" columns="5">
+					<h:commandButton action="/hospital-web/?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>				
+					<h:commandButton action="#{ordenHospitalizacionController.registrar()}" value="Crear" id="btnCrearOrden" />
+					
+				</h:panelGrid>
+				
+			</div>
+			
+			
+			<!-- este div es el que otorga el estilo a la tabla que ponga dentro -->
+			<div class="tabladatos">
+			<p:panel header="Listado de Ordenes" id="paneltabla">
+				<p:dataTable id="tablaOrden" value="#{ordenHospitalizacionController.listaOrdenesHospitalizaciones}" var="orden">
+
+					<p:column headerText="Numero Orden">
+						<h:outputLabel value="#{orden.id}" />
+					</p:column>
+
+					<p:column headerText="Cita">
+						<h:outputLabel value="#{orden.citaMedica}" />
+					</p:column>
+
+					<p:column headerText="Cita">
+						<h:outputLabel value="#{orden.hospitalizacion}" />
+					</p:column>
+
+					
+				</p:dataTable>
+			</p:panel>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
