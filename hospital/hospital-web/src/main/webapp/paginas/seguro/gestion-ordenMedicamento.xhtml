@@ -12,12 +12,7 @@
 		<h:form id="gestion" prependId="false">
 			<div class="datos">
 			<h:panelGrid id="paneldatos" columns="3">
-			
-					<h:outputLabel for="id" value="Numero orden" id="id"/> 
-					<h:inputText value="#{ordenMedicamento.id}" id="identi" />
-					<p:message for="id" />
-			
-			
+						
 				<h:outputLabel for="fechaEntre"  id="fechaE" value="Fecha entrega" />
 		        <p:calendar value="#{ordenMedicamento.fecha}" id="fechaEntre" pattern="dd/MM/yyyy" />
 				<p:message for="fechaEntre" />
@@ -40,7 +35,7 @@
 				<h:panelGrid id="acciones" columns="5">
 					<h:commandButton action="/hospital-web/?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>				
 					<h:commandButton action="#{ordenMedicamento.crearOrden()}" value="Crear" id="btnCrear" />
-					<h:commandButton action="#{ordenMedicamento.buscarOrden()}" value="Buscar" id="btnBus" />
+					
 					<h:commandButton action="#{ordenMedicamento.editarOrden()}" value="Editar" id="btnEditar" />
 					<h:commandButton action="#{ordenMedicamento.eliminarOrden()}" value="Eliminar" id="btnEliminar" />
 				</h:panelGrid>
@@ -49,6 +44,14 @@
 			
 			<!-- este div es el que otorga el estilo a la tabla que ponga dentro -->
 			<div class="tabladatos">
+			
+			<h:panelGrid id="tablaadd" columns="3">
+				<h:outputLabel for="idBus" id="idBus" value="Numero de la orden" />
+				<h:inputText style="width:290px!important" id="ias" value="#{ordenMedicamento.id}" />
+				<p:commandButton action="#{ordenMedicamento.buscarOrden()}" value="Buscar Orden" id="btnBuscar" update="gestion" process="@this, ias"/>
+			</h:panelGrid>
+			
+			
 			<p:panel header="Listado de Ordenes" id="paneltabla">
 				<p:dataTable id="tablaOrden" value="#{ordenMedicamento.listaOrdenes}" var="orden">
 
