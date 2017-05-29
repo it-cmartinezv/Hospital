@@ -197,6 +197,9 @@ public class CitaController implements Serializable{
 			lacita = citaEJB.buscar(id);
 		}
 		if(lacita != null){
+			if(lacita.getEstado().equalsIgnoreCase("atendida")){
+				Messages.addFlashGlobalInfo("El paciente "+lacita.getPaciente().getNombre()+" "+lacita.getPaciente().getApellido()+" ya fue atendido en esta cita");
+			}
 			caracter = lacita.getCaracter();
 			valoracion = lacita.getValoracion();
 			medico = lacita.getMedico();

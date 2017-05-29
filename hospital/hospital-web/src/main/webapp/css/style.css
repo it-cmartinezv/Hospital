@@ -36,7 +36,9 @@
     margin-top: 3px;
     padding: 0;
     border-radius: 0 0 3px 3px;
-        display: none;
+    display: none;
+    max-height: 300px;
+    overflow-y: scroll;
 }
 .submenu li {
     padding: 6px 10px;
