@@ -19,12 +19,13 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "Orden_Cirugia")
 @NamedQueries({
-	@NamedQuery(name=OrdenCirugia.listarCirugia, query="SELECT oC FROM OrdenCirugia oC WHERE oC.cirugia =?1")
+	@NamedQuery(name=OrdenCirugia.listarCirugia, query="SELECT oC FROM OrdenCirugia oC WHERE oC.cirugia =?1"),
+	@NamedQuery(name=OrdenCirugia.LISTAR, query="SELECT oC FROM OrdenCirugia oC")
 })
 public class OrdenCirugia implements Serializable{
 	
 	public static final String listarCirugia = "Cirugia.listarOrdenCirugiaCirugia";
-	
+	public static final String LISTAR = "OrdenCirugia.listar";
 	@Id
 	@Column(name="Id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="SEQ_ORDEN_CIRUGIA") 

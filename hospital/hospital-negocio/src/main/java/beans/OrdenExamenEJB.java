@@ -10,6 +10,7 @@ import javax.persistence.Query;
 
 import entidades.CitaMedica;
 import entidades.Examen;
+import entidades.OrdenCirugia;
 import entidades.OrdenExamen;
 
 /**
@@ -65,6 +66,14 @@ public class OrdenExamenEJB {
 	}
 	
 	/**
+	 * lista de ordenes de cirugia
+	 */
+	public List<OrdenCirugia> listaOrdenCirugias(){
+		Query q = em.createNamedQuery(OrdenCirugia.LISTAR);
+		return q.getResultList();
+	}
+	
+	/**
 	 * MEtodo para crear una orden 
 	 * @param ordenEx
 	 */
@@ -72,6 +81,12 @@ public class OrdenExamenEJB {
 		em.persist(ordenEx);
 	}
 	
+	/**
+	 * Crear orden de cirugia
+	 */
+	public void crearOrdenCirugia(OrdenCirugia orden){
+		em.persist(orden);
+	}
 	/**
 	 * Metodo para buscar una orden de un examen
 	 * @param id
@@ -81,12 +96,25 @@ public class OrdenExamenEJB {
 		return em.find(OrdenExamen.class, id);
 	}
 	
+	/**
+	 * Buscar orden de cirugia
+	 */
+	public OrdenCirugia buscarOrdenCirugia(int id){
+		return em.find(OrdenCirugia.class, id);
+	}
 	
 	/**
 	 * Metodo para editar un a orden de examen 
 	 * @param orden
 	 */
 	public void editar(OrdenExamen orden){
+		em.merge(orden);
+	}
+	
+	/**
+	 * Orden de cirugia editar
+	 */
+	public void editarOrdenCirugia(OrdenCirugia orden){
 		em.merge(orden);
 	}
 	
@@ -98,8 +126,12 @@ public class OrdenExamenEJB {
 		em.remove(ordenEx);
 	}
 	
-	
-	
+	/**
+	 * Eliminar orden de cirugia
+	 */
+	public void eliminarOrdenCirugia(OrdenCirugia orden){
+		em.remove(orden);
+	}
 	
 	
 	

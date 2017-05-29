@@ -25,6 +25,9 @@ public class CirugiaEJB {
 	@PersistenceContext
 	private EntityManager em;
 	
+	public Cirugia buscar(int id){
+		return em.find(Cirugia.class, id);
+	}
 	/**
 	 * Metodo para crear una cirugia
 	 * @param cirugia

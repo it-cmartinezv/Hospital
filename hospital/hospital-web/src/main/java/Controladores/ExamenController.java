@@ -33,8 +33,7 @@ public class ExamenController implements Serializable{
 	@Length(min=4,max=50,message="longitud entre 4 y 50")
 	String nombre;
 	
-	@Pattern(regexp="[a-zA-Z ]*",message="Nombre No valido")
-	@Length(min=4,max=200,message="longitud entre 4 y 200")
+	@Length(min=4,max=300,message="longitud entre 4 y 300")
 	String descripcion;
 	
 	private List<Examen> examenes;
