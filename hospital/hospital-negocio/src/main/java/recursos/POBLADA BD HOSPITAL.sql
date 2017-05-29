@@ -60,6 +60,9 @@ INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('22', 'Gestion enfermedades', '/pag
 INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('23', 'Gestion quirofanos', '/paginas/seguro/gestion-quirofanos.xhtml');
 INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('24', 'Gestion Orden examenes', '/paginas/seguro/gestion-OrdenExamen.xhtml');
 INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('25', 'Informacion cita', '/paginas/seguro/informacion-cita.xhtml');
+INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('26', 'Gestionar enfermedades sintomas', '/paginas/seguro/gestion-enfermedad-sintoma.xhtml');
+INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('27', 'Gestionar hospitalizacion', '/paginas/seguro/gestion-hospitalizacion.xhtml');
+INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('28', 'Gestionar cama', '/paginas/seguro/gestion-cama.xhtml');
 
 --------------- ADMINISTRADOR -------------------------------------
 
@@ -108,6 +111,10 @@ INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('4', '14');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('4', '15');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('4', '16');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('4', '25');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '28');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '27');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('2', '27');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '26');
 
 ----------------------------------- SINTOMAS ------------------------------------------------
 
