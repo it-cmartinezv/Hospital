@@ -80,4 +80,14 @@ public class ExamenEJB {
 		return lista;
 	}
 	
+	
+	/**
+	 * Metodo para buscar un examen por su id (ESTE es para el converter)
+	 * @param id
+	 * @return
+	 */
+	public Examen buscar(int id){
+		return em.find(Examen.class, id);
+	}
+	
 }

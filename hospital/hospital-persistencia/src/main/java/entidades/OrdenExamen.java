@@ -9,20 +9,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Orden_Examen")
 @NamedQueries({
-	@NamedQuery(name=OrdenExamen.listarExamen, query="SELECT oE FROM OrdenExamen oE WHERE oE.examen =?1")
+	@NamedQuery(name=OrdenExamen.listarExamen, query="SELECT oE FROM OrdenExamen oE WHERE oE.examen =?1"), 
+	@NamedQuery(name= OrdenExamen.LISTAORDENESEXIS, query="SELECT E FROM OrdenExamen E")
 })
 public class OrdenExamen implements Serializable{
 	
 	public static final String listarExamen = "Examen.listarOrdenExamenExamen";
+	public static final String LISTAORDENESEXIS = "OrdenExamen,listarOrdenes";
 	
 	@Id
 	@Column(name="Id_Orden")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="SEQ_ORDEN_EXAMEN") 
+	@SequenceGenerator(name="SEQ_ORDEN_EXAMEN", sequenceName="SEQ_ORDEN_EXAMEN",allocationSize=1)
 	private int id;
 	
 	@JoinColumn(name="Citas_Medicas_Id_Cita")
