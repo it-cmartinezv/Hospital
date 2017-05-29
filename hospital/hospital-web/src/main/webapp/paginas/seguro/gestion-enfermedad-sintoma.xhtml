@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/template/template.xhtml">
+	<h:head>
+	</h:head>
+
+	<ui:define name="cuerpo">
+	    <!-- TITULO  --> 
+		<h1>Gestion de Enfermedades Sintomas</h1>
+		<!-- FORMULARIO, SOLO DEBE HABER UNO --> 
+		<h:form prependId="false" id="gestion">
+			<!-- PANELGRID ES UNA TABLA SE PUEDE REPETIR  --> 
+			<div class="datos">
+			<h:panelGrid id="paneldatos" columns="3">
+				
+				<h:outputLabel for="enfermedad" id="lenfermedad" value="Enfermedad: " />
+				<h:selectOneMenu id="enfermedad" value="#{enfermedadSintomaController.enfermedad}" converter="enfermedadConverter">
+					<f:selectItems value="#{enfermedadSintomaController.enfermedades}" var="enfermedad" itemValue="#{enfermedad}" itemLabel="#{enfermedad.nombre}"/>
+				</h:selectOneMenu>
+				<p:message for="enfermedad"/>
+				
+				<h:outputLabel for="sintoma" id="lsintoma" value="Sintoma: " />
+				<h:selectOneMenu id="sintoma" value="#{enfermedadSintomaController.sintoma}" converter="sintomaConverter">
+					<f:selectItems value="#{enfermedadSintomaController.sintomas}" var="sintoma" itemValue="#{sintoma}" itemLabel="#{sintoma.nombre}"/>
+				</h:selectOneMenu>
+				<p:message for="sintoma"/>
+
+			</h:panelGrid>
+			
+			<h:panelGrid id="acciones" columns="5">
+				<h:commandButton action="/hospital-web/?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>
+				<h:commandButton action="#{enfermedadSintomaController.registrar}" value="Registrar" id="btnRegistrar"/>
+			</h:panelGrid>
+
+
+			
+
+			</div>
+			
+			<div class="tabladatos">
+			<p:panel header="Listado de Enfermedades Sintomas" id="paneltabla">
+				<p:dataTable id="tablaEnfermedadesSintoma" value="#{enfermedadSintomaController.sintomasEnfermedades}" var="sintomasEnfermedades">
+
+					<p:column headerText="Enfermedad">
+						<h:outputLabel value="#{sintomasEnfermedades.enfermedad}" />
+					</p:column>	
+
+					<p:column headerText="Sintoma">
+						<h:outputLabel value="#{sintomasEnfermedades.sintoma}" />
+					</p:column>	
+					
+						
+				</p:dataTable>
+			</p:panel>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

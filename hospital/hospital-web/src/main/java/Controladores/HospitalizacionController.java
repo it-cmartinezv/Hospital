@@ -38,6 +38,8 @@ public class HospitalizacionController implements Serializable{
 	@EJB
 	private EJBUsuario usuarioEJB;
 	
+	int id;
+	
 	Date fechaEntrada;
 	
 	Date fechaSalida;
@@ -55,6 +57,7 @@ public class HospitalizacionController implements Serializable{
 	@PostConstruct
 	public void inicializar(){
 		try{
+			hospitalizaciones = hospitalizacionEJB.listarHospitalizaciones();
 			camas = camaEJB.listarCamas();
 			medicos = usuarioEJB.listarMedicos();
 			
@@ -75,16 +78,57 @@ public class HospitalizacionController implements Serializable{
 			hospitalizacion.setMedico(medico);
 			hospitalizacionEJB.crear(hospitalizacion);
 			Messages.addFlashGlobalInfo("Hospitalizacion registrada exitosamente");
-			
+			hospitalizaciones = hospitalizacionEJB.listarHospitalizaciones();
 		}catch(ExcepcionNegocio e){
 			Messages.addFlashGlobalError(e.getMessage());
 		}
 	}
 	
-	public void limpiar(){
-		
-		
+	/**
+	 * Buscar hospitalizacion
+	 */
+	public void buscar(){
+		try{
+			Hospitalizacion hospitalizacion = hospitalizacionEJB.buscar(id);
+			if(hospitalizacion != null){
+				fechaEntrada = hospitalizacion.getEntrada();
+				fechaSalida = hospitalizacion.getSalida();
+				cama = hospitalizacion.getCama();
+				medico = hospitalizacion.getMedico();
+			}else{
+				Messages.addFlashGlobalError("No se ha encontrado ninguna hospitalizacion");
+			}
+		}catch(ExcepcionNegocio e){
+			Messages.addFlashGlobalError(e.getMessage());
+			
+		}
 	}
+	
+	/**
+	 * Metodo para editar una hospitalizacion
+	 */
+	public void editar(){
+		try{
+			Hospitalizacion hospitalizacion = hospitalizacionEJB.buscar(id);
+			if(hospitalizacion != null){
+				hospitalizacion.setEntrada(fechaEntrada);
+				hospitalizacion.setSalida(fechaSalida);
+				hospitalizacion.setCama(cama);
+				hospitalizacion.setMedico(medico);
+				hospitalizacionEJB.editar(hospitalizacion);
+				Messages.addFlashGlobalInfo("La hospitalizacion se ha actualizado correctamente");
+			}else{
+				Messages.addGlobalError("No se ha encontrado ninguna hospitalizacion para actualizar");
+			}
+		}catch(ExcepcionNegocio e){
+			Messages.addGlobalError(e.getMessage());
+		}
+	}
+	
+	public void limpiar(){
+	}
+	
+	
 
 	public Date getFechaEntrada() {
 		return fechaEntrada;
@@ -132,6 +176,22 @@ public class HospitalizacionController implements Serializable{
 
 	public void setMedicos(List<Medico> medicos) {
 		this.medicos = medicos;
+	}
+
+	public List<Hospitalizacion> getHospitalizaciones() {
+		return hospitalizaciones;
+	}
+
+	public void setHospitalizaciones(List<Hospitalizacion> hospitalizaciones) {
+		this.hospitalizaciones = hospitalizaciones;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

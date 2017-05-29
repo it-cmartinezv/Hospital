@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -22,8 +23,10 @@ import javax.persistence.Table;
 public class Cama implements Serializable{
 	
 	public static final String listarCama = "Cama.listarCama";
+	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="SEQ_CAMA_HOSPITALIZACION") 
+	@SequenceGenerator(name="SEQ_CAMA_HOSPITALIZACION", sequenceName="SEQ_CAMA_HOSPITALIZACION",allocationSize=1)
 	@Column(name="Id_Cama")
 	private int id;
 	

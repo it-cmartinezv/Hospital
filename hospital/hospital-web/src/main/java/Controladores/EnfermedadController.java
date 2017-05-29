@@ -17,6 +17,7 @@ import beans.SintomaEJB;
 import beans.TratamientoEJB;
 import entidades.Enfermedad;
 import entidades.Sintoma;
+import entidades.SintomaEnfermedad;
 import entidades.Tratamiento;
 import excepciones.ExcepcionNegocio;
 
@@ -41,6 +42,10 @@ public class EnfermedadController implements Serializable {
 	@Pattern(regexp="[a-zA-Z ]*",message="Nombre No valido")
 	@Length(min=4,max=50,message="longitud entre 4 y 50")
 	String nombre;
+
+	@Pattern(regexp="[a-zA-Z ]*",message="Nombre No valido")
+	@Length(min=4,max=100,message="longitud entre 4 y 100")
+	String descripcion;
 	
 	private Tratamiento tratamiento;
 	
@@ -51,6 +56,8 @@ public class EnfermedadController implements Serializable {
 	private List<Tratamiento> tratamientos;
 	
 	private List<Enfermedad> enfermedades;
+	
+	private List<SintomaEnfermedad> sintomasEnfermadades;
 	
 	private List<Sintoma> sintomas;
 	
@@ -73,6 +80,7 @@ public class EnfermedadController implements Serializable {
 		try{
 			Enfermedad enfermedad = new Enfermedad();
 			enfermedad.setNombre(nombre);
+			enfermedad.setDescripcion(descripcion);
 			enfermedad.setTratamiento(tratamiento);
 			enfermedadEJB.crear(enfermedad);
 			limpiar();
@@ -85,6 +93,7 @@ public class EnfermedadController implements Serializable {
 	
 	public void limpiar(){
 		nombre = "";
+		descripcion = "";
 	}
 	
 	public void buscar(){
@@ -93,6 +102,7 @@ public class EnfermedadController implements Serializable {
 			if(enfermedad != null ){
 				nombre = enfermedad.getNombre();
 				tratamiento = enfermedad.getTratamiento();
+				descripcion = enfermedad.getDescripcion();
 			}else{
 				Messages.addFlashGlobalError("No se ha encontrado ninguna enfermedad con este nombre");
 			}
@@ -110,6 +120,7 @@ public class EnfermedadController implements Serializable {
 			if(enfermedad != null){
 				enfermedad.setNombre(nombre);
 				enfermedad.setTratamiento(tratamiento);
+				enfermedad.setDescripcion(descripcion);
 				enfermedadEJB.editar(enfermedad);
 				limpiar();
 				Messages.addFlashGlobalInfo("La enfermedad "+nombre+" se ha actualizado exitosamente");
@@ -210,4 +221,13 @@ public class EnfermedadController implements Serializable {
 		public void setEnfermedad(Enfermedad enfermedad) {
 			this.enfermedad = enfermedad;
 		}
+
+		public String getDescripcion() {
+			return descripcion;
+		}
+
+		public void setDescripcion(String descripcion) {
+			this.descripcion = descripcion;
+		}
+		
 }

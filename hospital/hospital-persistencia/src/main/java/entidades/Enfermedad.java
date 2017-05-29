@@ -28,7 +28,7 @@ public class Enfermedad implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="SEQ_ENFERMEDAD") 
 	@SequenceGenerator(name="SEQ_ENFERMEDAD", sequenceName="SEQ_ENFERMEDAD",allocationSize=1) 
-	@Column(name="Id_Enfermedad")
+	@Column(name="Id")
 	private int id;
 	
 	@Column(name="Nombre",nullable = false,length=50)

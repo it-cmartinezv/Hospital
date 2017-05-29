@@ -6,12 +6,19 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="Sintomas_Enfermedad")
 @IdClass(SintomaEnfermedadPK.class)
+@NamedQueries({
+	@NamedQuery(name=SintomaEnfermedad.BYENFERMEDAD, query="SELECT se FROM SintomaEnfermedad se WHERE se.enfermedad=?1")
+})
 public class SintomaEnfermedad implements Serializable{
+	
+	public static final String BYENFERMEDAD = "SintomaEnfermedad.byenfermedad";
 	
 	@Id
 	@ManyToOne(cascade={})

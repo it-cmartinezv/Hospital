@@ -16,57 +16,67 @@
 			<div class="datos">
 			<h:panelGrid id="paneldatos" columns="3">
 				
+
 				<h:outputLabel for="fechaEntrada" id="lfechaEntrada" value="Fecha entrada:" />
-				<h:inputText id="fechaEntrada" value="#{hospitalizacionController.fechaEntrada}" />
+				<p:calendar id="fechaEntrada" value="#{hospitalizacionController.fechaEntrada}" pattern="dd/MM/yyyy"/>
 				<p:message for="fechaEntrada" />
 				
-				<h:outputLabel for="fechaSalida" id="lfechaSalida" value="Fecha salida:" />
-				<h:inputText id="fechaSalida" value="#{hospitalizacionController.fechaSalida}" />
+				<h:outputLabel for="fechaSalida" id="lfechaSalida" value="Fecha salida (Opcional):" />
+				<p:calendar id="fechaSalida" value="#{hospitalizacionController.fechaSalida}" pattern="dd/MM/yyyy"/>
 				<p:message for="fechaSalida" />
 								
 				<h:outputLabel for="cama" id="lcama" value="Cama:" />
 				<h:selectOneMenu id="cama" value="#{hospitalizacionController.cama}" converter="camaConverter">
-					<f:selectItems value="#{hospitalizacionController.camas}" var="cama" itemValue="#{cama}" itemLabel="#{cama.descripcion}"/>
+					<f:selectItems value="#{hospitalizacionController.camas}" var="cama" itemValue="#{cama}" itemLabel="#{cama.id}"/>
 				</h:selectOneMenu>
 				<p:message for="cama"/>
 				
 				<h:outputLabel for="medico" id="lmedico" value="Medico:" />
 				<h:selectOneMenu id="medico" value="#{hospitalizacionController.medico}" converter="medicoConverter">
-					<f:selectItems value="#{hospitalizacionController.medicos}" var="medico" itemValue="#{medico}" itemLabel="#{medico.id}"/>
+					<f:selectItems value="#{hospitalizacionController.medicos}" var="medico" itemValue="#{medico}" itemLabel="#{medico.nombre}"/>
 				</h:selectOneMenu>
 				<p:message for="medico"/>
-				
-				
-				
-				
 					
 			</h:panelGrid>
 			
 			<h:panelGrid id="acciones" columns="5">
 				<h:commandButton action="/hospital-web/?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>
 				<h:commandButton action="#{hospitalizacionController.eliminar}" value="Eliminar" id="btneliminar"/>
-				<h:commandButton action="#{hospitalizacionController.editar}" value="Editar" id="btneditar"/>
-				<p:commandButton action="#{hospitalizacionController.buscar()}" value="Buscar" update="paneldatos" process="@this,nombre" id="btnbuscar"/>
+				<h:commandButton action="#{hospitalizacionController.editar}" value="Editar" id="btneditar"/>		
 				<h:commandButton action="#{hospitalizacionController.registrar}" value="Registrar" id="btnRegistrar"/>
 			</h:panelGrid>
 			</div>
 			
 			<div class="tabladatos">
-			<p:panel header="Listado de Hospitalizaciones]" id="paneltabla">
-				<p:dataTable id="tablaHospitalizaciones" value="#{hospitalizacionController.hospitalizaciones}" var="hospitalizaciones">
+			<h:panelGrid id="tablaadd" columns="3">
+				<h:outputLabel for="id" id="lid" value="Codigo:" />
+				<h:inputText style="width:290px!important" id="id" value="#{hospitalizacionController.id}" />
+				<p:commandButton action="#{hospitalizacionController.buscar}" value="Buscar" update="paneldatos" process="@this,id" id="btnbuscar"/>		
+			</h:panelGrid>
+			
+			<p:panel header="Listado de Hospitalizaciones" id="paneltabla">
+				<p:dataTable id="tablaHospitalizaciones" value="#{hospitalizacionController.hospitalizaciones}" var="h">
 
 					<p:column headerText="Codigo">
-						<h:outputLabel value="#{hospitalizacion.id}" />
+						<h:outputLabel value="#{h.id}" />
 					</p:column>
 
 					<p:column headerText="Fecha Entrada">
-						<h:outputLabel value="#{hospitalizacion.entrada}" />
+						<h:outputLabel value="#{h.entrada}" />
 					</p:column>
 
 					<p:column headerText="Fecha Salida">
-						<h:outputLabel value="#{hospitalizacion.salida}" />
+						<h:outputLabel value="#{h.salida}" />
 					</p:column>
 					
+					<p:column headerText="Medico">
+						<h:outputLabel value="#{h.medico.nombre} #{h.medico.apellido}" />
+					</p:column>
+					
+					<p:column headerText="Cama">
+						<h:outputLabel value="#{h.cama.descripcion}" />
+					</p:column>
+						
 				</p:dataTable>
 			</p:panel>
 			</div>

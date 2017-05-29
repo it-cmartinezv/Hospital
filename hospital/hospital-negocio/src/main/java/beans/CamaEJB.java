@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import entidades.Cama;
+import excepciones.ExcepcionNegocio;
 
 /**
  * 
@@ -45,6 +46,15 @@ public class CamaEJB {
 	 */
 	public void editar(Cama cama){
 		em.merge(cama);
+	}
+	
+	public void eliminar(int id){
+		Cama cama = buscar(id);
+		if(cama != null){
+			em.remove(cama);
+		}else{
+			throw new ExcepcionNegocio("No se ha encontrado ninguna cama");
+		}
 	}
 	
 	/**

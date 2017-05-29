@@ -8,8 +8,10 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import entidades.Enfermedad;
 import entidades.Sintoma;
+import entidades.SintomaEnfermedad;
 import excepciones.ExcepcionNegocio;
 
 /**
@@ -39,6 +41,8 @@ public class EnfermedadEJB {
 	public void editar(Enfermedad enfermedad){
 		em.merge(enfermedad);
 	}
+	
+	
 	
 	
 	/**

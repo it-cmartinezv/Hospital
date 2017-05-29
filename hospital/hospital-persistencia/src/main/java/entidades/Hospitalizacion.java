@@ -8,16 +8,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "Hospitalizacion")
+@NamedQueries({
+	@NamedQuery(name=Hospitalizacion.listarHospitalizacion, query = "SELECT h FROM Hospitalizacion h")
+})
 public class Hospitalizacion implements Serializable{
+	
+	public static final String listarHospitalizacion = "Hospitalizacion.listarHospitalizacion";
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="SEQ_HOSPITALIZACION") 
+	@SequenceGenerator(name="SEQ_HOSPITALIZACION", sequenceName="SEQ_HOSPITALIZACION",allocationSize=1)
 	@Column(name="Id_Hospitalizacion")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
 	@Temporal(TemporalType.DATE)
@@ -32,7 +42,7 @@ public class Hospitalizacion implements Serializable{
 	@ManyToOne(cascade={})
 	private Cama cama;
 	
-	@JoinColumn(name="Medico_Numero_Identificacion")
+	@JoinColumn(name="Medico")
 	@ManyToOne(cascade={})
 	private Medico medico;
 
