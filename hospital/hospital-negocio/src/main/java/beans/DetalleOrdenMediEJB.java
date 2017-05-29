@@ -6,6 +6,7 @@ package beans;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -15,6 +16,8 @@ import javax.persistence.Query;
 import entidades.Medicamento;
 import entidades.OrdenMedicamento;
 import entidades.detalleOrdenMedicamente;
+import entidades.detalleOrdenMedicamentePK;
+import excepciones.ExcepcionNegocio;
 
 /**
  * @author AlejandroM
@@ -28,14 +31,82 @@ public class DetalleOrdenMediEJB implements Serializable{
 	@PersistenceContext
 	private EntityManager em;
 	
+	
+	@EJB
+	OrdenMedicamentoEJB ordenMedicamentoEJB;
+	
+	@EJB
+	MedicamentoEJB medicamentoEJB;
+	
+	
 	/**
 	 * Metodo para crear una detalle d eorden de medicamento
 	 * @param ordenMedicamente
 	 */
 	public void crearDetalleOrden(detalleOrdenMedicamente ordenMedicamente){
-		em.persist(ordenMedicamente);
+		OrdenMedicamento orden = ordenMedicamentoEJB.buscar(ordenMedicamente.getOrdenMedicamento().getId());
+		if (orden!=null) {
+			Medicamento medi = medicamentoEJB.buscar(ordenMedicamente.getMedicamento().getId());
+			if (medi!=null) {
+				detalleOrdenMedicamente detalle = buscar(ordenMedicamente.getMedicamento(), ordenMedicamente.getOrdenMedicamento());
+				
+				if (detalle==null) {
+					ordenMedicamente.setMedicamento(medi);
+					ordenMedicamente.setOrdenMedicamento(orden);
+					em.persist(ordenMedicamente);
+				} else {
+					throw new ExcepcionNegocio("Ya registraste esta orden ");
+				}
+			}else {
+				throw new ExcepcionNegocio("Medicamento no existe");
+			}
+		}else {
+			throw new ExcepcionNegocio("Orden no existe");
+		}
+		
 	}
 	
+	
+	
+	
+	public void editarDetalleOrden(detalleOrdenMedicamente ordenMedicamente){
+		OrdenMedicamento orden = ordenMedicamentoEJB.buscar(ordenMedicamente.getOrdenMedicamento().getId());
+		if (orden!=null) {
+			Medicamento medi = medicamentoEJB.buscar(ordenMedicamente.getMedicamento().getId());
+			if (medi!=null) {
+				detalleOrdenMedicamente detalle = buscar(ordenMedicamente.getMedicamento(), ordenMedicamente.getOrdenMedicamento());
+				
+				if (detalle!=null) {
+					ordenMedicamente.setMedicamento(medi);
+					ordenMedicamente.setOrdenMedicamento(orden);
+					em.merge(ordenMedicamente);
+				} else {
+					throw new ExcepcionNegocio("No has registrado esta orden ");
+				}
+			}else {
+				throw new ExcepcionNegocio("Medicamento no existe");
+			}
+		}else {
+			throw new ExcepcionNegocio("Orden no existe");
+		}
+		
+	}
+	
+	
+	/**
+	 * Metodo para buscar una orden de un medicamento, busca las dos foraneas
+	 * @param medicamento
+	 * @param ordenMedicamento
+	 * @return
+	 */
+	public detalleOrdenMedicamente buscar(Medicamento medicamento, OrdenMedicamento ordenMedicamento){
+	
+		detalleOrdenMedicamentePK pk = new detalleOrdenMedicamentePK();
+		pk.setMedicamento(medicamento.getId());
+		pk.setOrdenMedicamento(ordenMedicamento.getId());
+		return em.find(detalleOrdenMedicamente.class, pk);
+		
+	}
 	
 	/**
 	 * Lista que me trae todos los medicamentos que estan en la BD
@@ -112,7 +183,7 @@ public class DetalleOrdenMediEJB implements Serializable{
 	 * @return
 	 */
 	public List<detalleOrdenMedicamente> listaEntre(){
-		Query q = em.createNamedQuery(detalleOrdenMedicamente.LISTA_ORDEN_ENTREGADAS);
+		Query q = em.createNamedQuery(detalleOrdenMedicamente.LISTA_DETALLES);
 		List<detalleOrdenMedicamente> lista = q.getResultList();
 		return lista;
 	}

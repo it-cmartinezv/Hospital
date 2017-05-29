@@ -101,7 +101,7 @@ public class ControladorDetalleOrdenMedicamento implements Serializable {
 	 */
 	public void entregarMedicamento(detalleOrdenMedicamente detalleOrdenMedicamente){
 		detalleOrdenMedicamente.setEntregado(true);
-		ordenMediEJB.editar(detalleOrdenMedicamente);
+		ordenMediEJB.editarDetalleOrden(detalleOrdenMedicamente);
 		listaDetalle=ordenMediEJB.listaMedicamentos(detalleOrdenMedicamente.getOrdenMedicamento());
 		if (listaDetalle== null) {
 			detalleOrdenMedicamente.getOrdenMedicamento().setEstado(true);
