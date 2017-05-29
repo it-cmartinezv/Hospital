@@ -58,7 +58,7 @@ INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('20', 'Ordenes medicamento', '/pagi
 INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('21', 'Horario medicos', '/paginas/seguro/horario-medico.xhtml');
 INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('22', 'Gestion enfermedades', '/paginas/seguro/gestion-enfermedades.xhtml');
 INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('23', 'Gestion quirofanos', '/paginas/seguro/gestion-quirofanos.xhtml');
-
+INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('24', 'Gestion Orden examenes', '/paginas/seguro/gestion-OrdenExamen.xhtml');
 
 --------------- ADMINISTRADOR -------------------------------------
 
@@ -103,6 +103,8 @@ INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('4', '11');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('4', '14');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('4', '15');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('4', '16');
+
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '24');
 
 
 ----------------------------------- SINTOMAS ------------------------------------------------

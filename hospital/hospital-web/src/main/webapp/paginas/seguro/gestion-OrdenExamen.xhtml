@@ -16,13 +16,28 @@
 				
 					<h:outputLabel for="citas" id="ci" value="Citas medicas" />
 					<h:selectOneMenu id="citas" value="#{OrdenEx.cita}" converter="citaConverter">
-						<f:selectItems value="#{OrdenEx.listarCitas}" var="c" itemValue="#{c}" itemLabel="#{c.paciente.nombre} #{c.paciente.apellido}" />
+						<f:selectItems value="#{OrdenEx.listarCitas}" var="c" itemValue="#{c}" itemLabel="#{c.id} #{c.paciente.nombre} #{c.paciente.apellido} " />
 					</h:selectOneMenu>
 					<p:message for="citas" />
 					
 					<h:outputLabel for="examen" id="exa" value="Examen" />
 					<h:selectOneMenu id="examen" value="#{OrdenEx.examen}" converter="ExamenConverter">
 						<f:selectItems value="#{OrdenEx.listaExamen}" var="e" itemValue="#{e}" itemLabel="#{e.nombre}" />
+					</h:selectOneMenu>
+					<p:message for="citas" />
+					
+					<h:outputLabel for="fechaRealizacion"  id="fechaRea" value="Fecha" />
+		        	<p:calendar value="#{OrdenEx.fecha}" id="fechaEntre" pattern="dd/MM/yyyy" />
+					<p:message for="fechaEntre" />
+				
+					<h:outputLabel for="descripcion" id="descripcion" value="Descripcion"/> 
+					<p:inputTextarea maxlength="300" rows="10" value="#{OrdenEx.descripcion}" id="des" />
+					<p:message for="descripcion" />
+					
+					
+					<h:outputLabel for="medico" id="medi" value="Medico" />
+					<h:selectOneMenu id="medico" value="#{OrdenEx.medico}" converter="medicoConverter">
+						<f:selectItems value="#{OrdenEx.listaMedicos}" var="m" itemValue="#{m}" itemLabel="#{m.nombre} #{m.apellido}" />
 					</h:selectOneMenu>
 					<p:message for="citas" />
 				

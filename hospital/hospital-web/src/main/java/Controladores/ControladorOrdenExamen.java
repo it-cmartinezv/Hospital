@@ -4,6 +4,7 @@
 package Controladores;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,9 +16,11 @@ import org.omnifaces.cdi.ViewScoped;
 
 import org.omnifaces.util.Messages;
 
+import beans.EJBUsuario;
 import beans.OrdenExamenEJB;
 import entidades.CitaMedica;
 import entidades.Examen;
+import entidades.Medico;
 import entidades.OrdenExamen;
 
 /**
@@ -32,14 +35,21 @@ public class ControladorOrdenExamen implements Serializable{
 	@EJB
 	OrdenExamenEJB ordenEJB;
 	
+	@EJB
+	EJBUsuario usuarioEJB;
+	
 	private CitaMedica cita;
 	private Examen examen;
+	private Date fecha;
+	private String descripcion;
+	private Medico medico;
 	
 	
 	private List<CitaMedica> listarCitas;
 	private List<Examen> listaExamen;
 	
 	private List<OrdenExamen> listaOrden;
+	private List<Medico> listaMedicos;
 	
 	
 	@PostConstruct
@@ -47,6 +57,7 @@ public class ControladorOrdenExamen implements Serializable{
 		listarCitas = ordenEJB.listaCitas();
 		listaOrden = ordenEJB.listaOrdenes();
 		listaExamen = ordenEJB.listaExamen();
+		listaMedicos = usuarioEJB.listarMedicos();
 	}
 	
 	
@@ -55,8 +66,12 @@ public class ControladorOrdenExamen implements Serializable{
 	 * Metodo para crear una orden de un examen
 	 */
 	public void crear(){
-		//OrdenExamen orden = new OrdenExamen(cita, examen);
-		//ordenEJB.crear(orden);
+		Messages.addFlashGlobalInfo("cita");
+		
+		Messages.addFlashGlobalInfo("examen");
+		
+		OrdenExamen orden = new OrdenExamen(cita, examen, fecha, descripcion, medico);
+		ordenEJB.crear(orden);
 		Messages.addFlashGlobalInfo("La orden del examen se ha creado exitosamente");
 	}
 	
@@ -120,6 +135,39 @@ public class ControladorOrdenExamen implements Serializable{
 	public void setListaExamen(List<Examen> listaExamen) {
 		this.listaExamen = listaExamen;
 	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public Medico getMedico() {
+		return medico;
+	}
+
+	public void setMedico(Medico medico) {
+		this.medico = medico;
+	}
+
+	public List<Medico> getListaMedicos() {
+		return listaMedicos;
+	}
+
+	public void setListaMedicos(List<Medico> listaMedicos) {
+		this.listaMedicos = listaMedicos;
+	}
+	
 	
 	
 	
