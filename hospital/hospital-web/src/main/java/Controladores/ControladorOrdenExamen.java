@@ -55,8 +55,8 @@ public class ControladorOrdenExamen implements Serializable{
 	 * Metodo para crear una orden de un examen
 	 */
 	public void crear(){
-		OrdenExamen orden = new OrdenExamen(cita, examen);
-		ordenEJB.crear(orden);
+		//OrdenExamen orden = new OrdenExamen(cita, examen);
+		//ordenEJB.crear(orden);
 		Messages.addFlashGlobalInfo("La orden del examen se ha creado exitosamente");
 	}
 	

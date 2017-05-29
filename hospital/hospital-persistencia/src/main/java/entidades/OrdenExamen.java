@@ -1,5 +1,7 @@
 package entidades;
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "Orden_Examen")
@@ -24,12 +28,12 @@ public class OrdenExamen implements Serializable{
 	public static final String LISTAORDENESEXIS = "OrdenExamen,listarOrdenes";
 	
 	@Id
-	@Column(name="Id_Orden")
+	@Column(name="Id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="SEQ_ORDEN_EXAMEN") 
 	@SequenceGenerator(name="SEQ_ORDEN_EXAMEN", sequenceName="SEQ_ORDEN_EXAMEN",allocationSize=1)
 	private int id;
 	
-	@JoinColumn(name="Citas_Medicas_Id_Cita")
+	@JoinColumn(name="Citas_Medicas")
 	@ManyToOne(cascade={})
 	private CitaMedica citaMedica;
 	
@@ -37,40 +41,104 @@ public class OrdenExamen implements Serializable{
 	@ManyToOne(cascade={})
 	private Examen examen;
 
+	@Temporal(TemporalType.DATE)
+	@Column(name="Fecha_Realizacion",nullable = false)
+	private Date fechaRealizacion;
+	
+	@Column(name="Descripcion",nullable = false,length=2000)
+	private String Descripcion;
+	
+	@JoinColumn(name="Medico")
+	@ManyToOne(cascade={})
+	private Medico medico;
+	
 	public OrdenExamen() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrdenExamen(CitaMedica citaMedica, Examen examen) {
+	
+
+	public OrdenExamen(CitaMedica citaMedica, Examen examen, Date fechaRealizacion, String descripcion, Medico medico) {
 		super();
 		this.citaMedica = citaMedica;
 		this.examen = examen;
+		this.fechaRealizacion = fechaRealizacion;
+		Descripcion = descripcion;
+		this.medico = medico;
 	}
 
 	public int getId() {
 		return id;
 	}
 
+
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
+
 
 	public CitaMedica getCitaMedica() {
 		return citaMedica;
 	}
 
+
+
 	public void setCitaMedica(CitaMedica citaMedica) {
 		this.citaMedica = citaMedica;
 	}
+
+
 
 	public Examen getExamen() {
 		return examen;
 	}
 
+
+
 	public void setExamen(Examen examen) {
 		this.examen = examen;
 	}
+
+
+
+	public Date getFechaRealizacion() {
+		return fechaRealizacion;
+	}
+
+
+
+	public void setFechaRealizacion(Date fechaRealizacion) {
+		this.fechaRealizacion = fechaRealizacion;
+	}
+
+
+
+	public String getDescripcion() {
+		return Descripcion;
+	}
+
+
+
+	public void setDescripcion(String descripcion) {
+		Descripcion = descripcion;
+	}
+
+
+
+	public Medico getMedico() {
+		return medico;
+	}
+
+
+
+	public void setMedico(Medico medico) {
+		this.medico = medico;
+	}
+
+
 
 	@Override
 	public int hashCode() {
