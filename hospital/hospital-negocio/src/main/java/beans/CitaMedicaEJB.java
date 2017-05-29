@@ -106,5 +106,32 @@ public class CitaMedicaEJB {
 		q.setParameter(2, estado);
 		return q.getResultList();
 	}
-
+	
+	/**
+	 * buscar cita de un paciente
+	 */
+	public CitaMedica citasByPacienteId(int id, Paciente paciente){
+		Query q = em.createNamedQuery(CitaMedica.citasByPacienteID);
+		q.setParameter(1, id);
+		q.setParameter(2, paciente);
+		if(q.getResultList().size() > 0){
+			return (CitaMedica) q.getResultList().get(0);
+		}else{
+			return null;
+		}
+	}
+	
+	/**
+	 * buscar cita de un medico
+	 */
+	public CitaMedica citasByMedicoId(int id, Medico medico){
+		Query q = em.createNamedQuery(CitaMedica.citasByMedicoID);
+		q.setParameter(1, id);
+		q.setParameter(2, medico);
+		if(q.getResultList().size() > 0){
+			return (CitaMedica) q.getResultList().get(0);
+		}else{
+			return null;
+		}
+	}
 }

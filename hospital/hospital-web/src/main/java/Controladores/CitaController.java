@@ -41,6 +41,8 @@ public class CitaController implements Serializable{
 	@EJB
 	private SintomaEJB sintomaEJB;
 	
+	private int id;
+	
 	private int caracter;
 	
 	private String valoracion;
@@ -80,7 +82,6 @@ public class CitaController implements Serializable{
 				cita = new CitaMedica();
 				cita.setCaracter(caracter);
 				cita.setMedico(medico);
-				cita.setDescripcion(descripcion);
 				cita.setValoracion(valoracion);
 				cita.setEstado("Pendiente");
 				cita.setPaciente(paciente);
@@ -91,7 +92,6 @@ public class CitaController implements Serializable{
 				cita.setHora(hora);
 				// fin datos de prueba
 				citaEJB.crear(cita);
-				limpiar();
 				Messages.addFlashGlobalInfo("Su cita fue registrada exitosamente, puedes agregar sintomas a la cita para dar indicaciones al medico.");
 			}else{
 				Messages.addFlashGlobalInfo("No eres un paciente");
@@ -139,6 +139,56 @@ public class CitaController implements Serializable{
 		citaSintomas = citaSintomaEJB.listarSintomasByCita(cita);
 	}
 		
+	/**
+	 * Buscar cita
+	 */
+	public void buscar(){
+		Paciente paciente = usuarioEJB.buscarPaciente(tipoID, numeroIdentificacion);
+		CitaMedica lacita = new CitaMedica();
+		if(paciente != null){
+			lacita = citaEJB.citasByPacienteId(id, paciente);
+		}else{
+			lacita = citaEJB.buscar(id);
+		}
+		if(lacita != null){
+			caracter = lacita.getCaracter();
+			valoracion = lacita.getValoracion();
+			medico = lacita.getMedico();
+			descripcion = lacita.getDescripcion();
+			cita = lacita;
+			citaSintomas();
+		}else{
+			limpiar();
+			sintomas = null;
+			Messages.addFlashGlobalInfo("No se ha encontrado ninguna cita con este codigo");
+		}
+	}
+	
+	/**
+	 * Buscar cita
+	 */
+	public void buscarCitaMedico(){
+		Medico medico = usuarioEJB.buscarMedico(tipoID, numeroIdentificacion);
+		CitaMedica lacita = new CitaMedica();
+		if(medico != null){
+			lacita = citaEJB.citasByMedicoId(id, medico);
+		}else{
+			lacita = citaEJB.buscar(id);
+		}
+		if(lacita != null){
+			caracter = lacita.getCaracter();
+			valoracion = lacita.getValoracion();
+			medico = lacita.getMedico();
+			descripcion = lacita.getDescripcion();
+			cita = lacita;
+			citaSintomas();
+		}else{
+			limpiar();
+			sintomas = null;
+			Messages.addFlashGlobalInfo("No se ha encontrado ninguna cita con este codigo");
+		}
+	}
+	
 	/**
 	 * Accesores y Modificadores
 	 * 
@@ -214,4 +264,13 @@ public class CitaController implements Serializable{
 	public void setCita(CitaMedica cita) {
 		this.cita = cita;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 }

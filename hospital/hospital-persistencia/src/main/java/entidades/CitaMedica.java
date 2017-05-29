@@ -29,8 +29,9 @@ import javax.persistence.TemporalType;
 	@NamedQuery(name=CitaMedica.citasByPaciente, query="SELECT c FROM CitaMedica c WHERE c.paciente=?1"),
 	@NamedQuery(name=CitaMedica.pacienteByEstado, query="SELECT c FROM CitaMedica c WHERE c.paciente=?1 AND c.estado=?2"),
 	@NamedQuery(name=CitaMedica.citasByMedico, query="SELECT c FROM CitaMedica c WHERE c.medico=?1"),
-	@NamedQuery(name=CitaMedica.medicoByEstado, query="SELECT c FROM CitaMedica c WHERE c.medico=?1 AND c.estado=?2")
-
+	@NamedQuery(name=CitaMedica.medicoByEstado, query="SELECT c FROM CitaMedica c WHERE c.medico=?1 AND c.estado=?2"),
+	@NamedQuery(name=CitaMedica.citasByPacienteID, query="SELECT c FROM CitaMedica c WHERE c.id=?1 AND c.paciente=?2"),
+	@NamedQuery(name=CitaMedica.citasByMedicoID, query="SELECT c FROM CitaMedica c WHERE c.id=?1 AND c.medico=?2")
 })
 public class CitaMedica implements Serializable{
 	
@@ -40,7 +41,8 @@ public class CitaMedica implements Serializable{
 	public static final String pacienteByEstado = "CitaMedica.pacienteByEstado";
 	public static final String citasByMedico = "CitaMedica.citasByMedico";
 	public static final String medicoByEstado = "CitaMedica.medicoByEstado";
-
+	public static final String citasByPacienteID = "CitaMedica.citasByPacienteID";
+	public static final String citasByMedicoID = "CitaMedica.citasByMedicoID";
 	
 	@Id
 	@Column(name="id")
