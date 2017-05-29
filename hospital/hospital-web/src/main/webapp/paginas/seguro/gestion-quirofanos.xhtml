@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/template/template.xhtml">
+	<h:head>
+	</h:head>
+
+	<ui:define name="cuerpo">
+	    <!-- TITULO  --> 
+		<h1>Gestion de Quirofanos</h1>
+		<!-- FORMULARIO, SOLO DEBE HABER UNO --> 
+		<h:form prependId="false" id="gestion">
+			<!-- PANELGRID ES UNA TABLA SE PUEDE REPETIR  --> 
+			<div class="datos">
+			<h:panelGrid id="paneldatos" columns="3">
+				
+				<h:outputLabel for="nombre" id="lnombre" value="Nombre:" />
+				<h:inputText id="nombre" value="#{quirofanoController.nombre}" />
+				<p:message for="nombre" />
+												
+				<h:outputLabel for="descripcion" id="ldescripcion" value="Descripcion:" />
+				<p:inputTextarea rows="10" maxlength="300" id="descripcion" value="#{quirofanoController.descripcion}" />
+				<p:message for="descripcion" />
+				
+			</h:panelGrid>
+			
+			<h:panelGrid id="acciones" columns="5">
+				<h:commandButton action="/paciente.xhtml?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>
+				<p:commandButton action="#{quirofanoController.eliminar}" value="Eliminar" id="btnEliminar" update="paneltabla" process="@this,paneldatos"/>
+				<p:commandButton action="#{quirofanoController.editar}" value="Editar" id="btnEditar" update="paneltabla" process="@this,paneldatos"/>
+				<p:commandButton action="#{quirofanoController.buscar}" value="Buscar" id="btnBuscar" update="paneldatos" process="@this,paneldatos"/>
+				<p:commandButton action="#{quirofanoController.crear}" value="Registrar" id="btnRegistrar" update="paneltabla" process="@this,paneldatos"/>
+			</h:panelGrid>
+						
+			</div>
+			
+			
+			<div class="tabladatos">			
+			<p:panel header="Listado de Quirofanos" id="paneltabla">
+				<p:dataTable id="tablaSintomas" value="#{quirofanoController.quirofanos}" var="q">
+					<p:column headerText="Nombre">
+						<h:outputLabel value="#{q.nombre}" />
+					</p:column>
+
+					<p:column headerText="Descripcion">
+						<h:outputLabel value="#{q.descripcion}" />
+					</p:column>
+					
+					<p:column headerText="Estado">
+						<p:outputLabel value="Ocupado" rendered="#{q.estado=true}" />
+						<p:outputLabel value="Desocupado" rendered="#{q.estado=false}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
