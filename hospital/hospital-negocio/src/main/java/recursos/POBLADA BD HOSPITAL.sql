@@ -64,6 +64,7 @@ INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('26', 'Gestionar enfermedades sinto
 INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('27', 'Gestionar hospitalizacion', '/paginas/seguro/gestion-hospitalizacion.xhtml');
 INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('28', 'Gestionar cama', '/paginas/seguro/gestion-cama.xhtml');
 INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('29', 'Atender cita', '/paginas/seguro/atender-cita.xhtml');
+INSERT INTO ACCESO (ID, NOMBRE, URL) VALUES ('30', 'Gestion orden cirugia', '/paginas/seguro/gestion-ordencirugia.xhtml');
 --------------- ADMINISTRADOR -------------------------------------
 
 INSERT INTO PERSONA (ID,NUMERO_IDENTIFICACION, TIPO_IDENTIFICACION, NOMBRE, APELLIDO, FECHA_NACIMIENTO, GENERO, CORREO, PASSWORD, TELEFONO, CIUDAD) VALUES ('1','1500000', 'CEDULA_DE_CIUDADANIA', 'Carlos', 'Martinez', TO_DATE('1994-05-05 03:26:09', 'YYYY-MM-DD HH24:MI:SS'), 'HOMBRE', 'admin@hospital.com', '123', '3213456789', '1');
@@ -117,6 +118,8 @@ INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('2', '27');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '26');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '29');
 INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('2', '29');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('1', '30');
+INSERT INTO ACCESOROL (ROL, ACCESO) VALUES ('2', '30');
 
 ----------------------------------- SINTOMAS ------------------------------------------------
 
