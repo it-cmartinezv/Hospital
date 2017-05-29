@@ -38,6 +38,8 @@ public class ControladorOrdenExamen implements Serializable{
 	@EJB
 	EJBUsuario usuarioEJB;
 	
+	private int id;
+	
 	private CitaMedica cita;
 	private Examen examen;
 	private Date fecha;
@@ -66,10 +68,7 @@ public class ControladorOrdenExamen implements Serializable{
 	 * Metodo para crear una orden de un examen
 	 */
 	public void crear(){
-		Messages.addFlashGlobalInfo("cita");
-		
-		Messages.addFlashGlobalInfo("examen");
-		
+	
 		OrdenExamen orden = new OrdenExamen(cita, examen, fecha, descripcion, medico);
 		ordenEJB.crear(orden);
 		Messages.addFlashGlobalInfo("La orden del examen se ha creado exitosamente");
@@ -90,19 +89,49 @@ public class ControladorOrdenExamen implements Serializable{
 	 * Metodo para editar una orden de examen
 	 */
 	public void editar(){
-		OrdenExamen orden = new OrdenExamen();
-		orden.setCitaMedica(cita);
-		orden.setExamen(examen);
-		ordenEJB.editar(orden);
-		Messages.addFlashGlobalInfo("La orden del examen se ha editado exitosamente");
+		OrdenExamen or = ordenEJB.buscar(id);
+		if (or!=null) {
+			or.setCitaMedica(cita);
+			or.setDescripcion(descripcion);
+			or.setExamen(examen);
+			or.setFechaRealizacion(fecha);
+			or.setMedico(medico);
+			ordenEJB.editar(or);
+			Messages.addFlashGlobalInfo("La orden del examen se ha editado exitosamente");
+		} else {
+			Messages.addFlashGlobalInfo("No existe ningun orden con este numero");
+		}
+
 	}
 	
 	
+	/**
+	 * Metodo para buscar las ordenes de los medicamentos
+	 */
 	public void buscar() {
+		OrdenExamen or = ordenEJB.buscar(id);
+		System.out.println(or);
+		if (or!=null) {
+			cita = or.getCitaMedica();
+			medico = or.getMedico();
+			examen = or.getExamen();
+			fecha = or.getFechaRealizacion();
+			descripcion = or.getDescripcion();
+			
+		} else {
+			Messages.addFlashGlobalInfo("No hay orden medica con estos datos");
+		}
 		
 	}
 	
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	public List<OrdenExamen> getListaOrden() {
 		return listaOrden;
 	}

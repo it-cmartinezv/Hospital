@@ -48,7 +48,7 @@
 				<h:panelGrid id="acciones" columns="5">
 					<h:commandButton action="/hospital-web/?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>				
 					<h:commandButton action="#{OrdenEx.crear()}" value="Crear" id="btnCrearOrden" />
-					<p:commandButton action="#{OrdenEx.buscar()}" value="Buscar" update="paneldatos" id="btn"/>
+					
 					<h:commandButton action="#{OrdenEx.editar()}" value="Editar" id="btnEditar" />
 					<h:commandButton action="#{OrdenEx.eliminar()}" value="Eliminar" id="btneliminar" />
 				</h:panelGrid>
@@ -58,11 +58,18 @@
 			
 			<!-- este div es el que otorga el estilo a la tabla que ponga dentro -->
 			<div class="tabladatos">
+			
+			<h:panelGrid id="tablaadd" columns="3">
+				<h:outputLabel for="idBus" id="idBus" value="Numero del examen" />
+				<h:inputText style="width:290px!important" id="ias" value="#{OrdenEx.id}" />
+				<p:commandButton action="#{OrdenEx.buscar()}" value="Buscar Orden" id="btnBuscar" update="gestion" process="@this, ias"/>
+			</h:panelGrid>
+			
 			<p:panel header="Listado de Ordenes" id="paneltabla">
 				<p:dataTable id="tablaOrden" value="#{OrdenEx.listaOrden}" var="orden">
 
-					<p:column headerText="Numero Examen">
-						<h:outputLabel value="#{orden.examen.id}" />
+					<p:column headerText="Numero Orden">
+						<h:outputLabel value="#{orden.id}" />
 					</p:column>
 
 					<p:column headerText="Examen">
