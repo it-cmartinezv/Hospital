@@ -317,9 +317,9 @@ public class EJBUsuario implements Serializable{
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Medico buscarMedico(String tipoId, String numId){
-		Query q = em.createNamedQuery(Medico.BUSCAR);
-		q.setParameter(1, tipoId);
-		q.setParameter(2, numId);
+		Query q = em.createNamedQuery(Medico.MEDICO);
+		q.setParameter(1, numId);
+		q.setParameter(2, tipoId);
 		List<Medico> lista = q.getResultList();
 		if(lista.size() > 0){
 			return lista.get(0);

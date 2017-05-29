@@ -12,11 +12,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Medico")
 @NamedQueries({
+	@NamedQuery(name=Medico.MEDICO, query="SELECT m FROM Medico m WHERE m.numeroIdentificacion=?1 AND m.tipoIdentificacion=?2"),
 	@NamedQuery(name=Medico.BYTARJETA,query="SELECT m FROM Medico m WHERE m.tarjetaProfesional=?1"),
 	@NamedQuery(name=Medico.LISTAR, query="SELECT m FROM Medico m")	
 })
 public class Medico extends Persona implements Serializable{
 	
+	public static final String MEDICO = "Medico.medico";
 	public static final String BYTARJETA = "Medico.bytarjeta";
 	public static final String LISTAR = "Medico.listar";
 	

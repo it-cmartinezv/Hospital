@@ -12,6 +12,7 @@ import org.omnifaces.util.Messages;
 import beans.CitaMedicaEJB;
 import beans.EJBUsuario;
 import entidades.CitaMedica;
+import entidades.Medico;
 import entidades.Paciente;
 import excepciones.ExcepcionNegocio;
 import seguridad.SesionBean;
@@ -35,14 +36,30 @@ public class PanelPacienteController implements Serializable{
 	
 	private Paciente paciente;
 	
+	private Medico medico;
+	
+	private String tipoid;
+	
+	private String numeroid;
+	
 	@PostConstruct
 	public void inicializar(){
-		paciente = usuarioEJB.buscarPaciente(sesion.getUsuario().getTipoIdentificacion(), sesion.getUsuario().getNumeroIdentificacion());
+		tipoid = sesion.getUsuario().getTipoIdentificacion();
+		numeroid = sesion.getUsuario().getNumeroIdentificacion();
+		paciente = usuarioEJB.buscarPaciente(tipoid,numeroid);
 		if(paciente != null){
 			citasPaciente = citaMedicaEJB.citasByPaciente(paciente);
 			citasPendientes = citaMedicaEJB.citasByPacienteEstado(paciente, "Pendiente");
 			citasAtendidas = citaMedicaEJB.citasByPacienteEstado(paciente, "Atendida");
 			citasCanceladas = citaMedicaEJB.citasByPacienteEstado(paciente, "Cancelada");
+		}else{
+			medico = usuarioEJB.buscarMedico(tipoid, numeroid);
+			if(medico != null){
+				citasPaciente = citaMedicaEJB.citasByMedico(medico);
+				citasPendientes = citaMedicaEJB.citasByMedicoEstado(medico, "Pendiente");
+				citasAtendidas = citaMedicaEJB.citasByMedicoEstado(medico, "Atendida");
+				citasCanceladas = citaMedicaEJB.citasByMedicoEstado(medico, "Cancelada");
+			}
 		}
 	}
 	
@@ -102,5 +119,29 @@ public class PanelPacienteController implements Serializable{
 
 	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
+	}
+
+	public Medico getMedico() {
+		return medico;
+	}
+
+	public void setMedico(Medico medico) {
+		this.medico = medico;
+	}
+
+	public String getTipoid() {
+		return tipoid;
+	}
+
+	public void setTipoid(String tipoid) {
+		this.tipoid = tipoid;
+	}
+
+	public String getNumeroid() {
+		return numeroid;
+	}
+
+	public void setNumeroid(String numeroid) {
+		this.numeroid = numeroid;
 	}
 }
