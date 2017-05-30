@@ -2,6 +2,7 @@ package beans;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -11,6 +12,7 @@ import javax.persistence.Query;
 import entidades.CitaMedica;
 import entidades.Hospitalizacion;
 import entidades.OrdenHospitalizacion;
+import excepciones.ExcepcionNegocio;
 
 /**
  * 
@@ -20,7 +22,10 @@ import entidades.OrdenHospitalizacion;
 @LocalBean
 @Stateless
 public class OrdenHospitalizacionEJB {
-
+	
+	@EJB
+	private HospitalizacionEJB hospitalizacionEJB;
+	
 	@PersistenceContext
 	private EntityManager em;
 	
@@ -59,7 +64,13 @@ public class OrdenHospitalizacionEJB {
 	 * @param ordenHospitalizacion
 	 */
 	public void crear(OrdenHospitalizacion ordenHospitalizacion){
-		em.persist(ordenHospitalizacion);
+		Hospitalizacion hospitalizacion = hospitalizacionEJB.buscar(ordenHospitalizacion.getId());
+		if(hospitalizacion != null){
+			em.persist(ordenHospitalizacion);
+		}else{
+			throw new ExcepcionNegocio("Esta hospitalizacion no existe");
+		}
+		
 	}
 	
 	/**

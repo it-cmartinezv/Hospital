@@ -1,5 +1,5 @@
 --------------------------------------------------------
--- Archivo creado  - domingo-mayo-28-2017   
+-- Archivo creado  - lunes-mayo-29-2017   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Sequence SEQ_ACCESO
@@ -10,12 +10,12 @@
 --  DDL for Sequence SEQ_CAMA_HOSPITALIZACION
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "CARLOSABD"."SEQ_CAMA_HOSPITALIZACION"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "CARLOSABD"."SEQ_CAMA_HOSPITALIZACION"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence SEQ_CIRUGIA
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "CARLOSABD"."SEQ_CIRUGIA"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "CARLOSABD"."SEQ_CIRUGIA"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence SEQ_CITAS_MEDICAS
 --------------------------------------------------------
@@ -50,7 +50,7 @@
 --  DDL for Sequence SEQ_EXAMEN
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "CARLOSABD"."SEQ_EXAMEN"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "CARLOSABD"."SEQ_EXAMEN"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 41 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence SEQ_FARMACIA
 --------------------------------------------------------
@@ -60,12 +60,12 @@
 --  DDL for Sequence SEQ_HORARIO
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "CARLOSABD"."SEQ_HORARIO"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "CARLOSABD"."SEQ_HORARIO"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence SEQ_HOSPITALIZACION
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "CARLOSABD"."SEQ_HOSPITALIZACION"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "CARLOSABD"."SEQ_HOSPITALIZACION"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence SEQ_MEDICAMENTO
 --------------------------------------------------------
@@ -80,12 +80,12 @@
 --  DDL for Sequence SEQ_ORDEN_CIRUGIA
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "CARLOSABD"."SEQ_ORDEN_CIRUGIA"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "CARLOSABD"."SEQ_ORDEN_CIRUGIA"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence SEQ_ORDEN_EXAMEN
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "CARLOSABD"."SEQ_ORDEN_EXAMEN"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "CARLOSABD"."SEQ_ORDEN_EXAMEN"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence SEQ_ORDEN_HOSPITALIZACION
 --------------------------------------------------------
@@ -305,7 +305,7 @@
   CREATE TABLE "CARLOSABD"."EXAMEN" 
    (	"ID_EXAMEN" NUMBER(*,0), 
 	"NOMBRE" VARCHAR2(30 BYTE), 
-	"DESCRIPCION" VARCHAR2(50 BYTE)
+	"DESCRIPCION" VARCHAR2(300 BYTE)
    ) SEGMENT CREATION IMMEDIATE 
   PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
@@ -633,6 +633,22 @@
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for View DATOS_REPORTES_CARLOS_MARTINEZ
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE VIEW "CARLOSABD"."DATOS_REPORTES_CARLOS_MARTINEZ" ("CITA", "ID_MEDICO", "NOMBRE_MEDICO", "ID_PACIENTE", "NOMBRE_PACIENTE", "CIUDAD", "DEPARTAMENTO", "PAIS") AS 
+  SELECT CM.ID CITA, M.ID ID_MEDICO, PA.NOMBRE||' '||PA.APELLIDO NOMBRE_MEDICO, P.ID ID_PACIENTE, PE.NOMBRE||' '||PE.APELLIDO NOMBRE_PACIENTE, C.NOMBRE CIUDAD, D.NOMBRE DEPARTAMENTO, PS.NOMBRE PAIS 
+  FROM CITAS_MEDICAS CM JOIN MEDICO M ON M.ID = CM.MEDICO JOIN PERSONA PA ON PA.ID = M.ID JOIN PACIENTE P ON P.ID = CM.PACIENTE JOIN PERSONA PE ON PE.ID = P.ID JOIN CIUDAD C ON C.ID_CIUDAD = PE.CIUDAD
+  JOIN DEPARTAMENTO D ON D.ID_DEPARTAMENTO = C.DEPARTAMENTO_ID_DEPARTAMENTO JOIN PAIS PS ON PS.ID_PAIS = D.PAIS_ID_PAIS;
+--------------------------------------------------------
+--  DDL for View REPORTES_CARLOS_MARTINEZ
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE VIEW "CARLOSABD"."REPORTES_CARLOS_MARTINEZ" ("CITA", "ID_MEDICO", "NOMBRE_MEDICO", "ID_PACIENTE", "NOMBRE_PACIENTE", "CIUDAD", "DEPARTAMENTO", "PAIS") AS 
+  SELECT CM.ID CITA, M.ID ID_MEDICO, PA.NOMBRE||' '||PA.APELLIDO NOMBRE_MEDICO, P.ID ID_PACIENTE, PE.NOMBRE||' '||PE.APELLIDO NOMBRE_PACIENTE, C.NOMBRE CIUDAD, D.NOMBRE DEPARTAMENTO, PS.NOMBRE PAIS 
+  FROM CITAS_MEDICAS CM JOIN MEDICO M ON M.ID = CM.MEDICO JOIN PERSONA PA ON PA.ID = M.ID JOIN PACIENTE P ON P.ID = CM.PACIENTE JOIN PERSONA PE ON PE.ID = P.ID JOIN CIUDAD C ON C.ID_CIUDAD = PE.CIUDAD
+  JOIN DEPARTAMENTO D ON D.ID_DEPARTAMENTO = C.DEPARTAMENTO_ID_DEPARTAMENTO JOIN PAIS PS ON PS.ID_PAIS = D.PAIS_ID_PAIS;
 REM INSERTING into CARLOSABD.ACCESO
 SET DEFINE OFF;
 Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('10','Solicitar cita','/paginas/seguro/solicitar-cita.xhtml');
@@ -649,6 +665,12 @@ Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('20','Ordenes medicamento',
 Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('21','Horario medicos','/paginas/seguro/horario-medico.xhtml');
 Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('22','Gestion enfermedades','/paginas/seguro/gestion-enfermedades.xhtml');
 Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('23','Gestion quirofanos','/paginas/seguro/gestion-quirofanos.xhtml');
+Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('26','Gestionar enfermedades sintomas','/paginas/seguro/gestion-enfermedad-sintoma.xhtml');
+Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('27','Gestionar hospitalizacion','/paginas/seguro/gestion-hospitalizacion.xhtml');
+Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('28','Gestionar cama','/paginas/seguro/gestion-cama.xhtml');
+Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('29','Atender cita','/paginas/seguro/atender-cita.xhtml');
+Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('30','Gestion orden cirugia','/paginas/seguro/gestion-ordencirugia.xhtml');
+Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('31','Gestion orden hospitalizacion','/paginas/seguro/gestion-ordenhospitalizacion.xhtml');
 Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('1','Gestionar medicos','/paginas/seguro/gestion-medicos.xhtml');
 Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('2','Gestionar pacientes','/paginas/seguro/gestion-pacientes.xhtml');
 Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('3','Gestionar farmaceuticos','/paginas/seguro/gestion-farmaceuticos.xhtml');
@@ -658,6 +680,8 @@ Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('6','Gestionar farmacias','
 Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('7','Gestionar medicamentos','/paginas/seguro/gestion-medicamentos.xhtml');
 Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('8','Gestionar cirugias','/paginas/seguro/gestion-cirugia.xhtml');
 Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('9','Gestionar examenes','/paginas/seguro/gestion-examen.xhtml');
+Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('24','Gestion Orden examenes','/paginas/seguro/gestion-OrdenExamen.xhtml');
+Insert into CARLOSABD.ACCESO (ID,NOMBRE,URL) values ('25','Informacion cita','/paginas/seguro/informacion-cita.xhtml');
 REM INSERTING into CARLOSABD.ACCESOROL
 SET DEFINE OFF;
 Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','1');
@@ -696,12 +720,38 @@ Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('3','20');
 Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','21');
 Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','22');
 Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','23');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','24');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','25');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('2','25');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('4','25');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','26');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','27');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('2','27');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','28');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','29');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('2','29');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','30');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('2','30');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('1','31');
+Insert into CARLOSABD.ACCESOROL (ROL,ACCESO) values ('2','31');
 REM INSERTING into CARLOSABD.CAMAS
 SET DEFINE OFF;
+Insert into CARLOSABD.CAMAS (ID_CAMA,DESCRIPCION,ESTADO) values ('1','Cama especial ortopedica','0');
 REM INSERTING into CARLOSABD.CIRUGIA
 SET DEFINE OFF;
+Insert into CARLOSABD.CIRUGIA (ID_CIRUGIA,NOMBRE,DESCRIPCION,QUIROFANO) values ('1','Cirugia estetica facil de nariz','en esta cirugia se hace esto','1');
 REM INSERTING into CARLOSABD.CITA_SINTOMAS
 SET DEFINE OFF;
+Insert into CARLOSABD.CITA_SINTOMAS (CITA,SINTOMA) values ('32','1');
+Insert into CARLOSABD.CITA_SINTOMAS (CITA,SINTOMA) values ('33','1');
+Insert into CARLOSABD.CITA_SINTOMAS (CITA,SINTOMA) values ('35','1');
+Insert into CARLOSABD.CITA_SINTOMAS (CITA,SINTOMA) values ('33','2');
+Insert into CARLOSABD.CITA_SINTOMAS (CITA,SINTOMA) values ('35','2');
+Insert into CARLOSABD.CITA_SINTOMAS (CITA,SINTOMA) values ('33','3');
+Insert into CARLOSABD.CITA_SINTOMAS (CITA,SINTOMA) values ('36','3');
+Insert into CARLOSABD.CITA_SINTOMAS (CITA,SINTOMA) values ('33','4');
+Insert into CARLOSABD.CITA_SINTOMAS (CITA,SINTOMA) values ('35','4');
+Insert into CARLOSABD.CITA_SINTOMAS (CITA,SINTOMA) values ('36','4');
 REM INSERTING into CARLOSABD.CITAS_MEDICAS
 SET DEFINE OFF;
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('4','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'tengo contracciones','32','28','MEDICO_GENERAL','Cancelada');
@@ -714,6 +764,11 @@ Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,P
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('11','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'me duele una muela','32','28','MEDICO_GENERAL','Cancelada');
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('12','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),null,'32','28','MEDICO_GENERAL','Cancelada');
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('30','0',to_date('28/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'mal de amores','48','28','MEDICO_GENERAL','Pendiente');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('31','0',to_date('28/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'Me duelen las piernas de tanto culiar','48','28','GINECOLOGO','Pendiente');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('32','0',to_date('29/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'me duele el estomago','48','28','MEDICO_GENERAL','Pendiente');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('33','0',to_date('29/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'me duelen los pies de estar caminando hacia el futuro','48','28','MEDICO_GENERAL','Atendida');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('34','1',to_date('29/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'valoracion exitosa y medicamentos entregados','32','28','GINECOLOGO','Atendida');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('35','1',to_date('29/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'este paciente sufre de insuficiencia renal','32','28','GINECOLOGO','Atendida');
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('13','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'me duele la cabeza','32','28','MEDICO_GENERAL','Pendiente');
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('14','0',to_date('27/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'pedir cita','32','28','MEDICO_GENERAL','Pendiente');
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('21','0',to_date('28/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'me duelen las muñecas, ojala no sea nada grave','32','28','MEDICO_GENERAL','Pendiente');
@@ -726,6 +781,7 @@ Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,P
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('24','0',to_date('28/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'me arden los ojos','32','28','MEDICO_GENERAL','Pendiente');
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('25','0',to_date('28/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'las piernas desgastadas de jugar','32','28','MEDICO_GENERAL','Pendiente');
 Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('26','0',to_date('28/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),'me duele la cabeza de pensarte tanto','32','28','MEDICO_GENERAL','Pendiente');
+Insert into CARLOSABD.CITAS_MEDICAS (ID,CARACTER,FECHA,HORA,DESCRIPCION,MEDICO,PACIENTE,VALORACION,ESTADO) values ('36','1',to_date('29/05/17','DD/MM/RR'),to_date('01/01/70','DD/MM/RR'),null,'32','28','PEDIATRA','Pendiente');
 REM INSERTING into CARLOSABD.CIUDAD
 SET DEFINE OFF;
 Insert into CARLOSABD.CIUDAD (ID_CIUDAD,NOMBRE,DEPARTAMENTO_ID_DEPARTAMENTO) values ('1','Armenia','1');
@@ -749,6 +805,7 @@ Insert into CARLOSABD.EPS (ID_EPS,NOMBRE,DIRECCION,TELEFONO,TIPO_EPS_ID_TIPO_EPS
 Insert into CARLOSABD.EPS (ID_EPS,NOMBRE,DIRECCION,TELEFONO,TIPO_EPS_ID_TIPO_EPS) values ('3','Pasvisalud','Cra 25 # 43 -57','7466159','3');
 REM INSERTING into CARLOSABD.EXAMEN
 SET DEFINE OFF;
+Insert into CARLOSABD.EXAMEN (ID_EXAMEN,NOMBRE,DESCRIPCION) values ('21','Prostata','examen que se le hace a personas mayores de 40');
 REM INSERTING into CARLOSABD.FARMACEUTICO
 SET DEFINE OFF;
 REM INSERTING into CARLOSABD.FARMACIA
@@ -757,6 +814,7 @@ REM INSERTING into CARLOSABD.HORARIO
 SET DEFINE OFF;
 REM INSERTING into CARLOSABD.HOSPITALIZACION
 SET DEFINE OFF;
+Insert into CARLOSABD.HOSPITALIZACION (ID_HOSPITALIZACION,FECHA_ENTRADA,FECHA_SALIDA,CAMAS_ID_CAMA,MEDICO) values ('1',to_date('28/05/17','DD/MM/RR'),to_date('12/12/17','DD/MM/RR'),'1','32');
 REM INSERTING into CARLOSABD.HT_FARMACEUTICO
 SET DEFINE OFF;
 REM INSERTING into CARLOSABD.HT_MEDICO
@@ -773,8 +831,12 @@ Insert into CARLOSABD.MEDICO (ID,ESTADO,TARJETA_PROFESIONAL) values ('48','1','1
 Insert into CARLOSABD.MEDICO (ID,ESTADO,TARJETA_PROFESIONAL) values ('32','1','12345');
 REM INSERTING into CARLOSABD.ORDEN_CIRUGIA
 SET DEFINE OFF;
+Insert into CARLOSABD.ORDEN_CIRUGIA (ID,CITAS_MEDICAS,CIRUGIA,MEDICO,FECHA_CIRUGIA,DESCRIPCION) values ('1','4','1','48',to_date('12/12/17','DD/MM/RR'),'cirugia facil de cara en la nariz');
+Insert into CARLOSABD.ORDEN_CIRUGIA (ID,CITAS_MEDICAS,CIRUGIA,MEDICO,FECHA_CIRUGIA,DESCRIPCION) values ('2','35','1','32',to_date('12/12/17','DD/MM/RR'),'operacion de cirugia a corazon abierto');
+Insert into CARLOSABD.ORDEN_CIRUGIA (ID,CITAS_MEDICAS,CIRUGIA,MEDICO,FECHA_CIRUGIA,DESCRIPCION) values ('3','34','1','48',to_date('12/11/17','DD/MM/RR'),'cirugia estetica facial');
 REM INSERTING into CARLOSABD.ORDEN_EXAMEN
 SET DEFINE OFF;
+Insert into CARLOSABD.ORDEN_EXAMEN (ID,CITAS_MEDICAS,EXAMEN,FECHA_REALIZACION,DESCRIPCION,MEDICO) values ('1','4','21',to_date('29/06/17','DD/MM/RR'),'A este paciente se le hara un descuento por que es ','48');
 REM INSERTING into CARLOSABD.ORDEN_HOSPITALIZACION
 SET DEFINE OFF;
 REM INSERTING into CARLOSABD.ORDEN_MEDICAMENTO
@@ -1764,75 +1826,31 @@ SET DEFINE OFF;
   ALTER TABLE "CARLOSABD"."PERSONAROL" ADD CONSTRAINT "ROL_FKV2" FOREIGN KEY ("ROL")
 	  REFERENCES "CARLOSABD"."ROL" ("ID") ENABLE;
 --------------------------------------------------------
---  DDL for Procedure ADD_JOB_HISTORY
+--  DDL for Procedure CITAS_BY_MEDICO_CIUDAD
 --------------------------------------------------------
 set define off;
 
-  CREATE OR REPLACE PROCEDURE "CARLOSABD"."ADD_JOB_HISTORY" 
-  (  p_emp_id          job_history.employee_id%type
-   , p_start_date      job_history.start_date%type
-   , p_end_date        job_history.end_date%type
-   , p_job_id          job_history.job_id%type
-   , p_department_id   job_history.department_id%type
-   )
-IS
-BEGIN
-  INSERT INTO job_history (employee_id, start_date, end_date,
-                           job_id, department_id)
-    VALUES(p_emp_id, p_start_date, p_end_date, p_job_id, p_department_id);
-END add_job_history;
-
-/
---------------------------------------------------------
---  DDL for Procedure REPORTE
---------------------------------------------------------
-set define off;
-
-  CREATE OR REPLACE PROCEDURE "CARLOSABD"."REPORTE" (newcursor OUT SYS_REFCURSOR)
+  CREATE OR REPLACE PROCEDURE "CARLOSABD"."CITAS_BY_MEDICO_CIUDAD" (newcursor OUT SYS_REFCURSOR)
   AS
     /* VARIABLE QUE CONTENDRA LA CONSULTA SQL DEL REPORTE */ 
-    consulta VARCHAR2(10000);
-    /* CURSOR DONDE ESTARAN TODOS LOS DEPARTAMENTOS A MOSTRAR EN EL REPORTE */
-    CURSOR DEPARTAMENTOS IS 
-    SELECT DEPARTMENT_ID,DEPARTMENT_NAME FROM DEPARTMENTS;
-    --SELECT DEPARTMENT_NAME FROM DEPARTMENTS WHERE DEPARTMENT_ID IN (50,60,70,80,90);
-    /* ALMACENO LOS NOMBRES DE LOS DEPARTAMENTOS */
-    nombres VARCHAR2(10000);
-    /* ALMACENAMOS LOS CAMPOS QUE SE MOSTRARAN EN LA CONSULTA */
-    campos VARCHAR2(10000);
+    consulta VARCHAR2(600);
+    /* CURSOR DONDE ESTARAN TODAS LAS CIUDADES A MOSTRAR EN EL REPORTE */
+    CURSOR DATOS IS 
+    SELECT C.NOMBRE FROM CIUDAD C;
+    /* ALMACENO LOS NOMBRES DE LAS CIUDADES */
+    nombres VARCHAR2(600);
   BEGIN
-    campos := 'TRABAJO,';
-    --SELECT TRABAJO,"'Shipping'_CANTIDAD" AS "Shipping Empleados" ,NVL("'Shipping'_SALARIO",0)  AS "Shipping Salarios" FROM 
-    FOR REG IN DEPARTAMENTOS LOOP
-      nombres := nombres||''''||REG.DEPARTMENT_NAME||''',';
-      campos := campos||'"'''||REG.DEPARTMENT_NAME||'''_CANTIDAD" AS "'||REG.DEPARTMENT_ID||' EMPLEADOS", NVL("'''||REG.DEPARTMENT_NAME||'''_SALARIO",0) AS "'||REG.DEPARTMENT_ID||' SALARIOS",';
+    FOR REG IN DATOS LOOP
+      nombres := nombres||''''||REG.NOMBRE||''',';
     END LOOP; 
     /* USAMOS LA FUNCION RTRIM(variable, 'caracter') PARA ELIMINAR UN DETERMINADO CARACTER DEL FINAL DE LA CADENA EN ESTE CASO UNA ,*/
-    nombres := RTRIM(nombres, ','); 
-    campos := RTRIM(campos, ','); 
-    DBMS_OUTPUT.PUT_LINE(campos);
-    consulta := 'SELECT * FROM (SELECT J.JOB_TITLE AS TRABAJO,D.DEPARTMENT_NAME,E.EMPLOYEE_ID,E.SALARY 
-    FROM EMPLOYEES E JOIN DEPARTMENTS D ON D.DEPARTMENT_ID = E.DEPARTMENT_ID JOIN JOBS J ON J.JOB_ID = E.JOB_ID)
-    PIVOT(COUNT(EMPLOYEE_ID) AS CANTIDAD,SUM(SALARY) AS SALARIO
-        FOR DEPARTMENT_NAME IN ('||nombres||')) ORDER BY TRABAJO';
-    DBMS_OUTPUT.PUT_LINE(consulta);   
+    nombres := RTRIM(nombres, ',');    
+    consulta := 'SELECT * FROM (SELECT NOMBRE_MEDICO,CITA,CIUDAD FROM REPORTES_CARLOS_MARTINEZ)
+  PIVOT(COUNT(CITA) AS CANTIDAD FOR CIUDAD IN ('||nombres||')) ORDER BY NOMBRE_MEDICO';
     /* ABRIMOS EL CURSOR CON NUESTRA CONSULTA YA HECHA */
     OPEN newcursor FOR
     consulta;
-  END reporte;
-
-/
---------------------------------------------------------
---  DDL for Procedure RETORNAR
---------------------------------------------------------
-set define off;
-
-  CREATE OR REPLACE PROCEDURE "CARLOSABD"."RETORNAR" (newcursor OUT SYS_REFCURSOR) AS
-  BEGIN
-    OPEN newcursor FOR
-    SELECT J.JOB_TITLE AS TRABAJO,D.DEPARTMENT_NAME,E.EMPLOYEE_ID,E.SALARY 
-    FROM EMPLOYEES E JOIN DEPARTMENTS D ON D.DEPARTMENT_ID = E.DEPARTMENT_ID JOIN JOBS J ON J.JOB_ID = E.JOB_ID;
-  END retornar;
+  END CITAS_BY_MEDICO_CIUDAD;
 
 /
 --------------------------------------------------------

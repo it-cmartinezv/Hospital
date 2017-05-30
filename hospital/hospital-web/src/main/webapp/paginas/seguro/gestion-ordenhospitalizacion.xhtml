@@ -15,17 +15,24 @@
 				<h:panelGrid id="paneldatos" columns="3">
 				
 					<h:outputLabel for="citas" id="cita" value="Citas Medicas: " />
-					<h:selectOneMenu id="citas" value="#{OrdenHospitalizacion.cita}" converter="citaConverter">
-						<f:selectItems value="#{ordenHospitalizacionController.listarCitasMedicas}" var="c" itemValue="#{c}" itemLabel="#{c.id} " />
+					<h:selectOneMenu id="citas" value="#{ordenHospitalizacionController.citaMedica}" converter="citaConverter">
+						<f:selectItems value="#{ordenHospitalizacionController.listarCitasMedicas}" var="c" itemValue="#{c}" itemLabel="#{c.id} #{c.paciente.nombre} #{c.paciente.apellido}" />
 					</h:selectOneMenu>
 					<p:message for="citas" />
 					
-					<h:outputLabel for="hospitalizacion" id="hospitalizacion" value="Hospitalizacion" />
+					<h:outputLabel for="hospitalizacion" id="lhospitalizacion" value="Hospitalizacion" />
 					<h:selectOneMenu id="hospitalizacion" value="#{ordenHospitalizacionController.hospitalizacion}" converter="hospitalizacionConverter">
-						<f:selectItems value="#{ordenHospitalizacionController.listaHospitalizaciones}" var="hospitalizacion" itemValue="#{hospitalizacion}" itemLabel="#{hospitalizacion.id}" />
+						<f:selectItems value="#{ordenHospitalizacionController.listarHospitalizaciones}" var="hospitalizacion" itemValue="#{hospitalizacion}" itemLabel="#{hospitalizacion.id}" />
 					</h:selectOneMenu>
 					<p:message for="hospitalizacion" />
 					
+					<h:outputLabel for="fechaRealizacion"  id="fechaRea" value="Fecha" />
+		        	<p:calendar value="#{ordenHospitalizacionController.fecha}" id="fechaEntre" pattern="dd/MM/yyyy" />
+					<p:message for="fechaEntre" />
+				
+					<h:outputLabel for="descripcion" id="descripcion" value="Descripcion"/> 
+					<p:inputTextarea maxlength="300" rows="10" value="#{ordenHospitalizacionController.descripcion}" id="des" />
+					<p:message for="descripcion" />
 				
 				</h:panelGrid>
 				
@@ -43,7 +50,7 @@
 			<!-- este div es el que otorga el estilo a la tabla que ponga dentro -->
 			<div class="tabladatos">
 			<p:panel header="Listado de Ordenes" id="paneltabla">
-				<p:dataTable id="tablaOrden" value="#{ordenHospitalizacionController.listaOrdenesHospitalizaciones}" var="orden">
+				<p:dataTable id="tablaOrden" value="#{ordenHospitalizacionController.listarOrdenesHospitalizaciones}" var="orden">
 
 					<p:column headerText="Numero Orden">
 						<h:outputLabel value="#{orden.id}" />

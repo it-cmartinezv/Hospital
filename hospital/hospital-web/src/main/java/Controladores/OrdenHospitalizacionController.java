@@ -1,6 +1,7 @@
 package Controladores;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -35,6 +36,10 @@ public class OrdenHospitalizacionController implements Serializable{
 	
 	@EJB
 	private HospitalizacionEJB hospitalizacionEJB;
+	
+	private String descripcion;
+	
+	private Date fecha;
 	
 	private CitaMedica citaMedica;
 	
@@ -114,6 +119,20 @@ public class OrdenHospitalizacionController implements Serializable{
 		this.listarOrdenesHospitalizaciones = listarOrdenesHospitalizaciones;
 	}
 
-	
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
 	
 }
