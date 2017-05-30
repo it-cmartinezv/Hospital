@@ -47,12 +47,16 @@ public class EnfermedadSintomaController implements Serializable {
 	@PostConstruct
 	public void inicializar(){
 		try{
-			sintomasEnfermedades = sintomaEnfermedadEJB.listarSintomaByEnfermedad(enfermedad);
+			sintomasEnfermedades = sintomaEnfermedadEJB.listar();
 			enfermedades = enfermedadEJB.listarEnfermedad();
 			sintomas = sintomaEJB.listarSintoma();
 		}catch(excepciones.ExcepcionNegocio e){
 			Messages.addFlashGlobalError(e.getMessage());
 		}
+	}
+	
+	public void sintomasByEnfermedad(){
+		sintomasEnfermedades = sintomaEnfermedadEJB.listarSintomaByEnfermedad(enfermedad);
 	}
 	
 	/**

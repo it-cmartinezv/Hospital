@@ -64,6 +64,7 @@ public class OrdenHospitalizacionEJB {
 	 * @param ordenHospitalizacion
 	 */
 	public void crear(OrdenHospitalizacion ordenHospitalizacion){
+		System.out.println("id de la hospitalizacion "+ordenHospitalizacion.getHospitalizacion().getId());
 		Hospitalizacion hospitalizacion = hospitalizacionEJB.buscar(ordenHospitalizacion.getId());
 		if(hospitalizacion != null){
 			em.persist(ordenHospitalizacion);

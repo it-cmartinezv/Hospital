@@ -72,7 +72,7 @@ public class OrdenHospitalizacionController implements Serializable{
 			ordenHospitalizacion.setCitaMedica(citaMedica);
 			ordenHospitalizacion.setHospitalizacion(hospitalizacion);
 			ordenHospitalizacionEJB.crear(ordenHospitalizacion);
-			Messages.addFlashGlobalInfo("La orden de la hospitalizacion resgistrada exitosamente");
+			Messages.addFlashGlobalInfo("Orden de hospitalizacion resgistrada exitosamente");
 			
 		}catch(ExcepcionNegocio e){
 			Messages.addGlobalError(e.getMessage());

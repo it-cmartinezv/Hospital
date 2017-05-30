@@ -19,6 +19,7 @@
 				<h:outputLabel for="enfermedad" id="lenfermedad" value="Enfermedad: " />
 				<h:selectOneMenu id="enfermedad" value="#{enfermedadSintomaController.enfermedad}" converter="enfermedadConverter">
 					<f:selectItems value="#{enfermedadSintomaController.enfermedades}" var="enfermedad" itemValue="#{enfermedad}" itemLabel="#{enfermedad.nombre}"/>
+					<f:ajax event="change" execute="@this" render="tablaEnfermedadesSintoma" listener="#{enfermedadSintomaController.sintomasByEnfermedad()}"/>
 				</h:selectOneMenu>
 				<p:message for="enfermedad"/>
 				
@@ -32,7 +33,7 @@
 			
 			<h:panelGrid id="acciones" columns="5">
 				<h:commandButton action="/hospital-web/?faces-redirect=true" value="#{msj['cancelar']}" id="btnCancelar"/>
-				<h:commandButton action="#{enfermedadSintomaController.registrar}" value="Registrar" id="btnRegistrar"/>
+				<p:commandButton action="#{enfermedadSintomaController.registrar}" value="Registrar" id="btnRegistrar" update="gestion" process="@this,gestion"/>
 			</h:panelGrid>
 
 
@@ -42,14 +43,14 @@
 			
 			<div class="tabladatos">
 			<p:panel header="Listado de Enfermedades Sintomas" id="paneltabla">
-				<p:dataTable id="tablaEnfermedadesSintoma" value="#{enfermedadSintomaController.sintomasEnfermedades}" var="sintomasEnfermedades">
+				<p:dataTable id="tablaEnfermedadesSintoma" value="#{enfermedadSintomaController.sintomasEnfermedades}" var="s">
 
 					<p:column headerText="Enfermedad">
-						<h:outputLabel value="#{sintomasEnfermedades.enfermedad}" />
+						<h:outputLabel value="#{s.enfermedad.nombre}" />
 					</p:column>	
 
 					<p:column headerText="Sintoma">
-						<h:outputLabel value="#{sintomasEnfermedades.sintoma}" />
+						<h:outputLabel value="#{s.sintoma.nombre}" />
 					</p:column>	
 					
 						

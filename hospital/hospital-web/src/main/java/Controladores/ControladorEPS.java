@@ -37,8 +37,7 @@ public class ControladorEPS implements Serializable {
 	@Length(min=4,max=50,message="longitud entre 4 y 50")
 	private String nombre;
 	
-	@Pattern(regexp="[a-zA-Z ]*",message="Direccion No valida")
-	@Length(min=4,max=50,message="longitud entre 4 y 50")
+
 	private String direccion;
 	
 	@Pattern(regexp="[0-9]*",message="Solo numeros")

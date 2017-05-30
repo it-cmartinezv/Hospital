@@ -14,11 +14,13 @@ import javax.persistence.Table;
 @Table(name="Sintomas_Enfermedad")
 @IdClass(SintomaEnfermedadPK.class)
 @NamedQueries({
-	@NamedQuery(name=SintomaEnfermedad.BYENFERMEDAD, query="SELECT se FROM SintomaEnfermedad se WHERE se.enfermedad=?1")
+	@NamedQuery(name=SintomaEnfermedad.BYENFERMEDAD, query="SELECT se FROM SintomaEnfermedad se WHERE se.enfermedad=?1"),
+	@NamedQuery(name=SintomaEnfermedad.LISTAR, query="SELECT se FROM SintomaEnfermedad se")
 })
 public class SintomaEnfermedad implements Serializable{
 	
 	public static final String BYENFERMEDAD = "SintomaEnfermedad.byenfermedad";
+	public static final String LISTAR = "SintomaEnfermedad.LISTAR";
 	
 	@Id
 	@ManyToOne(cascade={})

@@ -37,7 +37,7 @@ public class SintomaEnfermedadEJB {
 	 * Metodo para crear un sintoma a una enfermedad
 	 * @param sintomaEnfermedad
 	 */
-	public void crear(SintomaEnfermedad sintomaEnfermedad){
+	public void crear(SintomaEnfermedad sintomaEnfermedad) throws ExcepcionNegocio{
 		Enfermedad enfermedad = enfermedadEJB.buscar(sintomaEnfermedad.getEnfermedad().getId());
 		if(enfermedad != null){
 			Sintoma sintoma = sintomaEJB.buscar(sintomaEnfermedad.getSintoma().getId());
@@ -79,6 +79,11 @@ public class SintomaEnfermedadEJB {
 	public List<SintomaEnfermedad> listarSintomaByEnfermedad(Enfermedad enfermedad){
 		Query q = em.createNamedQuery(SintomaEnfermedad.BYENFERMEDAD);
 		q.setParameter(1, enfermedad);
+		return q.getResultList();
+	}
+	
+	public List<SintomaEnfermedad> listar(){
+		Query q = em.createNamedQuery(SintomaEnfermedad.LISTAR);
 		return q.getResultList();
 	}
 }
